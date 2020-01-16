@@ -1,0 +1,40 @@
+{% extends "nav/base.html" %}
+
+{% block body %}
+
+  <nav id="mainHeaderAuth">
+    <a href="/login" class="companyLogo">
+      <img src="/static/src/hop-blue.png">
+      <p> hop</p>
+    </a>
+    <div class="nav-right">
+      <a href="#">HELP</a>
+      {% if cur_user != None %}
+        <a href="/logout">SIGN OUT</a>
+      {% else %}
+        <a href="/login">SIGN IN</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <link rel="stylesheet" type="text/css" href="/static/css/auth.min.css">
+  <main id="main_auth">
+      <form method="post">
+          <h1>SIGN IN</h1>
+          <input name="email" id="email" type="text" placeholder="Client E-mail or Phone number">
+          <div class="pass">
+              <input id="password" name="password" type="password" placeholder="Password">
+              <input type="checkbox" id="view_pass">
+              <label for="view_pass" class="glyphicon glyphicon-eye-close"></label>
+          </div>
+          <a class="forgot" href="/forgot">forgot password?</a>
+          <button class="login" type="submit">Masuk</button>
+          <hr>
+          <p>Don't have a hop account? <a href="/register">Sign up</a></p>
+      </form>
+  </main>
+  <script src="/static/js/detail/auth.js"></script>
+  <script>
+      login();
+  </script>
+{% endblock %}

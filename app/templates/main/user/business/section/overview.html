@@ -1,0 +1,27 @@
+<main id="mainBusinessPage">
+  <div class="_row _list_table">
+    <div class="no_data">
+      <img src="static/src/icon/outlet.png">
+        You don't have any Outlet yet.
+    </div>
+  </div>
+</main>
+{% include 'main/user/business/submacros/_edit_category_outlet.html' %}
+{% include 'main/user/business/submacros/_edit_item_outlet.html' %}
+{% include 'main/user/business/submacros/_edit.html' %}
+{% include 'main/user/business/submacros/_remove.html' %}
+<script>
+  $('.label.ui.dropdown')
+    .dropdown();
+
+  $('.no.label.ui.dropdown')
+    .dropdown({
+    useLabels: true
+  });
+
+  $('.ui.button').on('click', function () {
+    $('.ui.dropdown')
+      .dropdown('restore defaults')
+  })
+  _business_overview();
+</script>

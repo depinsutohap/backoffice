@@ -1,0 +1,48 @@
+    <script src="{{ url_for('static', filename='js/detail/employee.js') }}"></script>
+    <script>
+      _edit_manage_access();
+    </script>
+  <main id="new_employee_index">
+    <form id="form_add_employee_outlet" method="post">
+      <div class="inmain_nav">
+        <div class="title">
+          <h1><a onclick="sub_href('{{ url_for('main._page', sector='employee') }}')">Employee</a> > Manage access (<span id="_edit_employee_name">########</span>)</h1>
+        </div>
+        <div class="_filter">
+          <input type="hidden" id="add_employee_id">
+          <button type="button" onclick="sub_href('{{ url_for('main._page', sector='employee') }}')">Cancel</button>
+          <button type="submit" class="_submit">Save</button>
+        </div>
+      </div>
+      <div class="_container">
+
+
+
+
+          <div class="_row">
+            <div class="col_10">
+              <div class="card chart_card table_card">
+                <table class="table table-hover" id="table_data">
+                  <thead>
+                    <tr>
+                      <th><input type="checkbox" class="check_all"></th>
+                      <th onclick="sortTable(0);">Outlet Name</th>
+                      <th onclick="sortTable(1);">Business</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="data_body"></tbody>
+                </table>
+                <div class="no_data">
+                  <img src="{{ url_for('static', filename='src/icon/tag.png') }}">
+                  You don't have any outlet yet.
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+      </div>
+    </form>
+  </main>
+  {% include 'main/user/employee/submacros/_add_permission.html' %}

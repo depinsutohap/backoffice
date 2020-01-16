@@ -1,0 +1,66 @@
+    <script src="{{ url_for('static', filename='js/detail/business.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/semantic.min.js') }}"></script>
+    <script>
+      $('.label.ui.dropdown')
+        .dropdown();
+
+      $('.no.label.ui.dropdown')
+        .dropdown({
+        useLabels: false
+      });
+
+      $('.ui.button').on('click', function () {
+        $('.ui.dropdown')
+          .dropdown('restore defaults')
+      })
+
+      _new_business();
+    </script>
+<main id="new_business_index">
+  <div class="_container">
+    <div class="_row">
+      <div class="title active" id="cbt"><div class="number">1</div> Create Business</div>
+      <div class="title" id="mot"><div class="number">2</div> Move Outlets</div>
+    </div>
+
+    <div class="_row" id="new_business">
+      <div class="col_6">
+        <div class="card dashboard_card">
+          <form id="form_new_business" method="post">
+            <h1>Create new Business</h1>
+            <div class="li">
+              <label>Business Name</label>
+              <input name="business_name" id="business_name" type="text" placeholder="Business Name">
+            </div>
+            <div class="li">
+              <label>Business Category</label>
+              <select id="business_category"></select>
+            </div>
+            <div class="li">
+              <label>Description</label>
+              <input name="business_description" id="business_description" type="text" placeholder="Business Description">
+            </div>
+            <button type="submit">Create Business</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="_row" id="move_resources">
+      <div class="col_6">
+        <div class="card dashboard_card">
+          <form method="post" id="form_move_outlet">
+            <h1>Move outlet into <span id="mrt">#######</span></h1>
+            <p>Move Existing Outlet into your new project.</p>
+            <select id="move_list_outlet" name="skills" multiple="" class="label ui selection fluid dropdown"></select>
+            <input type="hidden" id="new_business_id">
+            <button type="submit">Move Outlet</button>
+            <a class="_skip" onclick="_skip();">Skip for now</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>

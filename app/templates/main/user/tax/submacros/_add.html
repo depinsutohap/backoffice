@@ -1,0 +1,48 @@
+<div class="sidemodal" id="add_tax_modal">
+  <div class="header">
+    <h4>Add Tax</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_add_tax">
+    <div class="colum_input">
+      <p>Tax Name<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="add_tax_name">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Type<span class="danger">*</span></p>
+      <div class="div_input">
+        <select id="add_tax_type"></select>
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Value<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="number" step="0.1" min="0" id="add_tax_value">
+      </div>
+    </div>
+    <div class="colum_input column_table">
+      <p class="table_title">Outlet<span class="danger">*</span></p>
+      <div class="div_input">
+        <table class="table table-hover" id="table_data">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="add_check_all"></th>
+              <th onclick="sortTable(0);">All Outlet</th>
+            </tr>
+          </thead>
+          <tbody class="add_outlet_list"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+        <button type="button" onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

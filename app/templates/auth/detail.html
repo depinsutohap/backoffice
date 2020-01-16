@@ -1,0 +1,48 @@
+{% extends "nav/base.html" %}
+
+{% block body %}
+
+  <nav id="mainHeaderAuth">
+    <a href="/login" class="companyLogo">
+      <img src="/static/src/hop-blue.png">
+      <p> hop</p>
+    </a>
+    <div class="nav-right">
+      <a href="#">HELP</a>
+      {% if cur_user != None %}
+        <a href="/logout">SIGN OUT</a>
+      {% else %}
+        <a href="/login">SIGN IN</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <link rel="stylesheet" type="text/css" href="/static/css/auth.min.css">
+  <main id="main_auth">
+      <form method="post" autocomplete="on">
+          <h1>Fill your merchant’s name & information</h1>
+          <h4>
+            Nama toko, kontak, lokasi dan informasi usaha digunakan untuk
+            Informasi tambahan mengenai usaha kamu.
+          </h4>
+          <hr>
+          <input name="business_name" id="business_name" type="text" placeholder="Business Name">
+          <input name="outlet_name" id="outlet_name" type="text" placeholder="Outlet Name">
+          <select id="business_category"></select>
+          <select id="outlet_num_emp"></select>
+          <input name="outlet_phone_number" id="outlet_phone_number" type="tel" placeholder="Outlet's Phone Number" onkeyup="input_formatNumberwocommas(this)">
+          <label class="owner_phone_check"><input class="_checkbox" name="owner_phone_check" id="owner_phone_check" type="checkbox">Copy from Owner’s phone number</label>
+          <input name="outlet_address" id="outlet_address" type="text" placeholder="Address">
+          <select id="outlet_country"></select>
+          <button type="submit">SUBMIT</button>
+      </form>
+  </main>
+  <script src="{{ url_for('static', filename='js/detail/auth.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/general.js') }}"></script>
+  <script>
+    function input_formatNumberwocommas(n) {
+      $(n).val($(n).val().toString().replace(/\D/g, ""))
+    }
+    detail();
+  </script>
+{% endblock %}

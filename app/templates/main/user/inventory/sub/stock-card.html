@@ -1,0 +1,60 @@
+    <script src="{{ url_for('static', filename='js/detail/inventory/stock-card.js') }}"></script>
+    <script>
+      _stock_card();
+    </script>
+  <main id="dashboard_index">
+    <div class="inmain_nav">
+      <div class="title">
+        <h1><a  onclick="sub_href('{{ url_for('main._page', sector='inventory') }}')">Inventory</a> > Stock Card</h1>
+      </div>
+    </div>
+    <div class="_container">
+
+      <div class="_row">
+        <div class="col_10">
+          <div class="card dashboard_card">
+            <div class="col_5">
+              <h5 class="title">Outlet</h5>
+              <select class="outlet" id="outlet" placeholder="Outlet">
+                <option value="0">Semua Outlet</option>
+              </select>
+            </div>
+            <div class="col_2">
+              <h5 class="title">Dari</h5>
+              <input type="date" name="start" class="date from_date">
+            </div>
+            <div class="col_2">
+              <h5 class="title">Sampai</h5>
+              <input type="date" name="end" class="date to_date">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="_row">
+        <div class="col_10">
+          <div class="card dashboard_card">
+            <table class="table table_stock_card table-hover" id="table_data">
+              <thead>
+                <tr>
+               <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
+                  <th onclick="sortTable(0)">PRODUCT</th>
+                  <th onclick="sortTable(1)">VARIANT</th>
+                  <th onclick="sortTable(2)">INITIAL STOCK</th>
+                  <th onclick="sortTable(3)">STOCK ENTRY</th>
+                  <th onclick="sortTable(4)">STOCK EXIT</th>
+                  <th onclick="sortTable(5)">SALES PROMO</th>
+                  <th onclick="sortTable(6)">SALES PRODUCT</th>
+                  <th onclick="sortTable(7)">TRANSFER PRODUCT</th>
+                  <th onclick="sortTable(8)">ADJUSTMENT</th>
+                  <th onclick="sortTable(9)">FINAL STOCK</th>
+                </tr>
+              </thead>
+              <tbody id="data_body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>

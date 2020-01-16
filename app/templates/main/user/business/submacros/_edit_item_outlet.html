@@ -1,0 +1,20 @@
+<div class="sidemodal" id="edit_item_outlet_modal">
+  <div class="header">
+    <h4>Edit Product Item (<span id="edit_item_outlet_modal_title">########</span>)</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_edit_item_outlet">
+    <div class="item_list_data">
+      <div class="column_header">Category List</div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+        <input type="hidden" id="edit_item_outlet_id">
+        <button onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button type="submit" class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

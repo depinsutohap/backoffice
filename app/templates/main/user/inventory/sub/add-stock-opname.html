@@ -1,0 +1,66 @@
+    <script src="{{ url_for('static', filename='js/detail/inventory/stock-opname.js') }}"></script>
+    <script>
+      add_stock_opname();
+    </script>
+  <main id="dashboard_index">
+    <form method="post" id="form_add_stock_opname">
+      <div class="inmain_nav">
+        <div class="title">
+          <h1>
+            <a  onclick="sub_href('{{ url_for('main._page', sector='inventory') }}')">Inventory</a> > <a  onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-opname') }}')">Stock Opname</a>
+             > Add Stock Opname
+          </h1>
+        </div>
+        <div class="_filter">
+          <button type="button" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-opname') }}')">Cancel</button>
+          <button class="_submit" type="submit">Save</button>
+        </div>
+      </div>
+      <div class="_container">
+            <div class="_row">
+              <div class="col_10">
+                <div class="card dashboard_card form_card">
+                  <div class="col_5">
+                    <div class="li">
+                      <label>Outlet<span class="danger">*</span></label>
+                      <select class="outlet" id="outlet">
+                        <option value="0">Select an Outlet</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col_5">
+                    <div class="li">
+                      <label>Description</label>
+                      <textarea id="description" placeholder="Description"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="_row _data_opname">
+              <div class="col_10">
+                <div class="card dashboard_card">
+                  <div class="col_10">
+                    <div class="div_add_stock_table">
+                      <div class="table_header stock_opname_table_header">
+                        <div class="item_column">Item</div>
+                        <div class="variant_column">Variant</div>
+                        <div class="total_unit_column">Total Unit (System)</div>
+                        <div class="total_unit_column">Total Unit (Actual)</div>
+                        <div class="unit">Unit</div>
+                        <div class="total_unit_column">Deviation</div>
+                      </div>
+                      <div class="table_body stock_opname_table_body"></div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+      </div>
+
+    </form>
+  </main>

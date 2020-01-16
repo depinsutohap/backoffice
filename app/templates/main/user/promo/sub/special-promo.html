@@ -1,0 +1,46 @@
+    <script src="{{ url_for('static', filename='js/table.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/detail/promo.js') }}"></script>
+    <script>
+        _special_promo();
+    </script>
+  <main id="dashboard_index">
+    <div class="inmain_nav">
+      <div class="title">
+        <h1><a onclick="sub_href('{{ url_for('main._page', sector='promo') }}')">Promo</a> > Special Promo</h1>
+      </div>
+      <div class="_filter">
+        <form>
+          <input type="text" placeholder="Search user">
+        </form>
+        <a class="nav_create" onclick="open_sideform('add_special_promo_modal');"><p>Add Promo</p></a>
+      </div>
+    </div>
+    <div class="_container">
+
+      <div class="_row">
+        <div class="col_10">
+          <div class="card chart_card table_card">
+            <button type="button" class="_remove_all danger" onclick="open_sideform('remove_many_special_promo_modal');" disabled>Remove</button>
+            <table class="table table-hover" id="table_data">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="check_all"></th>
+                  <th onclick="sortTable(0);">Promo's Name</th>
+                  <th onclick="sortTable(1);">Discount Value</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="data_body"></tbody>
+            </table>
+            <div class="no_data">
+              <img src="{{ url_for('static', filename='src/icon/report.png') }}">
+              You don't have any promo yet.
+            </div>
+        </div>
+      </div>
+    </div>
+    {% include 'main/user/promo/submacros/_add_special_promo.html' %}
+    {% include 'main/user/promo/submacros/_edit_special_promo.html' %}
+    {% include 'main/user/promo/submacros/_remove_special_promo.html' %}
+    {% include 'main/user/promo/submacros/_remove_many_special_promo.html' %}
+</main>

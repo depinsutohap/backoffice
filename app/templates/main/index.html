@@ -1,0 +1,120 @@
+{% extends "nav/base.html" %}
+
+{% block body %}
+
+  <link rel="stylesheet" type="text/css" href="/static/semantic/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.css">
+
+  <script src="/static/js/detail/navigation.js"></script>
+  <script src="/static/js/general.js"></script>
+  <script src="/static/js/graph.js"></script>
+  <script src="/static/semantic/semantic.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+
+  <nav id="mainHeader">
+      <div class="search_bar">
+        <i class="fa fa-search"></i>
+        <input type="text" id="nav_search_bar" class="ms" placeholder="Search by outlet name">
+      </div>
+      <div class="nav-right">
+        <a class="nav_create" onclick="sub_href('/page/business/new-outlet')"><p>Create Outlet</p></a>
+        <a><i class="fa fa-bell"></i></a>
+        <div class="vl"></div>
+        <div class="menu">
+          <i class="fas fa-user"></i><i class="fas fa-angle-down"></i>
+          <div class="menu_dropdown">
+            <div class="_header">
+              <h4 class="header_user_name">##############</h4>
+              <h6 class="header_user_email">#########@########</h6>
+            </div>
+            <div class="_body">
+              <a href="#" onclick="nav_href('account')">Account</a>
+              <a href="#" onclick="nav_href('billing')">Billing</a>
+              <a class="logout" onclick="logout();">Sign Out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="nav-left">
+        <a>
+          <i class="fas fa-envelope"></i>
+        </a>
+
+      </div> -->
+  </nav>
+
+  <nav id="sidenav_1" class="sidenav" data-status="true">
+      <div>
+        <img src="/static/src/hop-white.png" class="companyLogo">
+        <a class="mm actived" href="#" id="nav_dashboard" data-target="dashboard" onclick="nav_href('dashboard')">
+            <p>Dashboard</p>
+        </a>
+        <a class="mm" href="#" id="nav_report" onclick="nav_href('report')">
+            <p>Reports</p>
+        </a>
+        <hr>
+        <a class="mh" href="#" data-target="business" onclick="toggle_nav(this)">
+            <p>Business</p>
+            <i id="caret_business" class="fa fa-caret-up"></i>
+        </a>
+        <div id="list_business" class="collapse in"></div>
+        <hr>
+        <a class="mh" href="#" data-target="products" onclick="toggle_nav(this)">
+            <p>Products</p>
+            <i id="caret_products" class="fa fa-caret-up"></i>
+        </a>
+        <div id="list_products" class="collapse in">
+          <a class="mm" href="#" id="nav_product-item" onclick="nav_href('product-item')">
+              <p>Product Item</p>
+          </a>
+          <a class="mm" href="#" id="nav_product-category" onclick="nav_href('product-category')">
+              <p>Product Category</p>
+          </a>
+          <a class="mm" href="#" id="nav_outlet" onclick="nav_href('inventory')">
+              <p>Inventory<img src="/static/src/icon/upgrade-white.png" class="upgrade_icon"></p>
+          </a>
+        </div>
+        <hr>
+        <a class="mh" href="#" data-target="manage" onclick="toggle_nav(this)">
+            <p>Manage</p>
+            <i id="caret_manage" class="fa fa-caret-up"></i>
+        </a>
+        <div id="list_manage" class="collapse in">
+          <a class="mm" href="#" id="nav_outlet" onclick="nav_href('tax')">
+            <p>Tax & Services</p>
+          </a>
+          <a class="mm" href="#" id="nav_employee" onclick="nav_href('employee')">
+              <p>Employee</p>
+          </a>
+          <a class="mm" href="#" id="nav_promo" onclick="nav_href('promo')">
+              <p>Promo<img src="/static/src/icon/upgrade-white.png" class="upgrade_icon"></p>
+          </a>
+          <!-- <a class="mm" href="#" id="nav_outlet">
+              <p>Customer<img src="/static/src/icon/upgrade-white.png" class="upgrade_icon"></p>
+          </a> -->
+        </div>
+        <hr>
+        <a class="mh" href="#" data-target="settings" onclick="toggle_nav(this)">
+            <p>Settings</p>
+            <i id="caret_settings" class="fa fa-caret-up"></i>
+        </a>
+        <div id="list_settings" class="collapse in" data-status="false">
+          <a class="mm" href="#" id="nav_billing" onclick="nav_href('billing')">
+              <p>Billing</p>
+          </a>
+          <a class="mm" href="#" id="nav_account" onclick="nav_href('account')">
+              <p>Account</p>
+          </a>
+          <!-- <a class="mm" href="#" id="nav_outlet" onclick="nav_href('outlet')"> -->
+          <!-- <p>Applications</p>
+          </a> -->
+          <!-- <a class="mm" href="#" id="nav_outlet" onclick="nav_href('outlet')"> -->
+          <!-- <a class="mm" href="#" id="nav_outlet">
+              <p>Security</p>
+          </a> -->
+        </div>
+      </div>
+  </nav>
+  
+  <div id="mainBody"></div>
+{% endblock %}

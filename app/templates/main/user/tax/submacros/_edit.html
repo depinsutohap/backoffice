@@ -1,0 +1,49 @@
+<div class="sidemodal" id="edit_tax_modal">
+  <div class="header">
+    <h4>Edit Tax (<span id="edit_tax_modal_title">########</span>)</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_edit_tax">
+    <div class="colum_input">
+      <p>Name<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="edit_tax_name">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Type<span class="danger">*</span></p>
+      <div class="div_input">
+        <select id="edit_tax_type"></select>
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Value<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="number" step="0.1" min="0" id="edit_tax_value">
+      </div>
+    </div>
+    <div class="colum_input column_table">
+      <p class="table_title">Outlet<span class="danger">*</span></p>
+      <div class="div_input">
+        <table class="table table-hover" id="table_data">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="edit_check_all"></th>
+              <th onclick="sortTable(0);">All Outlet</th>
+            </tr>
+          </thead>
+          <tbody class="edit_outlet_list"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+      <input type="hidden" id="edit_tax_id">
+        <button type="button" onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

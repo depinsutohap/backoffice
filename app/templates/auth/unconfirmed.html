@@ -1,0 +1,45 @@
+{% extends "nav/base.html" %}
+
+{% block title %}ION AMS| Admin Management System{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <meta name="description" content="ION AMS - Admin Management System">
+    <meta name="keywords" content="ION AMS - Admin Management System">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/auth.min.css') }}">
+    <style>
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/detail/auth.js') }}"></script>
+    <script>
+        login();
+    </script>
+{% endblock %}
+
+
+{% block page_content %}
+  {% include 'main/macros/_header_auth.html' %}
+  {% include 'main/macros/_loading.html' %}
+  {% include 'main/macros/_notif.html' %}
+  <main id="main_auth">
+      <div>
+          <h1>Unconfimed.</h1>
+          <h3>You have not confirmed your account yet.</h3>
+          <h4>
+            Before you can access this site you need to confirm your account.
+            Check your inbox, you should have received an email with a confirmation link.
+          </h4>
+          <hr>
+          <p><a href="{{ url_for('auth.login') }}">
+            Need a confirmation email?
+          </a></p>
+          <p>
+            Back to the <a href="{{ url_for('auth.login') }}">Sign in</a> or
+            <a href="{{ url_for('auth.register') }}">Sign up</a> page
+          </p>
+      </div>
+  </main>
+{% endblock %}

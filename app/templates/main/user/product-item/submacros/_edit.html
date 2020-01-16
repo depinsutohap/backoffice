@@ -1,0 +1,25 @@
+<div class="sidemodal" id="manage_outlet_price">
+  <div class="header">
+    <h4>Manage Price (<span id="manage_outlet_price_modal_title">########</span>)</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_manage_outlet_price">
+    <div class="div_price">
+      <div class="price_header">
+        <div class="name"></div>
+        <div class="sku">SKU</div>
+        <div class="price">Price</div>
+      </div>
+      <div class="price_body outlet_price_body"></div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+        <button onclick="close_sideform()" type="button" class="_cancel">Cancel</button>
+        <input type="hidden" id="manage_outlet_price_id">
+        <button  type="submit"class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

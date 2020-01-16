@@ -1,0 +1,20 @@
+<div class="sidemodal" id="move_outlet_business_modal">
+  <div class="header">
+    <h4>Move outlets into <span class="move_outlet_title_business_name">Business</span></h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form method="post" id="form_move_outlet_business">
+    <div class="li">
+      <label>Move Existing Outlet into your new project.</label>
+      <select id="move_list_outlet_into_business" multiple="" class="label ui selection fluid dropdown"></select>
+    </div>
+
+    <div class="footer">
+      <div>
+        <button onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button class="_submit">Move to <span class="move_outlet_title_business_name">Business</span></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

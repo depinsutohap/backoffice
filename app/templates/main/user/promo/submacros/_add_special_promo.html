@@ -1,0 +1,113 @@
+<div class="sidemodal" id="add_special_promo_modal">
+  <div class="header">
+    <h4>Add Promo</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_add_special_promo">
+    <div class="colum_input">
+      <p>Promo Name<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="add_special_promo_name">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Discount Value<span class="danger">*</span></p>
+      <div class="div_input">
+        <select class="extra_input" id="add_special_promo_percent_type">
+          <option value="0">%</option>
+          <option value="1">Rp</option>
+        </select>
+        <input type="number" step="0.1" min="0" id="add_special_promo_value">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Set Promo Date</p>
+      <div class="div_input">
+        <label class="switch">
+          <input id="add_special_promo_date_status" type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="colum_input add_promo_date">
+      <p>Promo Date</p>
+      <div class="div_input">
+        <div class="subdiv_input">
+          <p class="title">Start Date</p>
+          <input type="date" id="add_special_promo_start_date">
+        </div>
+        <div class="subdiv_input">
+          <p class="title">End Date</p>
+          <input type="date" id="add_special_promo_end_date">
+        </div>
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Applied Day</p>
+      <div class="div_input">
+        <div class="select_area">
+          <input type="checkbox" class="add_applied_check_all" id="add_special_promo_everyday">
+          <label class="select_option" for="add_special_promo_everyday">Everyday</label>
+          <input value="sunday" type="checkbox" class="add_applied_check" id="add_special_promo_sunday">
+          <label class="select_option" for="add_special_promo_sunday">Sunday</label>
+          <input value="monday" type="checkbox" class="add_applied_check" id="add_special_promo_monday">
+          <label class="select_option" for="add_special_promo_monday">Monday</label>
+          <input value="tuesday" type="checkbox" class="add_applied_check" id="add_special_promo_tuesday">
+          <label class="select_option" for="add_special_promo_tuesday">Tuesday</label>
+          <input value="wednesday" type="checkbox" class="add_applied_check" id="add_special_promo_wednesday">
+          <label class="select_option" for="add_special_promo_wednesday">Wednesday</label>
+          <input value="thursday" type="checkbox" class="add_applied_check" id="add_special_promo_thursday">
+          <label class="select_option" for="add_special_promo_thursday">Thursday</label>
+          <input value="friday" type="checkbox" class="add_applied_check" id="add_special_promo_friday">
+          <label class="select_option" for="add_special_promo_friday">Friday</label>
+          <input value="saturday" type="checkbox" class="add_applied_check" id="add_special_promo_saturday">
+          <label class="select_option" for="add_special_promo_saturday">Saturday</label>
+        </div>
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Set Applied Time</p>
+      <div class="div_input">
+        <label class="switch">
+          <input id="add_special_promo_applied_status" type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="colum_input add_applied_time">
+      <p>Applied Time</p>
+      <div class="div_input">
+        <div class="subdiv_input">
+          <p class="title">Start Time</p>
+          <input type="time" id="add_special_promo_start_time">
+        </div>
+        <div class="subdiv_input">
+          <p class="title">End Time</p>
+          <input type="time" id="add_special_promo_end_time">
+        </div>
+      </div>
+    </div>
+    <div class="colum_input column_table">
+      <p class="table_title">Outlet</p>
+      <div class="div_input">
+        <table class="table table-hover" id="table_data">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="add_check_all"></th>
+              <th onclick="sortTable(0);">All Outlet</th>
+            </tr>
+          </thead>
+          <tbody class="add_outlet_list"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda  wajib disini</h5>
+      <div>
+        <button type="button" onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

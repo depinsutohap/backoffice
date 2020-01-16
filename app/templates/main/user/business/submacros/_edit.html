@@ -1,0 +1,62 @@
+<div class="sidemodal" id="edit_outlet_modal">
+  <div class="header">
+    <h4>Edit Outlet (<span id="edit_outlet_modal_title">########</span>)</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_edit_outlet">
+    <div class="colum_input">
+      <p>Outlet Name<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="edit_outlet_name">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Number of Employee<span class="danger">*</span></p>
+      <div class="div_input">
+        <select id="edit_outlet_numemp"></select>
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Phone Number<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="tel" id="edit_outlet_phone">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Address<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="edit_outlet_address">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Country<span class="danger">*</span></p>
+      <div class="div_input">
+        <select id="edit_outlet_country"></select>
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Tax & Service Charges</p>
+      <div class="div_input">
+        <select name="skills" multiple="" id="edit_outlet_tax" class="label ui selection fluid dropdown"></select>
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Table Module</p>
+      <div class="div_input">
+        <label class="switch">
+          <input id="edit_table_module_id" type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+        <input type="hidden" id="edit_outlet_id">
+        <button onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button type="submit" class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

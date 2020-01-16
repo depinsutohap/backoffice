@@ -1,0 +1,65 @@
+    <script src="{{ url_for('static', filename='js/detail/business.js') }}"></script>
+    <script>
+      _new_outlet();
+    </script>
+<main id="new_business_index">
+  <div class="inmain_nav">
+    <div class="title">
+      <h1 id="business_name">Create New Outlet</h1>
+    </div>
+  </div>
+  <div class="_container">
+
+    <div class="_row" id="new_business">
+      <div class="col_6">
+        <div class="card dashboard_card">
+          <form id="form_new_outlet" method="post">
+            <h1>Create new Outlet</h1>
+            <div class="li">
+              <label>Select Business</label>
+              <select id="select_business"></select>
+            </div>
+            <div class="li">
+              <label>Outlet Name</label>
+              <input name="outlet_name" id="outlet_name" type="text" placeholder="Outlet Name">
+            </div>
+            <div class="li">
+              <label>Number of Employee</label>
+              <select id="outlet_num_emp"></select>
+            </div>
+            <div class="li">
+              <label>Outlet Phone Number</label>
+              <input name="outlet_phone_number" id="outlet_phone_number" type="text" placeholder="Outlet's Phone Number" onkeyup="input_formatNumberwocommas(this)">
+            </div>
+            <label class="owner_phone_check"><input class="_checkbox" name="owner_phone_check" id="owner_phone_check" type="checkbox">Copy from Owner’s phone number</label>
+            <div class="li">
+              <label>Address</label>
+              <input name="outlet_address" id="outlet_address" type="text" placeholder="Outlet's address">
+            </div>
+            <div class="li">
+              <label>Country</label>
+              <select id="outlet_country"></select>
+            </div>
+            <button type="submit">Create Outlet</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="_row" id="move_resources">
+      <div class="col_6">
+        <div class="card dashboard_card">
+          <form method="post" id="form_move_outlet">
+            <h1>Move outlet into <span id="mrt">#######</span></h1>
+            <p>Move Existing Outlet into your new project.</p>
+            <select id="move_list_outlet" name="skills" multiple="" class="label ui selection fluid dropdown"></select>
+            <input type="hidden" id="new_business_id">
+            <button type="submit">Move Outlet</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>

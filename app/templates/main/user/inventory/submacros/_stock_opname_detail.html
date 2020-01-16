@@ -1,0 +1,35 @@
+<div class="sidemodal stock_sidemodal" id="stock_opname_modal">
+  <div class="header">
+    <h4>Stock Opname : <span id="stock_opname_modal_title">########</span></h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <div class="body">
+    <div class="_top">
+      <div class="left">
+        <div><i class="fas fa-store"></i> <span class="stock_opname_outlet">Fat Bubble</span></div>
+        <div><i class="fas fa-calendar"></i> <span class="stock_opname_date">05-12-2019</span></div>
+        <div><i class="fas fa-file"></i> <span class="stock_opname_description">-</span></div>
+      </div>
+      <div>
+        <!-- <button><i class="fas fa-download"></i> Download</button> -->
+      </div>
+    </div>
+    <div class="table">
+      <table class="table table-hover" id="table_data">
+        <thead>
+          <tr>
+         <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
+            <th>Product Item</th>
+            <th>Variant</th>
+            <th>Total Unit (System)</th>
+            <th>Total Unit (Actual)</th>
+            <th>Deviation</th>
+            <th>Unit</th>
+          </tr>
+        </thead>
+        <tbody id="data_body_modal"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="backdrop"></div>

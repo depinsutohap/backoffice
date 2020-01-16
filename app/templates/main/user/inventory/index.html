@@ -1,0 +1,50 @@
+  <script>
+      _loading(0);
+  </script>
+  <main id="dashboard_index">
+    <div class="inmain_nav">
+      <div class="title">
+        <h1>Inventory</h1>
+      </div>
+    </div>
+    <div class="_container">
+
+
+      <div class="_row">
+        <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-card') }}')">
+          <img src="{{ url_for('static', filename='src/icon/report.png') }}">
+          <p>Stock Card</p>
+        </a>
+        <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-entry') }}')">
+          <img src="{{ url_for('static', filename='src/icon/product.png') }}">
+          <p>Stock Entry</p>
+        </a>
+        <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-exit') }}')">
+          <img src="{{ url_for('static', filename='src/icon/bar.png') }}">
+          <p>Stock Exit</p>
+        </a>
+        <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='transfer-stock') }}')">
+          <img src="{{ url_for('static', filename='src/icon/report.png') }}">
+          <p>Transfer Stock</p>
+        </a>
+        <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-opname') }}')">
+          <img src="{{ url_for('static', filename='src/icon/tag.png') }}">
+          <p>Stock Opname</p>
+        </a>
+      </div>
+
+      <!-- <div class="_row">
+        <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='sales-per-outlet') }}')">
+          <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
+          <img src="{{ url_for('static', filename='src/icon/outlet.png') }}">
+          <p>Supplier</p>
+        </a>
+        <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='tax-revenue') }}')">
+          <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
+          <img src="{{ url_for('static', filename='src/icon/report.png') }}">
+          <p>Pruchase Order</p>
+        </a>
+      </div> -->
+
+    </div>
+  </main>

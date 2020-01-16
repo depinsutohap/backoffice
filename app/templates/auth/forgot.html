@@ -1,0 +1,45 @@
+{% extends "nav/base.html" %}
+
+{% block body %}
+
+  <nav id="mainHeaderAuth">
+    <a href="/login" class="companyLogo">
+      <img src="/static/src/hop-blue.png">
+      <p> hop</p>
+    </a>
+    <div class="nav-right">
+      <a href="#">HELP</a>
+      {% if cur_user != None %}
+        <a href="/logout">SIGN OUT</a>
+      {% else %}
+        <a href="/login">SIGN IN</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <link rel="stylesheet" type="text/css" href="/static/css/auth.min.css">
+  <main id="main_auth">
+      <form method="post">
+          <h1>Forgot password.</h1>
+          <h4>Enter your email address to reset your password</h4>
+          <hr>
+          <input name="email" id="email" type="email" placeholder="E-Mail">
+          <p>
+            We will send you a verification email to reset your password.
+          </p>
+          <button type="submit">SUBMIT</button>
+          <hr>
+          <p>
+            Back to the <a href="/login">Sign in</a> or
+            <a href="/register">Sign up</a> page
+          </p>
+      </form>
+  </main>
+  <script src="{{ url_for('static', filename='js/detail/auth.js') }}"></script>
+  <script>
+    function input_formatNumberwocommas(n) {
+      $(n).val($(n).val().toString().replace(/\D/g, ""))
+    }
+    register();
+  </script>
+{% endblock %}

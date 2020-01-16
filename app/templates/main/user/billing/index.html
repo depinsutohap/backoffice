@@ -1,0 +1,21 @@
+    <script src="{{ url_for('static', filename='js/detail/billing.js') }}"></script>
+    <script>
+      _billing();
+    </script>
+  <main id="dashboard_index">
+    <div class="inmain_nav">
+      <div class="title">
+        <h1>Billing (<span id="billing_title">#############</span>)</h1>
+      </div>
+    </div>
+    <div class="_container main_section">
+
+      <div class="header">
+        <a class="detail_header active" onclick="_detail_page('overview')" id="detail_overview">Overview</a>
+        <a class="detail_header" onclick="_detail_page('order')" id="detail_order">Order<span id="order_count">0</span></a>
+        <a class="detail_header" onclick="_detail_page('history')" id="detail_history">Billing History</a>
+        <!-- <a class="detail_header" onclick="_detail_page('settings')" id="detail_settings">Settings</a> -->
+      </div>
+      <section id="detailSection"></section>
+    </div>
+  </main>

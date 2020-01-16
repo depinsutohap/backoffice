@@ -1,0 +1,266 @@
+[2020-01-07 16:58:49 +0700] [1106] [DEBUG] 
+
+                 Sanic
+         Build Fast. Run Fast.
+
+
+[2020-01-07 16:58:49 +0700] [1106] [INFO] Goin' Fast @ http://0.0.0.0:8000
+[2020-01-07 16:58:51 +0700] [1110] [INFO] Starting worker [1110]
+[2020-01-07 17:05:41 +0700] [1110] [INFO] Stopping worker [1110]
+[2020-01-07 17:05:41 +0700] [1110] [INFO] Server Stopped
+[2020-01-07 17:05:44 +0700] [1203] [INFO] Starting worker [1203]
+[2020-01-07 17:09:45 +0700] [1203] [INFO] Stopping worker [1203]
+[2020-01-07 17:09:45 +0700] [1203] [INFO] Server Stopped
+Traceback (most recent call last):
+  File "manage.py", line 3, in <module>
+    from app import create_app
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 25, in <module>
+    Session = sessionmaker(bind=engine)
+NameError: name 'engine' is not defined
+Traceback (most recent call last):
+  File "manage.py", line 3, in <module>
+    from app import create_app
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 25, in <module>
+    Session = sessionmaker(bind=engine)
+NameError: name 'engine' is not defined
+Traceback (most recent call last):
+  File "manage.py", line 3, in <module>
+    from app import create_app
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 25, in <module>
+    Session = sessionmaker(bind=engine)
+NameError: name 'engine' is not defined
+Traceback (most recent call last):
+  File "manage.py", line 5, in <module>
+    app = create_app('development')
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 43, in create_app
+    Session(app)
+TypeError: __call__() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "manage.py", line 5, in <module>
+    app = create_app('development')
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 47, in create_app
+    from .main import main as main_blueprint
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/__init__.py", line 5, in <module>
+    from . import views, errors
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/views.py", line 2, in <module>
+    from ..models import *
+  File "/Users/uta/app/hop/backoffice-sanic/app/models.py", line 6, in <module>
+    from . import mongo, engine, Base, db_session
+ImportError: cannot import name 'db_session' from 'app' (/Users/uta/app/hop/backoffice-sanic/app/__init__.py)
+[2020-01-07 17:11:41 +0700] [1247] [INFO] Starting worker [1247]
+[2020-01-07 17:13:24 +0700] [1247] [INFO] Stopping worker [1247]
+[2020-01-07 17:13:24 +0700] [1247] [INFO] Server Stopped
+Traceback (most recent call last):
+  File "manage.py", line 5, in <module>
+    app = create_app('development')
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 47, in create_app
+    from .main import main as main_blueprint
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/__init__.py", line 5, in <module>
+    from . import views, errors
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/views.py", line 2, in <module>
+    from ..models import *
+  File "/Users/uta/app/hop/backoffice-sanic/app/models.py", line 28
+    if _role is not None:
+     ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "manage.py", line 5, in <module>
+    app = create_app('development')
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 47, in create_app
+    from .main import main as main_blueprint
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/__init__.py", line 5, in <module>
+    from . import views, errors
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/views.py", line 2, in <module>
+    from ..models import *
+  File "/Users/uta/app/hop/backoffice-sanic/app/models.py", line 28
+    if _role is not None:
+     ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "manage.py", line 5, in <module>
+    app = create_app('development')
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 47, in create_app
+    from .main import main as main_blueprint
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/__init__.py", line 5, in <module>
+    from . import views, errors
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/views.py", line 2, in <module>
+    from ..models import *
+  File "/Users/uta/app/hop/backoffice-sanic/app/models.py", line 28
+    if _role is not None:
+     ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "manage.py", line 5, in <module>
+    app = create_app('development')
+  File "/Users/uta/app/hop/backoffice-sanic/app/__init__.py", line 47, in create_app
+    from .main import main as main_blueprint
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/__init__.py", line 5, in <module>
+    from . import views, errors
+  File "/Users/uta/app/hop/backoffice-sanic/app/main/views.py", line 2, in <module>
+    from ..models import *
+  File "/Users/uta/app/hop/backoffice-sanic/app/models.py", line 26
+    _role = session.query(Hop_Role).filter(Hop_Role.id=_id, Hop_Role.status=True).first()
+                                          ^
+SyntaxError: keyword can't be an expression
+[2020-01-07 17:16:58 +0700] [1303] [INFO] Starting worker [1303]
+[2020-01-07 17:17:04 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/login'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 942, in handle_request
+    response = await response
+  File "/Users/uta/app/hop/backoffice-sanic/app/auth/views.py", line 20, in login
+    cur_user = _auth.current_user(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 61, in current_user
+    token = self.get_session(request).get(self.auth_session_key, None)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 143, in get_session
+    return request[self.session_name]
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/request.py", line 139, in __getitem__
+    return self.ctx.__dict__[key]
+KeyError: 'session'
+[2020-01-07 17:17:04 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:04 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:04 +0700] - (sanic.access)[INFO][127.0.0.1:50690]: GET http://localhost:8000/login  500 144
+[2020-01-07 17:17:04 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/favicon.ico'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 918, in handle_request
+    handler, args, kwargs, uri = self.router.get(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/router.py", line 407, in get
+    return self._get(request.path, request.method, "")
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/router.py", line 470, in _get
+    raise NotFound("Requested URL {} not found".format(url))
+sanic.exceptions.NotFound: Requested URL /favicon.ico not found
+[2020-01-07 17:17:04 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:04 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:04 +0700] - (sanic.access)[INFO][127.0.0.1:50690]: GET http://localhost:8000/favicon.ico  404 43
+[2020-01-07 17:17:09 +0700] [1303] [DEBUG] KeepAlive Timeout. Closing connection.
+[2020-01-07 17:17:19 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/login'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 942, in handle_request
+    response = await response
+  File "/Users/uta/app/hop/backoffice-sanic/app/auth/views.py", line 20, in login
+    cur_user = _auth.current_user(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 61, in current_user
+    token = self.get_session(request).get(self.auth_session_key, None)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 143, in get_session
+    return request[self.session_name]
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/request.py", line 139, in __getitem__
+    return self.ctx.__dict__[key]
+KeyError: 'session'
+[2020-01-07 17:17:19 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:19 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:19 +0700] - (sanic.access)[INFO][127.0.0.1:50695]: GET http://localhost:8000/login  500 144
+[2020-01-07 17:17:24 +0700] [1303] [DEBUG] KeepAlive Timeout. Closing connection.
+[2020-01-07 17:17:25 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/login'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 942, in handle_request
+    response = await response
+  File "/Users/uta/app/hop/backoffice-sanic/app/auth/views.py", line 20, in login
+    cur_user = _auth.current_user(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 61, in current_user
+    token = self.get_session(request).get(self.auth_session_key, None)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 143, in get_session
+    return request[self.session_name]
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/request.py", line 139, in __getitem__
+    return self.ctx.__dict__[key]
+KeyError: 'session'
+[2020-01-07 17:17:25 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:25 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:25 +0700] - (sanic.access)[INFO][127.0.0.1:50697]: GET http://localhost:8000/login  500 144
+[2020-01-07 17:17:30 +0700] [1303] [DEBUG] KeepAlive Timeout. Closing connection.
+[2020-01-07 17:17:41 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/login'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 942, in handle_request
+    response = await response
+  File "/Users/uta/app/hop/backoffice-sanic/app/auth/views.py", line 20, in login
+    cur_user = _auth.current_user(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 61, in current_user
+    token = self.get_session(request).get(self.auth_session_key, None)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 143, in get_session
+    return request[self.session_name]
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/request.py", line 139, in __getitem__
+    return self.ctx.__dict__[key]
+KeyError: 'session'
+[2020-01-07 17:17:41 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:41 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:41 +0700] - (sanic.access)[INFO][127.0.0.1:50708]: GET http://localhost:8000/login  500 144
+[2020-01-07 17:17:41 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/login'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 942, in handle_request
+    response = await response
+  File "/Users/uta/app/hop/backoffice-sanic/app/auth/views.py", line 20, in login
+    cur_user = _auth.current_user(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 61, in current_user
+    token = self.get_session(request).get(self.auth_session_key, None)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 143, in get_session
+    return request[self.session_name]
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/request.py", line 139, in __getitem__
+    return self.ctx.__dict__[key]
+KeyError: 'session'
+[2020-01-07 17:17:41 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:41 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:41 +0700] - (sanic.access)[INFO][127.0.0.1:50708]: GET http://localhost:8000/login  500 144
+[2020-01-07 17:17:42 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/login'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 942, in handle_request
+    response = await response
+  File "/Users/uta/app/hop/backoffice-sanic/app/auth/views.py", line 20, in login
+    cur_user = _auth.current_user(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 61, in current_user
+    token = self.get_session(request).get(self.auth_session_key, None)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 143, in get_session
+    return request[self.session_name]
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/request.py", line 139, in __getitem__
+    return self.ctx.__dict__[key]
+KeyError: 'session'
+[2020-01-07 17:17:42 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:42 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:42 +0700] - (sanic.access)[INFO][127.0.0.1:50708]: GET http://localhost:8000/login  500 144
+[2020-01-07 17:17:42 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/login'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 942, in handle_request
+    response = await response
+  File "/Users/uta/app/hop/backoffice-sanic/app/auth/views.py", line 20, in login
+    cur_user = _auth.current_user(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 61, in current_user
+    token = self.get_session(request).get(self.auth_session_key, None)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 143, in get_session
+    return request[self.session_name]
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/request.py", line 139, in __getitem__
+    return self.ctx.__dict__[key]
+KeyError: 'session'
+[2020-01-07 17:17:42 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:42 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:42 +0700] - (sanic.access)[INFO][127.0.0.1:50708]: GET http://localhost:8000/login  500 144
+[2020-01-07 17:17:42 +0700] [1303] [ERROR] Exception occurred while handling uri: 'http://localhost:8000/login'
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 942, in handle_request
+    response = await response
+  File "/Users/uta/app/hop/backoffice-sanic/app/auth/views.py", line 20, in login
+    cur_user = _auth.current_user(request)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 61, in current_user
+    token = self.get_session(request).get(self.auth_session_key, None)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic_auth/__init__.py", line 143, in get_session
+    return request[self.session_name]
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/request.py", line 139, in __getitem__
+    return self.ctx.__dict__[key]
+KeyError: 'session'
+[2020-01-07 17:17:42 +0700] [1303] [DEBUG] CORS: No CORS rule matches
+[2020-01-07 17:17:42 +0700] [1303] [DEBUG] CORS: CORS was handled in the exception handler, skipping
+[2020-01-07 17:17:42 +0700] - (sanic.access)[INFO][127.0.0.1:50708]: GET http://localhost:8000/login  500 144
+[2020-01-07 17:17:46 +0700] [1303] [INFO] Stopping worker [1303]
+[2020-01-07 17:17:46 +0700] [1303] [ERROR] Experienced exception while trying to serve
+Traceback (most recent call last):
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 1133, in run
+    serve(**server_settings)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/server.py", line 907, in serve
+    loop.run_until_complete(asyncio.sleep(0.1))
+  File "uvloop/loop.pyx", line 1454, in uvloop.loop.Loop.run_until_complete
+RuntimeError: Event loop stopped before Future completed.
+Traceback (most recent call last):
+  File "manage.py", line 9, in <module>
+    app.run(host="0.0.0.0", port=8000, debug=True)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/app.py", line 1133, in run
+    serve(**server_settings)
+  File "/Users/uta/opt/anaconda3/lib/python3.7/site-packages/sanic/server.py", line 907, in serve
+    loop.run_until_complete(asyncio.sleep(0.1))
+  File "uvloop/loop.pyx", line 1454, in uvloop.loop.Loop.run_until_complete
+RuntimeError: Event loop stopped before Future completed.

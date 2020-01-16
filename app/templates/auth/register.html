@@ -1,0 +1,53 @@
+{% extends "nav/base.html" %}
+
+{% block body %}
+
+  <nav id="mainHeaderAuth">
+    <a href="/login" class="companyLogo">
+      <img src="/static/src/hop-blue.png">
+      <p> hop</p>
+    </a>
+    <div class="nav-right">
+      <a href="#">HELP</a>
+      {% if cur_user != None %}
+        <a href="/logout">SIGN OUT</a>
+      {% else %}
+        <a href="/login">SIGN IN</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <link rel="stylesheet" type="text/css" href="/static/css/auth.min.css">
+  <main id="main_auth">
+      <form method="post">
+          <h1>Start your free account now.</h1>
+          <h3>Signing up to hop is just one step away</h3>
+          <h4>No payments, commitments or contracts</h4>
+          <hr>
+          <input name="name" id="name" type="name" placeholder="Name">
+          <input name="phone" id="phone" type="tel" placeholder="Owner's phone number" onkeyup="input_formatNumberwocommas(this)">
+          <input name="email" id="email" type="email" placeholder="E-Mail..">
+          <div class="pass">
+              <input id="password" name="password" type="password" placeholder="Password">
+              <input type="checkbox" id="view_pass">
+              <label for="view_pass" class="glyphicon glyphicon-eye-close"></label>
+          </div>
+          <button type="submit">SIGN UP</button>
+          <p>
+            By signing up, you agree to hop’s
+            <a href="https://hop.cash/terms-conditions">Terms of Services</a>
+            and have read hop’s
+            <a href="https://hop.cash/privacy-policy">Privacy Policy</a>.
+          </p>
+          <hr>
+          <p>Already have a hop account? <a href="/login">Sign in</a></p>
+      </form>
+  </main>
+  <script src="{{ url_for('static', filename='js/detail/auth.js') }}"></script>
+  <script>
+    function input_formatNumberwocommas(n) {
+      $(n).val($(n).val().toString().replace(/\D/g, ""))
+    }
+    register();
+  </script>
+{% endblock %}

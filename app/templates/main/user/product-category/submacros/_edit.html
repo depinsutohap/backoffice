@@ -1,0 +1,23 @@
+<div class="sidemodal" id="edit_category_modal">
+  <div class="header">
+    <h4>Edit Category (<span id="edit_category_modal_title">########</span>)</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_edit_category">
+    <div class="colum_input">
+      <p>Category Name<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="edit_category_name">
+        <input type="hidden" id="edit_category_id">
+      </div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+        <button type="button" onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

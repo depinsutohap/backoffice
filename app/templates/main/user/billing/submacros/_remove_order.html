@@ -1,0 +1,17 @@
+<div class="sidemodal" id="remove_order_modal">
+  <div class="header">
+    <h4>Remove Order</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form method="post" id="form_remove_order">
+    <p style="margin-top: 10px;">Are you sure you would like to remove this order's items?</p>
+
+    <div class="footer">
+      <div>
+        <button type="button" onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button type="submit" class="_submit">Remove</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

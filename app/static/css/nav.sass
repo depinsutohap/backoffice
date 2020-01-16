@@ -1,0 +1,219 @@
+/**
+ * Developed by ION Developer Team
+ * URL : https://ion.eco
+
+$primary-color: #031b4d
+$secondary-color: #227BFF
+$netral: transparent
+$light: #fff
+$semilight: #f0f4f8
+$dark: #222
+$qdark: #8D8D8D
+$semidark: lighten($dark, 30%)
+$active-bg: #37446F
+$hover-bg: darken($active-bg, 15%)
+$border-dark: #dfdfdf
+
+$danger: #8b0000
+$positive: #04B76B
+$negative: #FF5E6D
+$netral: transparent
+$green: #15CD72
+$orange: coral
+
+$font: 'Prime Regular'
+$primary-font: 'Prime Regular'
+$secondary-font: 'Prime Light'
+
+nav#mainHeader
+  background: $light
+  display: flex
+  justify-content: space-between
+  height: 70px
+  width: 100%
+  position: fixed
+  left: 0
+  top: 0
+  z-index: 12
+  padding: 0 10px 0 210px
+  box-shadow: 0 0 3px -2px $dark
+  >div.search_bar
+    display: flex
+    height: 100%
+    justify-content: left
+    align-items: center
+    >i
+      color: $qdark
+    >input.ms
+      // main search
+      margin: 0
+      border: none
+      padding-left: 10px
+      width: 400px
+      font-family: $secondary-font
+    \::-webkit-input-placeholder
+      color: $qdark
+      font-family: $secondary-font
+
+    \:-moz-placeholder
+      color: $qdark
+      font-family: $secondary-font
+
+    \::-moz-placeholder
+      color: $qdark
+      font-family: $secondary-font
+
+    \:-ms-input-placeholder
+      color: $qdark
+      font-family: $secondary-font
+  >div.nav-right
+    display: flex
+    >a
+      font-family: $primary-font
+      position: relative
+      display: flex
+      justify-content: center
+      align-items: center
+      background-color: transparent
+      min-height: 16px
+      color: $semidark
+      cursor: pointer
+      transition: 300ms
+      font-size: 20px
+      margin-left: 10px
+      margin-right: 10px
+      &:hover
+        color: $primary-color
+      &.nav_create
+        >p
+          margin: 0
+          color: $light
+          padding: 10px
+          border-radius: 3px
+          background: $green
+    div.menu
+      font-family: $primary-font
+      position: relative
+      display: flex
+      justify-content: center
+      align-items: center
+      background-color: transparent
+      min-height: 16px
+      color: $semidark
+      cursor: pointer
+      transition: 300ms
+      font-size: 20px
+      margin-left: 10px
+      margin-right: 10px
+      >i.fa-user
+        margin-right: 5px
+      .menu_dropdown
+        position: absolute
+        background: $light
+        width: 200px
+        top: 65px
+        right: 0
+        border: 1px solid $border-dark
+        box-shadow: 0 0 5px -3px
+        border-radius: 3px
+        display: none
+        >._header
+          border-bottom: 1px solid $border-dark
+          padding: 10px 15px
+          h4, h6
+            margin: 0
+          h4
+            font-size: 15px
+            color: $dark
+          h6
+            font-size: 11px
+            color: $qdark
+        >._body
+          padding: 10px 0
+          display: flex
+          flex-direction: column
+          >a
+            font-size: 14px
+            width: 100%
+            padding: 5px 15px
+            color: $dark
+            &:hover
+              background-color: $semilight
+            &.logout
+              font-size: 14px
+              color: $danger
+
+
+
+
+nav.sidenav
+  position: fixed
+  z-index: 20
+  width: 200px
+  height: 100%
+  top: 0
+  left: 0
+  background: $primary-color
+  padding-top: 10px
+  overflow-y: auto
+  overflow-x: hidden
+  >div
+    position: relative
+  img.companyLogo
+    width: 45px
+    margin: 15px 10px
+  hr
+    margin-top: 10px
+    border-color: $qdark
+  a.nb
+    // new business
+    text-decoration: none
+    font-family: $primary-font
+    color: $secondary-color
+    display: flex
+    padding: 5px 10px
+    align-items: center
+    cursor: pointer
+    >i
+      margin-right: 10px
+    >p
+      margin: 3px 0 0
+      font-size: 15px
+    &:hover
+      text-shadow: 0 0 3px $secondary-color
+      transition: 500ms
+  a.mh
+    // main header
+    text-decoration: none
+    font-family: $primary-font
+    color: $qdark
+    font-size: 14px
+    display: flex
+    padding: 0 10px
+    align-items: center
+    cursor: pointer
+    justify-content: space-between
+    >i
+      margin-bottom: 10px
+  a.mm
+    // main menu
+    text-decoration: none
+    font-family: $primary-font
+    color: $light
+    display: flex
+    padding: 5px 10px
+    align-items: center
+    cursor: pointer
+    >p
+      margin: 0
+      font-size: 15px
+      position: relative
+      >img.upgrade_icon
+        position: absolute
+        width: 35px
+        right: -40px
+        top: 0
+    &:hover
+      background-color: $hover-bg
+    &.actived
+      background-color: $active-bg

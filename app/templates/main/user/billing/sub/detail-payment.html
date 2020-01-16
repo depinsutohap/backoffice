@@ -1,0 +1,49 @@
+<script src="{{ url_for('static', filename='js/detail/billing.js') }}"></script>
+<main id="detail_payment_index">
+  <div class="inmain_nav">
+    <div class="title">
+      <h1><a onclick="sub_href('{{ url_for('main._page', sector='billing') }}')">Billing</a> > Payment</h1>
+    </div>
+  </div>
+  <div class="_container">
+
+    <div class="_row">
+      <div class="col_10">
+        <div class="card dashboard_card">
+          <h1>Please to finish you payment</h1>
+          <h4>Make payments immediately before <span class="payment_datetime"></span></h4>
+          <div class="_table_detail">
+            <div class="header">
+              <div>
+                <div class="title">Payment Code/Virtual Account</div>
+                <div class="value payment_code"></div>
+              </div>
+              <div>
+                  <div class="title">Total Bills</div>
+                  <div class=" value payment_bill"></div>
+              </div>
+            </div>
+            <div class="bottom">
+              <i class="fas fa-info"></i>
+              <p>
+                You do not need to confirm your payment manually.<br>
+                Your payment will be confirmed automatically by the system.
+              </p>
+            </div>
+          </div>
+
+          <div class="_row _list_table">
+            <div class="no_data">
+              <img src="static/src/icon/outlet.png">
+                You don't have any Outlet yet.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</main>

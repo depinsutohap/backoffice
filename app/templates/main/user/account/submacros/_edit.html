@@ -1,0 +1,35 @@
+<div class="sidemodal" id="edit_account_modal">
+  <div class="header">
+    <h4>Edit account</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_edit_account">
+    <div class="colum_input">
+      <p>Name<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="edit_account_name">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Email<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="edit_account_email">
+      </div>
+    </div>
+    <div class="colum_input">
+      <p>Phone Number<span class="danger">*</span></p>
+      <div class="div_input">
+        <input type="text" id="edit_account_phone">
+      </div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+      <input type="hidden" id="edit_account_id">
+        <button type="button" onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

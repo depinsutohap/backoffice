@@ -1,0 +1,17 @@
+<div class="sidemodal" id="payment_order_modal">
+  <div class="header">
+    <h4>Payment Order</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form method="post" id="form_payment_order">
+    <p style="margin-top: 10px;">Are you sure you would like to proceed this order?</p>
+
+    <div class="footer">
+      <div>
+        <button type="button" onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button type="submit" class="_submit">Proceed</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>

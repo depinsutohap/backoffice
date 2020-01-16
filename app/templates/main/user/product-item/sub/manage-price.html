@@ -1,0 +1,52 @@
+    <script src="{{ url_for('static', filename='js/detail/products.js') }}"></script>
+    <script>
+        _products_manage_price();
+    </script>
+  <main id="dashboard_index">
+    <form method="post" id="form_manage_price">
+      <div class="inmain_nav">
+        <div class="title">
+          <h1><a onclick="sub_href('{{ url_for('main._page', sector='product-item') }}')">Product</a> > Manage Price (<span id="edit_item_header_title">############</span>)</h1>
+        </div>
+        <div class="_filter">
+          <button type="button" onclick="sub_href('{{ url_for('main._page', sector='product-item') }}')">Cancel</button>
+          <button class="_submit" type="submit">Save</button>
+        </div>
+      </div>
+      <div class="_container">
+
+        <div class="_row">
+          <div class="col_10">
+            <div class="card dashboard_card form_card">
+              <div class="col_10">
+                <div class="colum_input">
+                  <p>Same Price's Settings</p>
+                  <div class="div_input">
+                    <label class="switch">
+                      <input id="same_price_manage" type="checkbox">
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="same_type">
+                  <div class="div_price">
+                    <div class="price_header">
+                      <div class="name"></div>
+                      <div class="sku">SKU</div>
+                      <div class="price_column">Price</div>
+                      <div class="sell">Sell</div>
+                    </div>
+                    <div class="price_body main_price_body"></div>
+                  </div>
+                </div>
+                <div class="unsame_type" id="unsame_type"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </main>
+
+{% include 'main/user/product-item/submacros/_edit.html' %}

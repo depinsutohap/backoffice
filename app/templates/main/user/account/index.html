@@ -1,0 +1,55 @@
+    <script src="{{ url_for('static', filename='js/table.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/detail/account.js') }}"></script>
+    <script>
+        _account();
+    </script>
+  <main id="dashboard_index">
+    <div class="inmain_nav">
+      <div class="title">
+        <h1>Account</h1>
+      </div>
+      <div class="_filter">
+        <a class="nav_create" onclick="_open_account_modal()"><p>Edit account</p></a>
+      </div>
+    </div>
+    <div class="_container">
+      <div class="_row">
+        <div class="col_10">
+          <div class="card dashboard_card account_card">
+            <div class="col_5">
+              <div class="li">
+                <label class="_title">Name</label>
+                <div class="_value _name">-</div>
+              </div>
+              <div class="li">
+                <label class="_title">E-mail</label>
+                <div class="_value _email">-</div>
+              </div>
+              <div class="li">
+                <label class="_title">Registration Date</label>
+                <div class="_value _reg_date">-</div>
+              </div>
+            </div>
+
+            <div class="col_5">
+              <div class="li">
+                <label class="_title">Phone Number<span class="danger">*</span></label>
+                <div class="_value _phone">-</div>
+              </div>
+              <div class="li">
+                <label class="_title">Password</label>
+                <div>
+                  <a class="_href" onclick="open_sideform('chg_pass_account_modal')">Change Password</a>
+                </div>
+              </div>
+              <div class="li">
+                <label class="_title">Last Login</label>
+                <div class="_value _last_login">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  {% include 'main/user/account/submacros/_change_password.html' %}
+  {% include 'main/user/account/submacros/_edit.html' %}
+</main>

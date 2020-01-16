@@ -1,0 +1,52 @@
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/template/dashboard.min.css') }}">
+    <script src="{{ url_for('static', filename='js/detail/report/taxrevenue.js') }}"></script>
+    <script>
+      _taxrevenue();
+    </script>
+  <main id="dashboard_index">
+    <div class="inmain_nav">
+      <div class="title">
+        <h1><a  onclick="sub_href('{{ url_for('main._page', sector='report') }}')">Report</a> > Tax Revenue</h1>
+      </div>
+    </div>
+    <div class="_container">
+
+      <div class="_row">
+        <div class="col_10">
+          <div class="card dashboard_card">
+            <div class="col_2">
+              <h5 class="title">Business</h5>
+              <select id="business" name="business" placeholder="Business">
+                <option value="0">Semua Business</option>
+              </select>
+            </div>
+            <div class="col_2">
+              <h5 class="title">Outlet</h5>
+              <select id="outlet" name="outlet" placeholder="Outlet">
+                <option value="0">Semua Outlet</option>
+              </select>
+            </div>
+            <div class="col_2">
+              <h5 class="title">Dari</h5>
+              <input type="date" name="start" id="startdate">
+            </div>
+            <div class="col_2">
+              <h5 class="title">Sampai</h5>
+              <input type="date" name="end" id="enddate">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="_row">
+        <div class="col_10">
+          <div class="card dashboard_card">
+            <table class="table">
+              <tbody id="data_body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>

@@ -1,0 +1,36 @@
+<main id="mainBusinessPage">
+  <div class="_row _list_table">
+    <h3>Business Detail</h3>
+    <form id="form_business_settngs" method="post">
+      <div class="li">
+        <label>Business Name</label>
+        <input name="settings_business_name" id="settings_business_name" type="text" placeholder="Business Name">
+      </div>
+      <div class="li">
+        <label>Business Category</label>
+        <select id="settings_business_category"></select>
+      </div>
+      <div class="li">
+        <label>Business Description</label>
+        <input name="settings_business_description" id="settings_business_description" type="text" placeholder="Business Description">
+      </div>
+      <button type="submit">Save</button>
+    </form>
+    <hr>
+    <div class="delete_div">
+      <div class="text">
+        <h1>Remove Business</h1>
+        <p>To remove a business, you must move or remove all outlet within it.</p>
+      </div>
+      <div>
+        <button id="delete_business_button" onclick="open_sideform('delete_business_modal')">
+          Remove Business
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+{% include 'main/user/business/submacros/_delete.html' %}
+<script>
+  _business_settings();
+</script>

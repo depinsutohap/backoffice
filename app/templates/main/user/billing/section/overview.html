@@ -1,0 +1,51 @@
+<main id="mainBusinessPage">
+  <div class="_row">
+    <div class="col_10">
+      <div class="card dashboard_card">
+        <div class="col_5">
+          <h5 class="title">Business</h5>
+          <select>
+            <option value="0">Semua Business</option>
+          </select>
+        </div>
+        <div class="col_5">
+          <h5 class="title">Package</h5>
+          <select>
+            <option value="0">All Package</option>
+            <option value="1">Regular</option>
+            <option value="2">Premium</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="_row">
+    <div class="col_10">
+      <div class="card chart_card table_card">
+        <button type="button" class="_remove_all submit" onclick="open_sideform('edit_billing_upgrade')" disabled>Upgrade</button>
+        <table class="table table-hover" id="table_data">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="check_all"></th>
+              <th onclick="sortTable(0);">Outlet</th>
+              <th onclick="sortTable(1);">Business</th>
+              <th onclick="sortTable(2);">Package</th>
+              <th onclick="sortTable(3);">Expired</th>
+            </tr>
+          </thead>
+          <tbody id="data_body"></tbody>
+        </table>
+        <div class="no_data">
+          <img src="{{ url_for('static', filename='src/icon/tag.png') }}">
+          You don't have any item yet.
+        </div>
+    </div>
+  </div>
+</div>
+
+</main>
+{% include 'main/user/billing/submacros/_upgrade.html' %}
+<script>
+  _billing_overview();
+</script>

@@ -1,0 +1,45 @@
+    <script src="{{ url_for('static', filename='js/table.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/detail/promo.js') }}"></script>
+    <script>
+        _promo_index();
+    </script>
+  <main id="dashboard_index">
+    <div class="inmain_nav">
+      <div class="title">
+        <h1>Promo</h1>
+      </div>
+    </div>
+    <div class="_container">
+
+      <div class="_row">
+        <div class="col_10">
+          <div class="card dashboard_card form_card">
+            <div class="col_5">
+              <a class="promo_href" onclick="sub_href('{{ url_for('main._subreport', sector='promo', subpage='special-promo') }}')">
+                <h4 class="title">Special Promo</h4>
+                <p>
+                  Merupakan promo yang dapat dipilih oleh kasir yang memiliki hak akses "Memberi Diskon".
+                </p>
+                <p>
+                  Contoh : Diskon 10% untuk pelajar
+                </p>
+                <div class="total_promo"><span class="total_special_promo">#</span> Promo</div>
+              </a>
+            </div>
+            <div class="col_5">
+              <a class="promo_href" onclick="sub_href('{{ url_for('main._subreport', sector='promo', subpage='auto-promo') }}')">
+                <h4 class="title">Auto Promo</h4>
+                <p>
+                  Merupakan promo yang akan otomatis diimplementasikan ketika konsumen mencapai kriteria tertentu.
+                </p>
+                <p>
+                  Contoh : Jika konsumen membeli A maka otamatis Gratis B
+                </p>
+                <div class="total_promo"><span class="total_auto_promo">#</span> Promo</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</main>

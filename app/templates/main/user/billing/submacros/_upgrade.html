@@ -1,0 +1,23 @@
+<div class="sidemodal" id="edit_billing_upgrade">
+  <div class="header">
+    <h4>Upgrade</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_billing_upgrade">
+    <div class="colum_input">
+      <p>Subscription Length<span class="danger">*</span></p>
+      <div class="div_input">
+        <select id="edit_subs"></select>
+      </div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+        <input type="hidden" id="edit_outlet_id">
+        <button type="button" onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button type="submit" class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>
