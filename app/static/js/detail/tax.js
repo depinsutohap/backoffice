@@ -44,7 +44,7 @@ function _tax_list(){
       }
     }
     if(e.data.length > 0){
-      $('.no_data').remove()
+      $('.no_data').css('display', 'none');
       for(i=0; i<e.data.length; i++){
         $('#data_body').append(
           '<tr id="data_tax_' + e.data[i].id + '">'+
@@ -234,11 +234,15 @@ function _submit_data_tax(){
       })
     }, function (e) {
         if(e.status == '00'){
-          $('#remove_tax_id').val('');
           if(e.data.status == '00'){
-            $('#data_tax_' + e.data.id).remove();
+            console.log('#data_tax_' + $('#remove_tax_id').val())
+            $('#data_tax_' + $('#remove_tax_id').val()).remove();
+            if($('#data_body > tr').length == 0){
+              $('.no_data').css('display', 'flex');
+            }
           }
           close_sideform();
+          $('#remove_tax_id').val('');
         }
       }).fail(function(){
         notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
@@ -266,14 +270,14 @@ function _submit_data_tax(){
       })
     }, function (e) {
         if(e.status == '00'){
-          for(i=0; i<e.data.length; i++){
-            if(e.data[i].status == '00'){
-              $('#data_tax_' + e.data[i].id).remove();
-            }else{
-
+          for(i=0; i<tax_list.length; i++){
+            $('#data_tax_' + tax_list[i]).remove();
+            if($('#data_body > tr').length == 0){
+              $('.no_data').css('display', 'flex');
             }
           }
           close_sideform();
+          $('._remove_all').css('display', 'none')
         }
       }).fail(function(){
         notif('danger', 'System Error!', 'Mohon kontak IT Administrator');

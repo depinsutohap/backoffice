@@ -33,10 +33,16 @@ async def _api_business(request):
             # LIST DATA AND OUTLET
                 _business = Hop_Business().verify_auth(apidata['bid'])
                 if _business is not None and _business.owner_id == user.owner_id:
-                    response['data'] = Hop_Business()._data(_id=_business.id)
-                    response['list'] = Hop_Outlet()._list(business_id=_business.id)
+                    response['data'] = Hop_Business()._basicdata(_id=_business.id)
                     response['status'] = '00'
             elif int(apidata['status']) == 2:
+            # LIST DATA AND OUTLET
+                _business = Hop_Business().verify_auth(apidata['bid'])
+                if _business is not None and _business.owner_id == user.owner_id:
+                    response['data'] = Hop_Business()._basicdata(_id=_business.id)
+                    response['list'] = Hop_Outlet()._list(business_id=_business.id)
+                    response['status'] = '00'
+            elif int(apidata['status']) == 3:
             # OUTLET LIST BASED ON BUSINESS ID AND OWNER ID
                 _business = Hop_Business().verify_auth(apidata['bid'])
                 if _business is not None and _business.owner_id == user.owner_id:
@@ -45,19 +51,19 @@ async def _api_business(request):
                     response['item_list'] = Hop_Product_Item()._list_sold(owner_id=user.owner_id)
                     response['tax_list'] = Hop_Tax()._list(owner_id=user.owner_id)
                     response['status'] = '00'
-            elif int(apidata['status']) == 3:
+            elif int(apidata['status']) == 4:
             # SUBMIT NEW BUSINESS AND GET EXISTING OUTLET BASED ON OWNER ID
                 response['data'] = Hop_Business()._insert_detail(_name=apidata['business_name'], _businesscategory=apidata['business_category'], _description=apidata['business_description'], owner_id=user.owner_id)
                 response['data_outlet'] = Hop_Business()._listbyownerid_all(owner_id=user.owner_id)
                 response['status'] = '00'
-            elif int(apidata['status']) == 4:
+            elif int(apidata['status']) == 5:
             # MOVE BUSINESS LIST INTO NEW BUSINESS
                 _business = Hop_Business().verify_auth(apidata['business_id'])
                 if _business is not None and _business.owner_id == user.owner_id:
                     response['data'] = Hop_Business()._move_business_list(new_business_id=_business.id, data_outlet_list=apidata['outlet_list'], owner_id=user.owner_id)
                     response['business_id'] = _business.id
                     response['status'] = '00'
-            elif int(apidata['status']) == 5:
+            elif int(apidata['status']) == 6:
             # INSERT NEW OUTLET
                 _business = Hop_Business().verify_auth(apidata['business_id'])
                 if _business is not None and _business.owner_id == user.owner_id:
@@ -65,7 +71,7 @@ async def _api_business(request):
                     response['status'] = '00'
                 else:
                     response['status'] = '50'
-            elif int(apidata['status']) == 6:
+            elif int(apidata['status']) == 7:
             # UPDATE BUSINESS SETTINGS
                 _business = Hop_Business().verify_auth(apidata['business_id'])
                 if _business is not None and _business.owner_id == user.owner_id:
@@ -77,7 +83,7 @@ async def _api_business(request):
                         response['message'] = 'Please fill all required fields'
                 else:
                     response['status'] = '50'
-            elif int(apidata['status']) == 7:
+            elif int(apidata['status']) == 8:
             # REMOVE BUSINESS
                 _business = Hop_Business().verify_auth(apidata['business_id'])
                 if _business is not None and _business.owner_id == user.owner_id:
@@ -85,7 +91,7 @@ async def _api_business(request):
                     response['status'] = '00'
                 else:
                     response['status'] = '50'
-            elif int(apidata['status']) == 8:
+            elif int(apidata['status']) == 9:
             # GET ALL OUTLET LIST BASED ON OWNER WITH CURRENT BUSINESS ID AS THE EXCEPTION
                 _business = Hop_Business().verify_auth(apidata['business_id'])
                 if _business is not None and _business.owner_id == user.owner_id:
@@ -93,11 +99,11 @@ async def _api_business(request):
                     response['status'] = '00'
                 else:
                     response['status'] = '50'
-            elif int(apidata['status']) == 9:
+            elif int(apidata['status']) == 10:
             # GET THE DATA FOR THE OUTLET
                 response['data'] = Hop_Outlet()._data(_id=apidata['outlet_id'])
                 response['status'] = '00'
-            elif int(apidata['status']) == 10:
+            elif int(apidata['status']) == 11:
             # GET THE DATA FOR THE OUTLET
                 response['data'] = Hop_Outlet()._update(
                     _id=apidata['outlet_id'], _name=apidata['outlet_name'],
@@ -105,28 +111,28 @@ async def _api_business(request):
                     _address=apidata['outlet_address'], _country_id=apidata['outlet_country'],
                     _tax_list=apidata['outlet_tax'], _table_status=apidata['table_status'])
                 response['status'] = '00'
-            elif int(apidata['status']) == 11:
+            elif int(apidata['status']) == 12:
             # GET THE DATA FOR THE OUTLET
                 response['data'] = Hop_Outlet()._remove(_id=apidata['outlet_id'], owner_id=user.owner_id)
                 response['status'] = '00'
-            elif int(apidata['status']) == 12:
+            elif int(apidata['status']) == 13:
             # GET THE DATA FOR THE OUTLET
                 response['data'] = Hop_Outlet()._data(_id=apidata['outlet_id'])
                 response['list'] = Hop_Product_Category_Outlet()._list(outlet_id=apidata['outlet_id'], owner_id=user.owner_id)
                 response['status'] = '00'
-            elif int(apidata['status']) == 13:
+            elif int(apidata['status']) == 14:
             # GET THE DATA FOR THE OUTLET
                 response['data'] = Hop_Product_Category_Outlet()._update(
                     outlet_id=apidata['outlet_id'], _list=apidata['list'],
                     owner_id=user.owner_id
                 )
                 response['status'] = '00'
-            elif int(apidata['status']) == 14:
+            elif int(apidata['status']) == 15:
             # GET THE DATA FOR THE OUTLET
                 response['data'] = Hop_Outlet()._data(_id=apidata['outlet_id'])
                 response['list'] = Hop_Product_Outlet()._list(outlet_id=apidata['outlet_id'], owner_id=user.owner_id)
                 response['status'] = '00'
-            elif int(apidata['status']) == 15:
+            elif int(apidata['status']) == 16:
             # GET THE DATA FOR THE OUTLET
                 response['data'] = Hop_Product_Outlet()._update(
                     outlet_id=apidata['outlet_id'], _list=apidata['list'],

@@ -510,6 +510,23 @@ class Hop_Business(Base):
             session.close()
         return Hop_User().verify_detail(owner_id)
 
+    def _basicdata(self, _id):
+        response = {}
+        session = Session()
+        try:
+            _business = session.query(Hop_Business).filter_by(id = _id, status = True).first()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        if _business is not None:
+            response['id'] = _business.id
+            response['name'] = _business.name
+            response['description'] = _business.description
+            response['business_category_id'] = Hop_Business_Category()._data(_business.business_category_id)
+        return response
+
     def _data(self, _id):
         response = {}
         session = Session()
@@ -555,7 +572,7 @@ class Hop_Business(Base):
             response.append({
                 'id' : i.id,
                 'name' : i.name,
-                'outlet' : Hop_Outlet()._list(i.id)
+                # 'outlet' : Hop_Outlet()._list(i.id)
             })
         return response
 
@@ -639,7 +656,10 @@ class Hop_Outlet(Base):
         return Hop_Outlet()._data(response)
 
     def _update(self, _id, _name, _numempid, _phonenumber, _address, _country_id, _tax_list, _table_status):
-        response = None
+        response = {}
+        response['status'] = '50'
+        response['message'] = 'Your credential is invalid'
+        response_id = None
         session = Session()
         try:
             insert = session.query(Hop_Outlet).filter_by(id=_id).first()
@@ -652,16 +672,18 @@ class Hop_Outlet(Base):
                 insert.table_status = True if _table_status == True else False
                 session.add(insert)
                 session.commit()
-                response = insert.id
+                response_id = insert.id
         except:
             session.rollback()
             raise
         finally:
             session.close()
-        Hop_Outlet_Tax()._remove(response)
-        for i in _tax_list:
-            Hop_Outlet_Tax()._insert(i, response)
-        return Hop_Outlet()._data(response)
+        if response_id is not None:
+            Hop_Outlet_Tax()._remove(response_id)
+            for i in _tax_list:
+                Hop_Outlet_Tax()._insert(response_id, i)
+            response = Hop_Outlet()._data(response_id)
+        return response
 
     def _data(self,_id):
         response = {}
@@ -3663,10 +3685,12 @@ class Hop_Tax(Base):
 
     def _remove(self, _id, owner_id):
         response = {}
+        response_id = None
         session = Session()
         try:
             _tax = session.query(Hop_Tax).filter_by(id=_id, owner_id=owner_id, status=True).first()
             if _tax is not None:
+                response_id = _tax.id
                 _tax.status = False
                 session.add(_tax)
             session.commit()
@@ -3675,8 +3699,8 @@ class Hop_Tax(Base):
             raise
         finally:
             session.close()
-        if _tax is not None:
-            response = Hop_Tax()._data(_tax.id, owner_id)
+        if response_id is not None:
+            Hop_Outlet_Tax()._remove_all(tax_id=response_id)
             response['status'] = '00'
         return response
 
@@ -3741,6 +3765,7 @@ class Hop_Outlet_Tax(Base):
                 _tax.outlet_id = outlet_id
                 _tax.tax_id = tax_id
                 session.add(_tax)
+                print(_tax.id)
             else:
                 _exist_tax.status = True
                 session.add(_exist_tax)
@@ -3799,13 +3824,13 @@ class Hop_Outlet_Tax(Base):
         session = Session()
         try:
             _outlet_tax = session.query(Hop_Outlet_Tax).filter_by(outlet_id=outlet_id, status=True).all()
+            for i in _outlet_tax:
+                response.append(i.tax_id)
         except:
             session.rollback()
             raise
         finally:
             session.close()
-        for i in _outlet_tax:
-            response.append(i.tax_id)
         return response
 
     def _sumtax(self, _outletid):
@@ -3929,51 +3954,55 @@ class Hop_Special_Promo(Base):
         starttime, endtime, apply_time_status, applied_day, outlet_list, owner_id):
         response = {}
         response_id = None
-        session = Session()
-        try:
-            if len(name.strip()) > 0 and len(value.strip()) >0:
-                promo = Hop_Special_Promo()
-                promo.name = name
-                promo.percent = True if int(percent) == 0 else False
-                promo.value = value
-                promo.promo_date_status = False
-                if promo_date_status == True:
-                    promo.promo_date_status = True
-                    promo.startdate = startdate
-                    promo.enddate = enddate
-                promo.apply_time_status = False
-                if apply_time_status == True:
-                    promo.apply_time_status = True
-                    promo.starttime = starttime
-                    promo.endtime = endtime
-                for i in applied_day:
-                    if i == 'sunday':
-                        promo.minggu = True
-                    elif i == 'monday':
-                        promo.senin = True
-                    elif i == 'tuesday':
-                        promo.selasa = True
-                    elif i == 'wednesday':
-                        promo.rabu = True
-                    elif i == 'thursday':
-                        promo.kamis = True
-                    elif i == 'friday':
-                        promo.jumat = True
-                    elif i == 'saturday':
-                        promo.sabtu = True
-                promo.owner_id = owner_id
-                session.add(promo)
-                session.commit()
-                response_id = promo.id
-                response['status'] = '00'
-            else:
+        if len(name.strip()) > 0 and len(value.strip()) >0:
+            if int(percent) == 0 and int(value) > 100:
                 response['status'] = '50'
-                response['message'] = 'Please fill all required fields'
-        except:
-            session.rollback()
-            raise
-        finally:
-            session.close()
+                response['message'] = 'Value of the promo has to be less than 100%'
+                return response
+            session = Session()
+            try:
+                    promo = Hop_Special_Promo()
+                    promo.name = name
+                    promo.percent = True if int(percent) == 0 else False
+                    promo.value = value
+                    promo.promo_date_status = False
+                    if promo_date_status == True:
+                        promo.promo_date_status = True
+                        promo.startdate = startdate
+                        promo.enddate = enddate
+                    promo.apply_time_status = False
+                    if apply_time_status == True:
+                        promo.apply_time_status = True
+                        promo.starttime = starttime
+                        promo.endtime = endtime
+                    for i in applied_day:
+                        if i == 'sunday':
+                            promo.minggu = True
+                        elif i == 'monday':
+                            promo.senin = True
+                        elif i == 'tuesday':
+                            promo.selasa = True
+                        elif i == 'wednesday':
+                            promo.rabu = True
+                        elif i == 'thursday':
+                            promo.kamis = True
+                        elif i == 'friday':
+                            promo.jumat = True
+                        elif i == 'saturday':
+                            promo.sabtu = True
+                    promo.owner_id = owner_id
+                    session.add(promo)
+                    session.commit()
+                    response_id = promo.id
+                    response['status'] = '00'
+            except:
+                session.rollback()
+                raise
+            finally:
+                session.close()
+        else:
+            response['status'] = '50'
+            response['message'] = 'Please fill all required fields'
         if response_id is not None:
             Hop_Promo_Outlet()._remove_all(promo_id=response_id, type_promo=2)
             for i in outlet_list:
@@ -3986,9 +4015,14 @@ class Hop_Special_Promo(Base):
         starttime, endtime, apply_time_status, applied_day, outlet_list, owner_id):
         response = {}
         response_id = None
-        session = Session()
-        try:
-            if len(name.strip()) > 0 and len(value.strip()) >0:
+        if len(name.strip()) > 0 and len(value.strip()) >0:
+            if int(percent) == 0 and float(value) > 100:
+                response['status'] = '50'
+                response['message'] = 'Value of the promo has to be less than 100%'
+                return response
+            session = Session()
+            try:
+
                 promo = session.query(Hop_Special_Promo).filter_by(id=id, owner_id=owner_id, status=True).first()
                 promo.name = name
                 promo.percent = True if int(percent) == 0 else False
@@ -4023,14 +4057,14 @@ class Hop_Special_Promo(Base):
                 session.commit()
                 response_id = promo.id
                 response['status'] = '00'
-            else:
-                response['status'] = '50'
-                response['message'] = 'Please fill all required fields'
-        except:
-            session.rollback()
-            raise
-        finally:
-            session.close()
+            except:
+                session.rollback()
+                raise
+            finally:
+                session.close()
+        else:
+            response['status'] = '50'
+            response['message'] = 'Please fill all required fields'
         if response_id is not None:
             Hop_Promo_Outlet()._remove_all(promo_id=response_id, type_promo=2)
             for i in outlet_list:

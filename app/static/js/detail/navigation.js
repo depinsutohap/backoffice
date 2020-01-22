@@ -9,6 +9,14 @@ $(document).ready(function () {
   _search();
 });
 
+function _menu(t){
+  if(t == 0){
+    $('.sidenav').css('left', '-300px')
+  }else{
+    $('.sidenav').css('left', 0)
+  }
+}
+
 function _search(){
   $('#nav_search_bar').on('keyup', function(){
     if(userData['sq'] != $(this).val()){
@@ -36,9 +44,12 @@ function _search(){
 function nav_href(t) {
   _loading(1);
   $('#mainBody').load('/page/' + t, function() {});
-
   $('a.mm').removeClass('actived');
   $('#nav_' + t).addClass('actived');
+  if(window.innerWidth < 991){
+    console.log('test')
+    _menu(0)
+  }
 }
 
 function nav_href_business(t, i) {
@@ -49,6 +60,9 @@ function nav_href_business(t, i) {
 
   $('a.mm').removeClass('actived');
   $('#nav_business_' + i).addClass('actived');
+  if(window.innerWidth < 991){
+    _menu(0)
+  }
 }
 
 function sub_href(t) {
@@ -158,7 +172,7 @@ function open_sideform(t){
 
 
 function close_sideform(){
-  $('.sidemodal').css('right', '-100%');
+  $('.sidemodal').css('right', '-200%');
   $('.backdrop').css('display', 'none');
 }
 

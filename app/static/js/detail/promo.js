@@ -270,6 +270,7 @@ function _submit_data_special_promo(){
             $('.no_data').css('display', 'none');
             close_sideform();
             _menu_dropdown();_check();
+            notif('success', 'Special Promo Added', 'a new special promo has been successfully added');
           }else{
             notif('danger', 'Add Special Promo Failed', e.data.message);
           }
@@ -327,6 +328,7 @@ function _submit_data_special_promo(){
             $('.data_promo_value_' + e.data.id).text(promo_value);
             _clear_input_sp('edit');
             close_sideform();
+            notif('success', 'Special Promo Edited', 'a special promo has been successfully edited');
           }else{
             notif('danger', 'Edit Special Promo Failed', e.data.message);
           }

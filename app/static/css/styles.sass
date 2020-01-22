@@ -521,6 +521,15 @@ div#mainBody
       font-size: 15px
   div._container
     padding: 0 50px
+  @media only screen and (max-width: 991px)
+    padding-left: 0
+    div.inmain_nav
+      width: 100%
+    div._container
+      padding: 0 25px
+  @media only screen and (max-width: 880px)
+    div._container
+      padding: 0 15px
 
 .column
   float: left
@@ -531,6 +540,8 @@ div#mainBody
   margin-top: 15px
   margin-bottom: 15px
   display: flex
+  @media only screen and (max-width: 880px)
+    flex-wrap: wrap
 
 .col_1, .col_2, .col_3, .col_4, .col_5,
 .col_6, .col_7, .col_8, .col_9, .col_10
@@ -556,6 +567,16 @@ div#mainBody
   width: 80%
 .col_10
   width: 100%
+
+@media only screen and (max-width: 880px)
+  .col_1, .col_2
+    width: calc(50% - 10px)
+  .col_4, .col_5, .col_6, .col_7, .col_8, .col_9 
+    width: 100%
+
+@media only screen and (max-width: 660px)
+  .col_1, .col_2, .col_3
+    width: 100%
 
 .card
   width: 100%
@@ -930,6 +951,12 @@ div._buttonadd
     right: -10px
     top: -10px
     width: 50px
+  @media only screen and (max-width: 880px)
+    margin: 5px
+    &:first-child
+      margin-left: 5px
+    &:last-child
+      margin-right: 5px
 
 table.table
   &.table_stock_card
@@ -1018,7 +1045,7 @@ div.main_section
   position: fixed
   z-index: 101
   top: 0
-  right: -100%
+  right: -200%
   background: $light
   width: 650px
   box-shadow: 0 0 5px 0px
@@ -1039,6 +1066,8 @@ div.main_section
             font-size: 20px
             width: 30px
             text-align: center
+  @media only screen and (max-width: 991px)
+    width: 400px
 
 
 
@@ -1209,6 +1238,9 @@ div.main_section
         p.note
           width: auto
           margin-left: 10px
+  @media only screen and (max-width: 660px)
+    .promo_rule_input
+      flex-wrap: wrap
 
 .switch
   position: relative

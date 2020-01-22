@@ -55,7 +55,7 @@ function _outlet_list_with_exception(b_id){
     data: JSON.stringify({
       'id': userData['id'],
       'token': userData['token'],
-      'status': 8,
+      'status': 9,
       'business_id': b_id
     })
   }, function (e) {
@@ -78,7 +78,7 @@ function _move_outlet_current(){
       data: JSON.stringify({
         id: userData['id'],
         token: userData['token'],
-        status: 4,
+        status: 5,
         outlet_list: $('#move_list_outlet_into_business').val(),
         business_id: userData['b_id'],
       })
@@ -104,7 +104,7 @@ function _outlet_list(b_id){
     data: JSON.stringify({
       'id': userData['id'],
       'token': userData['token'],
-      'status': 2,
+      'status': 3,
       'bid': b_id
     })
   }, function (e) {
@@ -240,7 +240,7 @@ function _edit_outlet(t){
     data: JSON.stringify({
       'id': userData['id'],
       'token': userData['token'],
-      'status': 9,
+      'status': 10,
       'outlet_id': t
     })
   }, function (e) {
@@ -275,7 +275,7 @@ function _edit_category_outlet(t){
     data: JSON.stringify({
       'id': userData['id'],
       'token': userData['token'],
-      'status': 12,
+      'status': 13,
       'outlet_id': t
     })
   }, function (e) {
@@ -301,7 +301,7 @@ function _edit_item_outlet(t){
     data: JSON.stringify({
       'id': userData['id'],
       'token': userData['token'],
-      'status': 14,
+      'status': 15,
       'outlet_id': t
     })
   }, function (e) {
@@ -336,7 +336,7 @@ function submit_edit_outlet(){
       data: JSON.stringify({
         id: userData['id'],
         token: userData['token'],
-        status: 10,
+        status: 11,
         outlet_id: $('#edit_outlet_id').val(),
         outlet_name:$('#edit_outlet_name').val(),
         outlet_numemp:$('#edit_outlet_numemp').val(),
@@ -393,7 +393,7 @@ function submit_edit_outlet(){
         data: JSON.stringify({
           id: userData['id'],
           token: userData['token'],
-          status: 13,
+          status: 14,
           outlet_id: $('#edit_category_outlet_id').val(),
           list:_list,
         })
@@ -419,7 +419,7 @@ function submit_edit_outlet(){
         data: JSON.stringify({
           id: userData['id'],
           token: userData['token'],
-          status: 15,
+          status: 16,
           outlet_id: $('#edit_item_outlet_id').val(),
           list:_list,
         })
@@ -444,7 +444,7 @@ function _remove_outlet(t){
     data: JSON.stringify({
       'id': userData['id'],
       'token': userData['token'],
-      'status': 9,
+      'status': 10,
       'outlet_id': t
     })
   }, function (e) {
@@ -471,7 +471,7 @@ function submit_remove_outlet(){
       data: JSON.stringify({
         'id': userData['id'],
         'token': userData['token'],
-        'status': 11,
+        'status': 12,
         'outlet_id': $('#remove_outlet_id').val(),
       })
     }, function (e) {
@@ -520,7 +520,7 @@ function _submit_new_business(){
       data: JSON.stringify({
         id: userData['id'],
         token: userData['token'],
-        status: 3,
+        status: 4,
         business_name: $('#business_name').val(),
         business_category: $('#business_category').val(),
         business_description: $('#business_description').val()
@@ -562,7 +562,7 @@ function _submit_new_business(){
       data: JSON.stringify({
         id: userData['id'],
         token: userData['token'],
-        status: 4,
+        status: 5,
         outlet_list: $('#move_list_outlet').val(),
         business_id: $('#new_business_id').val(),
       })
@@ -621,7 +621,7 @@ function _submit_new_outlet(){
       data: JSON.stringify({
         id: userData['id'],
         token: userData['token'],
-        status: 5,
+        status: 6,
         business_id: $('#select_business').val(),
         outlet_name: $('#outlet_name').val(),
         outlet_num_emp: $('#outlet_num_emp').val(),
@@ -659,7 +659,7 @@ function _business_settings_detail(){
     data: JSON.stringify({
       id: userData['id'],
       token: userData['token'],
-      status: 1,
+      status: 2,
       bid: userData['b_id']
     })
   }, function (e) {
@@ -690,7 +690,7 @@ function _form_business_settings(){
       data: JSON.stringify({
         id: userData['id'],
         token: userData['token'],
-        status: 6,
+        status: 7,
         business_id: userData['b_id'],
         business_name: $('#settings_business_name').val(),
         business_category: $('#settings_business_category').val(),
@@ -722,7 +722,7 @@ function _form_business_delete(){
       data: JSON.stringify({
         id: userData['id'],
         token: userData['token'],
-        status: 7,
+        status: 8,
         business_id: userData['b_id'],
       })
     }, function (e) {

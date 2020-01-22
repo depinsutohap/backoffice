@@ -69,6 +69,9 @@ main#mainBusinessPage
   div.delete_div
     display: flex
     justify-content: space-between
+  @media only screen and (max-width: 762)
+    form
+      width: 100%
 
 main#new_business_index
   >div._container
@@ -629,6 +632,31 @@ main#new_employee_index
       cursor: pointer
       >i
         margin-right: 10px
+  @media only screen and (max-width: 660px)
+    .table_header
+      display: none
+    .table_body
+      >.table_row
+        flex-wrap: wrap
+        >.item_column, >.variant_column, >.total_unit_column, >.cost_unit_column, >.total_cost_column, >.trash_column
+          width: 100%
+          margin-bottom: 10px
+          padding: 0
+        >.total_unit_column
+          >input
+            padding: 0 20px
+        >.trash_column
+          >a
+            background: $danger
+            color: $light
+            width: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            height: 45px
+            border-radius: 3px
+            font-size: 20px
+
 
 .account_card
   ._title

@@ -2,20 +2,7 @@
 
 {% block body %}
 
-  <nav id="mainHeaderAuth">
-    <a href="/login" class="companyLogo">
-      <img src="/static/src/hop-blue.png">
-      <p> hop</p>
-    </a>
-    <div class="nav-right">
-      <a href="#">HELP</a>
-      {% if cur_user != None %}
-        <a href="/logout">SIGN OUT</a>
-      {% else %}
-        <a href="/login">SIGN IN</a>
-      {% endif %}
-    </div>
-  </nav>
+  {% include 'macros/_auth_header.html' %}
 
   <link rel="stylesheet" type="text/css" href="/static/css/auth.min.css">
   <main id="main_auth">

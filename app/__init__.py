@@ -22,15 +22,15 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 app = Sanic(__name__)
 jinja = SanicJinja2()
 _auth = Auth(app)
-# engine = create_engine('mysql://hop_ag:!2345hopag0005432!@178.128.93.105:3306/uta_hop_db_000')
-engine = create_engine('mysql://hop_ag:!2345hopag0005432!@178.128.93.105:3306/uta_hop_dev_db_000')
+# engine = create_engine('mysql://hop_bo:!2345hopbo0005432!@178.128.93.105:3306/uta_hop_db_000')
+engine = create_engine('mysql://hop_bo:!2345HopBo0005432!@157.230.46.218:3306/uta_hop_dev_db_000')
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 
 
 # client = MongoClient("mongodb://hop_ag:!2345hopag0005432!@178.128.93.105:27017/uta_mongo_hop_db_000")
 # mongo = client.uta_mongo_hop_db_000
-client = MongoClient("mongodb://hop_ag:!2345hopag0005432!@178.128.93.105:27017/uta_mongo_hop_dev_db_000")
+client = MongoClient("mongodb://hop_bo:!2345hopbo0005432!@157.230.46.218:27017/uta_mongo_hop_dev_db_000")
 mongo = client.uta_mongo_hop_dev_db_000
 
 def create_app(config_name):
