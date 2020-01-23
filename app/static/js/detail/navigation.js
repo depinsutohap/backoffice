@@ -2,12 +2,56 @@ let userData;
 $(document).ready(function () {
   userData = localStorage;
   userData['sq'] = '';
+  _nav_permission();
   nav_href('dashboard');
   _header_user_data();
   _nav_business_list();
   _menu_dropdown();
+  nav_lang('nav');
   _search();
 });
+
+function _nav_permission(){
+  let _permission = JSON.parse(userData['permission'])
+  if(_permission !== null){
+    console.log(_permission)
+    if(_permission.bo_report.length == 0){
+      $('#nav_report').remove()
+    }
+    if(_permission.bo_management_product.length == 0){
+      $('.products').remove()
+    }
+    if(_permission.bo_management_inventory.length == 0){
+      $('#nav_inventory').remove()
+    }
+    if(_permission.bo_management_product.length == 0 && _permission.bo_management_inventory.length == 0){
+      $('.sidenav_product').remove()
+    }
+    if(_permission.bo_management_tax.length == 0){
+      $('#nav_tax').remove()
+    }
+    if(_permission.bo_management_employee.length == 0){
+      $('#nav_employee').remove()
+    }
+    if(_permission.bo_management_promo.length == 0){
+      $('#nav_promo').remove()
+    }
+    if(_permission.bo_billing.length == 0){
+      $('#nav_billing').remove()
+    }
+    if(_permission.bo_management_employee.length == 0 && _permission.bo_management_promo.length == 0 && _permission.bo_billing.length == 0){
+      $('.sidenav_manage').remove()
+    }
+  }
+}
+
+function nav_lang(t){
+  if (userData['lang'] !== 1){
+    for(i=0; i<language[t].length; i++){
+      $('.' + language[t][i][0]).text(language[t][i][1][userData['lang']])
+    }
+  }
+}
 
 function _menu(t){
   if(t == 0){
@@ -130,18 +174,22 @@ function _nav_business_list(){
     })
   }, function (e) {
     if(e.status == '00'){
-      $('#list_business').empty().prepend(
-        '<a class="nb" href="#" id="nav_outlet" onclick="sub_href(\'/page/business/new\')">' +
-        '<i class="fa fa-plus-circle"></i>' +
-        '<p>New Business</p></a>'
-      );
-
+      if (JSON.parse(userData['permission']) == null){
+        $('#list_business').empty().prepend(
+          '<a class="nb" href="#" id="nav_outlet" onclick="sub_href(\'/page/business/new\')">' +
+          '<i class="fa fa-plus-circle"></i>' +
+          '<p>New Business</p></a>'
+        );
+      }
+      _b_list = JSON.parse(userData['permission'])['business_list']
       for(i=0; i < e.data.length; i++){
-        $('#list_business').prepend(
-          '<a class="mm" href="#" id="nav_business_' + e.data[i].id + '" onclick="b_id(' + e.data[i].id + ');nav_href_business(\'business\', ' + e.data[i].id + ');">' +
-          '<p>' + e.data[i].name + '</p>' +
-          '</a>'
-        )
+        if(_b_list.includes(e.data[i].id)){
+          $('#list_business').prepend(
+            '<a class="mm" href="#" id="nav_business_' + e.data[i].id + '" onclick="b_id(' + e.data[i].id + ');nav_href_business(\'business\', ' + e.data[i].id + ');">' +
+            '<p>' + e.data[i].name + '</p>' +
+            '</a>'
+          )
+        }
       }
     }else{
       notif('danger', 'System Error!', 'Mohon kontak IT Administrator');

@@ -1,7 +1,7 @@
 function _summary(){
   business_list(); _date(); _detail();
   _loading(1);
-
+  nav_lang('report');
   $("#outlet, #startdate, #enddate, #business").change(function () {
     outlet_list_b();
     _loading(1);

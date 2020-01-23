@@ -5,7 +5,7 @@ from .. import _auth
 from decimal import *
 from app.models import *
 from sanic.response import json, raw, redirect
-from ..models import Hop_User, Hop_Business, Hop_Outlet, Hop_Business, Hop_Login_Log
+from ..models import Hop_User, Hop_Business, Hop_Outlet, Hop_Business, Hop_Login_Log, Hop_User_Outlet
 
 #===================================================================
 # SPECIFICS DATA [API]
@@ -30,8 +30,12 @@ async def request_login(request):
                         response['token'] = user_email.generate_token()
                         response['name'] = user_email.name
                         response['phone_number'] = user_email.phone_number
+                        # response['lang'] = user_email.language_id if user_email.language_id != None else 1
+                        response['lang'] = 1
                         response['email'] = user_email.email if user_email.email != None else '-'
-                        response['permission'] = {}
+                        response['permission'] = None
+                        if user_email.role_id != 1:
+                            response['permission'] = Hop_User_Outlet()._permission(user_email.id)
                         Hop_Login_Log()._insert(user_email.id, 2)
                         _auth.login_user(request, user_email)
                     else:

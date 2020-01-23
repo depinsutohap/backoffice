@@ -40,13 +40,13 @@ async def _api_business(request):
                 _business = Hop_Business().verify_auth(apidata['bid'])
                 if _business is not None and _business.owner_id == user.owner_id:
                     response['data'] = Hop_Business()._basicdata(_id=_business.id)
-                    response['list'] = Hop_Outlet()._list(business_id=_business.id)
+                    response['list'] = Hop_Outlet()._list(business_id=_business.id, user_id=user.id)
                     response['status'] = '00'
             elif int(apidata['status']) == 3:
             # OUTLET LIST BASED ON BUSINESS ID AND OWNER ID
                 _business = Hop_Business().verify_auth(apidata['bid'])
                 if _business is not None and _business.owner_id == user.owner_id:
-                    response['list'] = Hop_Outlet()._list(business_id=_business.id)
+                    response['list'] = Hop_Outlet()._list(business_id=_business.id, user_id=user.id)
                     response['category_list'] = Hop_Product_Category()._list(owner_id=user.owner_id)
                     response['item_list'] = Hop_Product_Item()._list_sold(owner_id=user.owner_id)
                     response['tax_list'] = Hop_Tax()._list(owner_id=user.owner_id)

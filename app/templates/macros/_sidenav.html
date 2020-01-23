@@ -6,63 +6,63 @@
         Close
       </a>
       <a class="mm actived" href="#" id="nav_dashboard" data-target="dashboard" onclick="nav_href('dashboard')">
-          <p>Dashboard</p>
+          <p class="nav_dashboard">Dashboard</p>
       </a>
       <a class="mm" href="#" id="nav_report" onclick="nav_href('report')">
-          <p>Reports</p>
+          <p class="nav_report">Reports</p>
       </a>
       <hr>
       <a class="mh" href="#" data-target="business" onclick="toggle_nav(this)">
-          <p>Business</p>
+          <p class="nav_business">Business</p>
           <i id="caret_business" class="fa fa-caret-up"></i>
       </a>
       <div id="list_business" class="collapse in"></div>
       <hr>
-      <a class="mh" href="#" data-target="products" onclick="toggle_nav(this)">
-          <p>Products</p>
+      <a class="mh sidenav_product" href="#" data-target="products" onclick="toggle_nav(this)">
+          <p class="nav_products">Products</p>
           <i id="caret_products" class="fa fa-caret-up"></i>
       </a>
       <div id="list_products" class="collapse in">
-        <a class="mm" href="#" id="nav_product-item" onclick="nav_href('product-item')">
-            <p>Product Item</p>
+        <a class="mm products" href="#" id="nav_product-item" onclick="nav_href('product-item')">
+            <p class="nav_product_item">Product Item</p>
         </a>
-        <a class="mm" href="#" id="nav_product-category" onclick="nav_href('product-category')">
-            <p>Product Category</p>
+        <a class="mm products" href="#" id="nav_product-category" onclick="nav_href('product-category')">
+            <p class="nav_product_category">Product Category</p>
         </a>
-        <a class="mm" href="#" id="nav_outlet" onclick="nav_href('inventory')">
-            <p>Inventory<img src="/static/src/icon/upgrade-white.png" class="upgrade_icon"></p>
+        <a class="mm" href="#" id="nav_inventory" onclick="nav_href('inventory')">
+            <p><span class="nav_inventory">Inventory</span><img src="/static/src/icon/upgrade-white.png" class="upgrade_icon"></p>
         </a>
       </div>
-      <hr>
-      <a class="mh" href="#" data-target="manage" onclick="toggle_nav(this)">
-          <p>Manage</p>
+      <hr class="sidenav_product">
+      <a class="mh sidenav_manage" href="#" data-target="manage" onclick="toggle_nav(this)">
+          <p class="nav_manage">Manage</p>
           <i id="caret_manage" class="fa fa-caret-up"></i>
       </a>
       <div id="list_manage" class="collapse in">
-        <a class="mm" href="#" id="nav_outlet" onclick="nav_href('tax')">
-          <p>Tax & Services</p>
+        <a class="mm" href="#" id="nav_tax" onclick="nav_href('tax')">
+          <p class="nav_tax">Tax & Services</p>
         </a>
         <a class="mm" href="#" id="nav_employee" onclick="nav_href('employee')">
-            <p>Employee</p>
+            <p class="nav_employee">Employee</p>
         </a>
         <a class="mm" href="#" id="nav_promo" onclick="nav_href('promo')">
-            <p>Promo<img src="/static/src/icon/upgrade-white.png" class="upgrade_icon"></p>
+            <p><span class="nav_promo">Promo</span><img src="/static/src/icon/upgrade-white.png" class="upgrade_icon"></p>
         </a>
         <!-- <a class="mm" href="#" id="nav_outlet">
             <p>Customer<img src="/static/src/icon/upgrade-white.png" class="upgrade_icon"></p>
         </a> -->
       </div>
-      <hr>
+      <hr class="sidenav_manage">
       <a class="mh" href="#" data-target="settings" onclick="toggle_nav(this)">
-          <p>Settings</p>
+          <p class="nav_settings">Settings</p>
           <i id="caret_settings" class="fa fa-caret-up"></i>
       </a>
       <div id="list_settings" class="collapse in" data-status="false">
         <a class="mm" href="#" id="nav_billing" onclick="nav_href('billing')">
-            <p>Billing</p>
+            <p class="nav_billing">Billing</p>
         </a>
         <a class="mm" href="#" id="nav_account" onclick="nav_href('account')">
-            <p>Account</p>
+            <p class="nav_account">Account</p>
         </a>
         <!-- <a class="mm" href="#" id="nav_outlet" onclick="nav_href('outlet')"> -->
         <!-- <p>Applications</p>

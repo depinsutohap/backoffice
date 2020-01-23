@@ -23,7 +23,9 @@ function login() {
             localStorage.setItem('role_id', e.role_id);
             localStorage.setItem('phone_number', e.phone_number);
             localStorage.setItem('email', e.email);
+            localStorage.setItem('lang', e.lang);
             localStorage.setItem('token', e.token);
+            localStorage.setItem('permission', JSON.stringify(e.permission));
             location.reload();
         }else{
             notif('danger', 'Authentication failed', e.message)

@@ -1,7 +1,7 @@
   <main id="dashboard_index">
     <div class="inmain_nav">
       <div class="title">
-        <h1>Dashboard</h1>
+        <h1 class="dashboard">Dashboard</h1>
       </div>
     </div>
     <div class="_container">
@@ -10,7 +10,7 @@
         <div class="col_10">
           <div class="card dashboard_card">
             <div class="col_2">
-              <h5 class="title">Business</h5>
+              <h5 class="title business">Business</h5>
               <select id="business" name="business" placeholder="Business">
                 <option value="0">Semua Business</option>
               </select>
@@ -22,11 +22,11 @@
               </select>
             </div>
             <div class="col_2">
-              <h5 class="title">Dari</h5>
+              <h5 class="title">From</h5>
               <input type="date" name="start" id="startdate">
             </div>
             <div class="col_2">
-              <h5 class="title">Sampai</h5>
+              <h5 class="title">To</h5>
               <input type="date" name="end" id="enddate">
             </div>
           </div>
@@ -37,37 +37,38 @@
         <div class="col_10">
           <div class="card dashboard_card">
             <div class="col_1">
-              <h5 class="title">Total Transactions</h5>
+              <h5 class="title total_transaction">Total Transactions</h5>
               <h2 class="value" id="totaltrans">-</h2>
               <span class="_growth positive"><span>12</span>% increase</span>
             </div>
             <div class="col_1">
-              <h5 class="title">Done Transactions</h5>
+              <h5 class="title done_transaction">Done Transactions</h5>
               <h2 class="value" id="successtrans">-</h2>
               <span class="_growth positive"><span>12</span>% increase</span>
             </div>
             <div class="col_1">
-              <h5 class="title">Ongoing Transactions</h5>
+              <h5 class="title ongoing_transaction">Ongoing Transactions</h5>
               <h2 class="value" id="ongoingtrans">-</h2>
               <span class="_growth negative"><span>12</span>% decrease</span>
             </div>
             <div class="col_1">
-              <h5 class="title">Cancelled Transactions</h5>
+              <h5 class="title cancel_transaction">Cancelled Transactions</h5>
               <h2 class="value last" id="cancelled">-</h2>
               <span class="_growth negative"><span>12</span>% decrease</span>
             </div>
             <div class="col_1">
-              <h5 class="title">Void Transactions</h5>
+              <h5 class="title void_transaction">Void Transactions</h5>
               <h2 class="value last" id="voidtrans">-</h2>
               <span class="_growth negative"><span>12</span>% decrease</span>
             </div>
           </div>
         </div>
       </div>
+      
       <div class="_row">
         <div class="col_10">
           <div class="card chart_card">
-            <h5 class="title">Sells data</h5>
+            <h5 class="title sells_data">Sells data</h5>
             <div class="_chart">
               <canvas id="sales_line_chart" width="400" height="140vh"></canvas>
             </div>
@@ -77,7 +78,7 @@
       <div class="_row">
         <div class="col_5">
           <div class="card chart_card">
-            <h5 class="title">Highest Products Sells</h5>
+            <h5 class="title highest_products_sells">Highest Product Sells</h5>
             <div class="_chart">
               <canvas id="product_bar_chart" width="400" height="400"></canvas>
             </div>
@@ -85,7 +86,7 @@
         </div>
         <div class="col_5">
           <div class="card chart_card">
-            <h5 class="title">Highest Categories Sells</h5>
+            <h5 class="title highest_category_sells">Highest Category Sells</h5>
             <div class="_chart">
               <canvas id="category_bar_chart" width="400" height="400"></canvas>
             </div>

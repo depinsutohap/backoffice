@@ -7,7 +7,11 @@ function _dashboard_sales(){
     _loading(1);
     _detail()
   });
+
+  nav_lang('report');
+
 }
+
 function _detail(){
   _loading(1);
   console.log('load detail')

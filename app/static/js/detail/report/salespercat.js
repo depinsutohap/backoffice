@@ -1,4 +1,5 @@
 function _sales_per_cat(){
+  nav_lang('report');
   business_list(); _date(); _detail();
   _loading(1);
 
@@ -32,9 +33,7 @@ function _detail(){
             sales_per_category_append(e.data.data[i]);
           }
         }else{
-          $('#data_body').append(
-            '<div class="_notif_menu"><i class="fa fa-exclamation-triangle"></i>data belum tersedia.</div>'
-          )
+          $('.no_data').css('display', 'flex')
         }
       }else{
         notif('danger', 'System Error !', e.message);

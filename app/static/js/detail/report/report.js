@@ -1,5 +1,6 @@
 function _report(){
   _loading(1);
+  nav_lang('report');
   $.post('/v1/api/data/report',{
       data: JSON.stringify({
         'id': userData['id'],
