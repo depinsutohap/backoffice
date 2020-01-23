@@ -19,15 +19,18 @@ function _detail(){
       'dari': $('#startdate').val(),
       'sampai': $('#enddate').val(),
       'business_id': $('#business').val(),
+      'dash_on': 0,
     })
   }, function (e) {
     let i;
     $('#data_body').empty();
     if(e['status'] === '00'){
       if(e.data.hourly_sales.length > 0){
+        console.log('readed')
           graph(e.data.hourly_sales, e.data.product_sales, e.data.category_sales);
       }
       else{
+        console.log('not readed')
         graph();
       }
     }else{
