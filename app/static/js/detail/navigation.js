@@ -181,9 +181,19 @@ function _nav_business_list(){
           '<p>New Business</p></a>'
         );
       }
-      _b_list = JSON.parse(userData['permission'])['business_list']
-      for(i=0; i < e.data.length; i++){
-        if(_b_list.includes(e.data[i].id)){
+      if (JSON.parse(userData['permission']) !== null){
+        let _b_list = JSON.parse(userData['permission'])['business_list']
+        for(i=0; i < e.data.length; i++){
+          if(_b_list.includes(e.data[i].id)){
+            $('#list_business').prepend(
+              '<a class="mm" href="#" id="nav_business_' + e.data[i].id + '" onclick="b_id(' + e.data[i].id + ');nav_href_business(\'business\', ' + e.data[i].id + ');">' +
+              '<p>' + e.data[i].name + '</p>' +
+              '</a>'
+            )
+          }
+        }
+      }else{
+        for(i=0; i < e.data.length; i++){
           $('#list_business').prepend(
             '<a class="mm" href="#" id="nav_business_' + e.data[i].id + '" onclick="b_id(' + e.data[i].id + ');nav_href_business(\'business\', ' + e.data[i].id + ');">' +
             '<p>' + e.data[i].name + '</p>' +
