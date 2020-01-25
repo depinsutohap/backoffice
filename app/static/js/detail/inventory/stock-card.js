@@ -16,8 +16,8 @@ function _dinamic_data(){
       })
     }, function (e) {
       console.log(e)
+      $('#data_body').empty()
       if(e.data.status == '00'){
-        $('#data_body').empty()
         for(i=0;i<e.data.list.length;i++){
           let vid = ''
           if(e.data.list[i].pid.variant_type == true){
