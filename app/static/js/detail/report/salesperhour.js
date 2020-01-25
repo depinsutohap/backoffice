@@ -21,6 +21,7 @@ function _detail(){
         'sampai': $('#enddate').val(),
         'business_id': $('#business').val(),
         'status': 11,
+        'dash_on': 0,
       })
     }, function (e) {
       let i;
@@ -29,9 +30,9 @@ function _detail(){
         $('#count_trx').text(e.data.total_sold);
         $('#total_revenue').text("Rp."+ formatNumber(e.data.total_revenue));
         $('#total_average').text("Rp."+ formatNumber(e.data.total_average));
-        if(e.data.data.length > 0){
-          for(i=0; i < e.data.data.length; i++){
-            sales_per_hour_append(e.data.data[i]);
+        if(e.data.hourly_sales.length > 0){
+          for(i=0; i < e.data.hourly_sales.length; i++){
+            sales_per_hour_append(e.data.hourly_sales[i]);
           }
         }else{
           $('.no_data').css('display', 'flex')
@@ -46,10 +47,10 @@ function _detail(){
     });
 }
   function sales_per_hour_append(data){
-    console.log(data)
+    console.log(data.hour)
     $('#data_body').append(
       '<tr>'+
-      '<td>'+data.hourPayment + '</td>' +
+      '<td>'+data.hour + '</td>' +
       '<td>'+data.total_trans + '</td>' +
       '<td>'+"Rp."+formatNumber(data.revenue) + '</td>' +
       '<td>'+"Rp."+formatNumber(data.average) + '</td>' +
