@@ -28,7 +28,7 @@ async def _api_tax(request):
             if int(apidata['status']) == 0:
                 response['data'] = Hop_Tax()._list(owner_id=user.owner_id)
                 response['type'] = Hop_Tax_Type()._list()
-                response['outlet_list'] = Hop_Outlet()._listbyownerid(owner_id=user.owner_id)
+                response['outlet_list'] = Hop_User_Outlet()._list(_user_id=user.id)
                 response['status'] = '00'
             elif int(apidata['status']) == 1:
                 response['data'] = Hop_Tax()._insert(name=apidata['tax_name'], tax_type_id=apidata['tax_type_id'], value=apidata['tax_value'], outlet_list=apidata['outlet_list'], owner_id=user.owner_id)

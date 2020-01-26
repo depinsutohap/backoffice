@@ -32,7 +32,7 @@ async def _api_employee(request):
                 if Hop_User().verify_user(_id=apidata['employee_phone']):
                     if (len(apidata['employee_email']) > 0 and Hop_User().verify_user(_id=apidata['employee_email'])) or len(apidata['employee_email']) == 0:
                         response['data'] = Hop_User()._insert_employee(_name=apidata['employee_name'], _email=apidata['employee_email'], _phonenumber=apidata['employee_phone'], _password=apidata['employee_password'], _role_id=apidata['employee_role_id'], owner_id=user.owner_id)
-                        response['outlet_list'] = Hop_Outlet()._listbyownerid(owner_id=user.owner_id)
+                        response['outlet_list'] = Hop_User_Outlet()._list(_user_id=user.id)
                         response['status'] = '00'
                     else:
                         response['status'] = '50'
@@ -75,7 +75,7 @@ async def _api_employee(request):
                 response['status'] = '00'
             elif int(apidata['status']) == 5:
                 response['data'] = Hop_User()._data(_id=apidata['employee_id'])
-                response['outlet_list'] = Hop_Outlet()._listbyownerid(owner_id=user.owner_id)
+                response['outlet_list'] = Hop_User_Outlet()._list(_user_id=user.id)
                 response['data_outlet'] = Hop_User_Outlet()._data_list(_user_id=apidata['employee_id'])
                 response['status'] = '00'
             elif int(apidata['status']) == 6:

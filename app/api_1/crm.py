@@ -32,7 +32,7 @@ async def _api_promo(request):
                 response['status'] = '00'
             elif int(apidata['status']) == 1:
                 response['data'] = Hop_Special_Promo()._list(owner_id=user.owner_id)
-                response['outlet_list'] = Hop_Outlet()._listbyownerid(owner_id=user.owner_id)
+                response['outlet_list'] = Hop_User_Outlet()._list(_user_id=user.id)
                 response['status'] = '00'
             elif int(apidata['status']) == 2:
                 response['data'] = Hop_Special_Promo()._insert(
@@ -66,7 +66,7 @@ async def _api_promo(request):
                 response['data'] = Hop_Ap_Detail()._list(owner_id=user.owner_id)
                 response['status'] = '00'
             elif int(apidata['status']) == 8:
-                response['outlet_list'] = Hop_Outlet()._listbyownerid(owner_id=user.owner_id)
+                response['outlet_list'] = Hop_User_Outlet()._list(_user_id=user.id)
                 response['item_list'] = Hop_Product_Item()._list_sold(owner_id=user.owner_id)
                 response['category_list'] = Hop_Product_Category()._list(owner_id=user.owner_id)
                 response['status'] = '00'
@@ -90,7 +90,7 @@ async def _api_promo(request):
                     response['message'] = 'Please fill all required fields'
             elif int(apidata['status']) == 10:
                 response['data'] = Hop_Ap_Detail()._data(promo_id=apidata['promo_id'], owner_id=user.owner_id)
-                response['outlet_list'] = Hop_Outlet()._listbyownerid(owner_id=user.owner_id)
+                response['outlet_list'] = Hop_User_Outlet()._list(_user_id=user.id)
                 response['item_list'] = Hop_Product_Item()._list_sold(owner_id=user.owner_id)
                 response['category_list'] = Hop_Product_Category()._list(owner_id=user.owner_id)
                 response['status'] = '00'

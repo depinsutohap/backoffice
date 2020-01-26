@@ -95,7 +95,7 @@ async def _api_business(request):
             # GET ALL OUTLET LIST BASED ON OWNER WITH CURRENT BUSINESS ID AS THE EXCEPTION
                 _business = Hop_Business().verify_auth(apidata['business_id'])
                 if _business is not None and _business.owner_id == user.owner_id:
-                    response['data'] = Hop_Business()._outlet_list_exception(business_id=_business.id, owner_id=user.owner_id)
+                    response['data'] = Hop_Business()._outlet_list_exception(business_id=_business.id, user_id=user.id)
                     response['status'] = '00'
                 else:
                     response['status'] = '50'

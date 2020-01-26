@@ -470,8 +470,11 @@ class TransLog:
                     for k,v in groupby(product_sales,key=lambda x:x['datePayment']): #dikelompokan berdasarkan date payment
                         for d in v:
                             for i in d['product']:
+                                print(i)
                                 id_price = i['price'][0]['id']
+                                print(id_price)
                                 get_price =  session.query(Hop_Price).filter_by(id=int(id_price), status=True).first()
+                                print(get_price.value)
                                 total = i['quantity'] * get_price.value
                                 product_data.append({'id': str(i['id']), 'price':int(total), 'quantity': i['quantity'], 'id_price': id_price})
                     product_data.sort(key=lambda x:x['id'])
@@ -788,7 +791,10 @@ class TransLog:
                         response['data'].append({'category':k, 'sold': sold_per_cat, 'total_revenue': total_revenue, 'average': round(avg)})
                     total_revenue = sum(get_revenue['total_revenue'] for get_revenue in response['data'])
                     total_sold = sum(get_total['sold'] for get_total in response['data'])
-                    avg = int(total_revenue) / int(total_sold)
+                    try:
+                        avg = int(total_revenue) / int(total_sold)
+                    except ZeroDivisionError:
+                        avg = 0
                     response['total_average'] = round(avg)
                     response['total_revenue'] = total_revenue
                     response['total_sold'] = total_sold

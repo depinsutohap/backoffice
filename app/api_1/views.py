@@ -146,7 +146,7 @@ async def _api_general(request):
                 response['data'] = Hop_Num_Emp()._list()
                 response['status'] = '00'
             elif int(apidata['status']) == 2:
-                response['data'] = Hop_Outlet()._listbyownerid(user.owner_id)
+                response['data'] = Hop_User_Outlet()._list(user.id)
                 response['status'] = '00'
             elif int(apidata['status']) == 3:
                 response['data'] = Hop_Business()._listbyownerid(user.owner_id)
@@ -249,7 +249,7 @@ async def _api_billing(request):
         if user is not None and user.verify_token(apidata['token']):
             # PRODUCT CATEGORY
             if int(apidata['status']) == 0:
-                response['data'] = Hop_User_Outlet()._list_billing(user.id)
+                response['data'] = Hop_User_Outlet()._list(user.id)
                 response['package'] = Hop_Billing_Package_Item()._list(1)
                 response['count'] = Hop_Billing_Invoice()._invoice_trx_count(user.id)
                 response['ongoing'] = Hop_Billing_Invoice()._check_ongoing_payment(user.id)

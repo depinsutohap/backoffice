@@ -557,6 +557,7 @@ class Hop_Business(Base):
             session.close()
         return response
 
+
     def _listbyownerid(self, owner_id):
         response = []
         session = Session()
@@ -589,18 +590,19 @@ class Hop_Business(Base):
             response += Hop_Outlet()._list(i.id)
         return response
 
-    def _outlet_list_exception(self, business_id, owner_id):
+    def _outlet_list_exception(self, business_id, user_id):
         response = []
         session = Session()
         try:
-            _business = session.query(Hop_Business).filter_by(owner_id=owner_id, status=True).filter(Hop_Business.id!=business_id).all()
+            _user = session.query(Hop_User).filter_by(id=user_id, status=True).first()
+            _business = session.query(Hop_Business).filter_by(owner_id=_user.owner_id, status=True).filter(Hop_Business.id!=business_id).all()
         except:
             session.rollback()
             raise
         finally:
             session.close()
         for i in _business:
-            response += Hop_Outlet()._list(i.id)
+            response += Hop_Outlet()._list(i.id, user_id)
         return response
 
     def _move_business_list(self, new_business_id, data_outlet_list, owner_id):
@@ -731,16 +733,38 @@ class Hop_Outlet(Base):
 
     def _list(self, business_id, user_id):
         response = []
+        _exist = []
         session = Session()
         try:
+            _user = session.query(Hop_User).filter_by(id=user_id, status=True).first()
             _outlet = session.query(Hop_Outlet).filter_by(business_id=business_id, status=True).all()
         except:
             session.rollback()
             raise
         finally:
             session.close()
-        for i in _outlet:
-            response.append(Hop_Outlet()._data(i.id))
+        if _user is not None:
+            if _user.role_id == 1:
+                for i in _outlet:
+                    response.append(Hop_Outlet()._data(i.id))
+            elif _user.role_id == 2:
+                for i in _outlet:
+                    _exist.append(i.id)
+                response = Hop_Outlet()._listbyuserid(_user.id, _exist)
+        return response
+
+    def _listbyuserid(self, _userid=None, _exist=[]):
+        response = []
+        session = Session()
+        try:
+            _user_outlet = session.query(Hop_User_Outlet).filter_by(user_id = _userid, status = True).filter(Hop_User_Outlet.outlet_id.in_(_exist)).all()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        for i in _user_outlet:
+            response.append(Hop_Outlet()._data(i.outlet_id))
         return response
 
     def _listbyownerid(self, owner_id=None, _except=[]):
@@ -850,25 +874,25 @@ class Hop_User_Outlet(Base):
                     if _business.id not in response['business_list']:
                         response['business_list'].append(_business.id)
                     if i.bo_outlet_management is not False:
-                        response['outlet_management'].append(i.outlet_id)
+                        response['bo_outlet_management'].append(i.outlet_id)
                     if i.bo_report is not False:
-                        response['report'].append(i.outlet_id)
+                        response['bo_report'].append(i.outlet_id)
                     if i.bo_management_product is not False:
-                        response['management_product'].append(i.outlet_id)
+                        response['bo_management_product'].append(i.outlet_id)
                     if i.bo_management_inventory is not False:
-                        response['management_inventory'].append(i.outlet_id)
+                        response['bo_management_inventory'].append(i.outlet_id)
                     if i.bo_management_tax is not False:
-                        response['management_tax'].append(i.outlet_id)
+                        response['bo_management_tax'].append(i.outlet_id)
                     if i.bo_management_employee is not False:
-                        response['management_employee'].append(i.outlet_id)
+                        response['bo_management_employee'].append(i.outlet_id)
                     if i.bo_management_promo is not False:
-                        response['management_promo'].append(i.outlet_id)
+                        response['bo_management_promo'].append(i.outlet_id)
                     if i.bo_customer_management is not False:
-                        response['customer_management'].append(i.outlet_id)
+                        response['bo_customer_management'].append(i.outlet_id)
                     if i.bo_billing is not False:
-                        response['billing'].append(i.outlet_id)
+                        response['bo_billing'].append(i.outlet_id)
                     if i.bo_daily_report is not False:
-                        response['daily_report'].append(i.outlet_id)
+                        response['bo_daily_report'].append(i.outlet_id)
         except:
             session.rollback()
             raise
@@ -1046,7 +1070,7 @@ class Hop_User_Outlet(Base):
             response.append(Hop_Outlet()._basic_data(i.id))
         return response
 
-    def _list_billing(self, _user_id):
+    def _list(self, _user_id):
         response = None
         session = Session()
         try:
