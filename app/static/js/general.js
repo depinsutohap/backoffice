@@ -236,6 +236,7 @@ function outlet_list_b(){
     })
   }, function (e) {
     let i;
+    $('#outlet').empty()
     if(e['status'] === '00'){
       if(e.data.length > 0){
         for(i=0; i < e.data.length; i++){
@@ -243,6 +244,10 @@ function outlet_list_b(){
             '<option value="'+ e.data[i].id +'">'+ e.data[i].name +'</option>'
           )
         }
+      }else{
+        $('#outlet').append(
+          '<option value="0">Semua Outlet</option>'
+        )
       }
     }else{
       notif('danger', 'System Error!', e.message);
@@ -263,7 +268,6 @@ function business_list(){
       status: 3,
     })
   }, function (e) {
-    console.log(e)
     let i;
     if(e['status'] === '00'){
       if(e.data.length > 0){
@@ -294,11 +298,11 @@ function _create_date(n){
 }
 
 function _min_max_data(){
-  $('.from_date').on('change', function(){
-    $('.to_date').attr('min', $(this).val());
+  $('.from_date, #startdate').on('change', function(){
+    $('.to_date, #enddate').attr('min', $(this).val());
   })
-  $('.to_date').on('change', function(){
-    $('.from_date').attr('max', $(this).val());
+  $('.to_date, #enddate').on('change', function(){
+    $('.from_date, #startdate').attr('max', $(this).val());
   })
   $('.from_date, .to_date').val(_create_date(0)).change();
 }

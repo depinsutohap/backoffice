@@ -2,10 +2,14 @@ function _sales_per_outlet(){
   business_list(); _date(); _detail();
   _loading(1);
 
-  $("#outlet, #startdate, #enddate, #business").change(function () {
-     outlet_list();
+  $("#business").change(function () {
+    outlet_list_b();
     _loading(1);
-    _detail();
+  });
+  $("#outlet, #startdate, #enddate, #business").change(function () {
+    _min_max_data();
+    _loading(1);
+    _detail()
   });
 }
 function _detail(){

@@ -2,10 +2,14 @@ function _sales_per_cat(){
   business_list(); _date(); _detail();
   _loading(1);
 
-  $("#outlet, #startdate, #enddate, #business").change(function () {
-    outlet_list();
+  $("#business").change(function () {
+    outlet_list_b();
     _loading(1);
-    _detail();
+  });
+  $("#outlet, #startdate, #enddate, #business").change(function () {
+    _min_max_data();
+    _loading(1);
+    _detail()
   });
 }
 function _detail(){
@@ -21,15 +25,16 @@ function _detail(){
         'status': 5,
       })
     }, function (e) {
+      console.log(e)
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){
         $('#sold_total').text(e.data.total_sold);
         $('#revenue_total').text("Rp."+ formatNumber(e.data.total_revenue));
         $('#avgrevenue').text("Rp."+ formatNumber(e.data.total_average));
-        if(e.data.data.length > 0){
-          for(i=0; i < e.data.data.length; i++){
-            sales_per_category_append(e.data.data[i]);
+        if(e.data.datas.length > 0){
+          for(i=0; i < e.data.datas.length; i++){
+            sales_per_category_append(e.data.datas[i]);
           }
         }else{
           $('#data_body').append(

@@ -10,7 +10,6 @@ function _dashboard_sales(){
 }
 function _detail(){
   _loading(1);
-  console.log('load detail')
   $.post('/v1/api/data/dashboard',{
     data: JSON.stringify({
       'id': userData['id'],
@@ -22,15 +21,14 @@ function _detail(){
       'dash_on': 0,
     })
   }, function (e) {
+    console.log(e)
     let i;
     $('#data_body').empty();
     if(e['status'] === '00'){
       if(e.data.hourly_sales.length > 0){
-        console.log('readed')
           graph(e.data.hourly_sales, e.data.product_sales, e.data.category_sales);
       }
       else{
-        console.log('not readed')
         graph();
       }
     }else{

@@ -305,5 +305,4 @@ function _date(){
   enddate = new Date().toDateInputValue();
   document.getElementById('startdate').value = startdate
   document.getElementById('enddate').value = enddate
-  console.log(startdate)
 }
