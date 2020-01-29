@@ -239,6 +239,9 @@ function outlet_list_b(){
     $('#outlet').empty()
     if(e['status'] === '00'){
       if(e.data.length > 0){
+        $('#outlet').append(
+          '<option value="0">Semua Outlet</option>'
+        )
         for(i=0; i < e.data.length; i++){
           $('#outlet').append(
             '<option value="'+ e.data[i].id +'">'+ e.data[i].name +'</option>'
