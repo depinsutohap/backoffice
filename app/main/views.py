@@ -1,4 +1,5 @@
 from . import main
+from app import app
 from ..models import *
 from .. import jinja, _auth
 from sanic.response import json, raw, text, redirect
@@ -22,6 +23,23 @@ async def allowed_file(filename):
 # @main.route("/")
 # async def hello(request):
 #     return text("Hello World!")
+
+@main.route('/send')
+async def send(request):
+    attachments = {}
+    # async with aiofiles.open("source/README.md", "rb") as f:
+    #     attachments["README.md"] = await f.read()
+    # async with aiofiles.open('source/猫.jpg', "rb") as f:
+    #     attachments['猫.jpg'] = await f.read()
+    print('test')
+    await app.send_email(
+        targetlist="yeye@hop.cash",
+        subject="test",
+        content="testcontent",
+        # attachments=attachments
+    )
+    return json({"result": "ok"})
+
 
 @main.route('/')
 async def index(request):
