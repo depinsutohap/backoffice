@@ -1,13 +1,17 @@
 function _summary(){
   business_list(); _date(); _detail();
   _loading(1);
-  nav_lang('report');
-  $("#outlet, #startdate, #enddate, #business").change(function () {
+  _min_max_data();
+
+  $("#business").change(function () {
     outlet_list_b();
+    _loading(1);
+  });
+  $("#outlet, #startdate, #enddate, #business").change(function () {
+    _min_max_data();
     _loading(1);
     _detail()
   });
-
 }
 
 function _detail(){
@@ -22,7 +26,6 @@ function _detail(){
         'status': 1,
       })
     }, function (e) {
-      console.log(e);
       let i;
       if(e.status == '00'){
         if ( userData['id'] > 0){

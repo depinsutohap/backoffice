@@ -46,6 +46,8 @@ async def _api_summary(request):
         # app = current_app._get_current_object()
         response = {}
         user = Hop_User().verify_auth(apidata['id'])
+        print('=======')
+        print(apidata)
         if user is not None and user.verify_token(apidata['token']):
             if int(apidata['status']) == 1:
                 if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
@@ -55,12 +57,8 @@ async def _api_summary(request):
                     response['data'] = TransLog()._summary(apidata['outlet'], apidata['dari'], apidata['sampai'])
                     response['status'] = '00'
             if int(apidata['status']) == 2:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._product_sales_all(user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._product_sales(apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._product_sales_all(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'])
+                response['status'] = '00'
             if int(apidata['status']) == 3:
                 if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
                     response['data'] = TransLog()._daily_sales_all(user.owner_id, apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -77,7 +75,7 @@ async def _api_summary(request):
                     response['status'] = '00'
             if int(apidata['status']) == 5:
                 if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._sales_per_category_all(user.owner_id, apidata['dari'], apidata['sampai'])
+                    response['data'] = TransLog()._sales_per_category_all(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'])
                     response['status'] = '00'
                 elif int(apidata['outlet']) != 0:
                     response['data'] = TransLog()._sales_per_category(apidata['outlet'], apidata['dari'], apidata['sampai'])
