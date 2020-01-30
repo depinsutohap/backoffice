@@ -1,7 +1,8 @@
 import ast
-import json as _json
+from app import app
 from . import api_1
-from .. import _auth
+import json as _json
+from .. import _auth, jinja
 from decimal import *
 from app.models import *
 from sanic.response import json, raw, redirect
@@ -71,6 +72,18 @@ async def _add_register(request):
                     user = Hop_User().verify_auth(response['data']['id'])
                     _auth.login_user(request, user)
                     Hop_Login_Log()._insert(user.id, 2)
+
+                    subject = "Hey, " + user.name + "! Awalilah perjalanan usahamu dengan Hop sekarang."
+                    content = jinja.env.get_template('mail/register.html').render(
+                        name=user.name, subject=subject
+                    )
+                    await app.send_email(
+                        targetlist=user.email,
+                        subject=subject,
+                        content=content,
+                        html=True,
+                        # attachments=attachments
+                    )
                 else:
                     response['status'] = '50'
                     response['message'] = 'Password must be at least 8 characters in length.'

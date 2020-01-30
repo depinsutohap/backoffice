@@ -2,8 +2,8 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    MAIL_SENDER = "no-reply@hop.cash"
-    MAIL_SENDER_PASSWORD = "!2345Hop5432!"
+    MAIL_SENDER = "hello@hop.cash"
+    MAIL_SENDER_PASSWORD = "!2345hop5432!"
     MAIL_SEND_HOST = "mx-s3.vivawebhost.com"
     MAIL_SEND_PORT = 465
     MAIL_TLS = True
