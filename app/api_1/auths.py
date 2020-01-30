@@ -66,7 +66,7 @@ async def _add_register(request):
             check_phone = Hop_User().verify_auth(apidata['phone'])
             if check_email is None and check_phone is None:
                 if len(apidata['password'].strip()) >= 8:
-                    response['data'] = Hop_User()._insertowner(apidata['name'],apidata['phone'],apidata['email'] ,apidata['password'])
+                    response['data'] = Hop_User()._insertowner(apidata['name'],apidata['phone'],apidata['email'], apidata['password'], apidata['refferal'])
                     response['status'] = '00'
                     response['message'] = 'Welcome to Hop! Be ready to Hop and Grow!'
                     user = Hop_User().verify_auth(response['data']['id'])

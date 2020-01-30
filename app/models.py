@@ -43,6 +43,7 @@ class Hop_User(Base, UserMixin):
     pin_hash = Column(String(128), default=None)
     email = Column(String(100),index=True, default=None)
     role_id = Column(Integer,ForeignKey('role.id'), default=3)
+    sales_id = Column(Integer,ForeignKey('sales.id'), default=None)
     owner_id = Column(Integer, default=None)
     address = Column(Text, default=None)
     gender_id = Column(String(15), default=None)
@@ -179,7 +180,7 @@ class Hop_User(Base, UserMixin):
             session.close()
         return response
 
-    def _insertowner(self, _name, _phonenumber, _email, _password):
+    def _insertowner(self, _name, _phonenumber, _email, _password, _refferal):
         response = None
         session = Session()
         try:
@@ -189,6 +190,9 @@ class Hop_User(Base, UserMixin):
             insert.email = _email
             insert.password_hash = generate_password_hash(_password)
             insert.role_id = 1
+            if _refferal is not None:
+                _sales = Hop_Sales()._data(_refferal)
+                insert.sales_id = _sales['id']
             session.add(insert)
             session.commit()
             insert.owner_id = insert.id
@@ -4790,7 +4794,6 @@ class Hop_Image_Service(Base):
     added_time = Column(DateTime(), default=datetime.now())
     status = Column(Boolean, default=True)
 
-
 class Hop_Image_Relation(Base):
     __tablename__ = 'image_relation'
 
@@ -5434,6 +5437,223 @@ class Hop_Billing_Payment_Detail(Base):
             response.append(i.name)
         return response
 
+# Class for Sales and Partner
+
+class Hop_Sales(Base):
+    __tablename__ = 'sales'
+
+    id = Column(Integer,primary_key=True)
+    username = Column(String(16), default=None)
+    name = Column(String(100), default=None)
+    phone_number = Column(String(50),index=True, default=None)
+    password_hash = Column(String(128), default=None)
+    email = Column(String(100),index=True, default=None)
+    role_id = Column(Integer,ForeignKey('sales_role.id'), default=None)
+    address = Column(Text, default=None)
+    gender_id = Column(String(15), default=None)
+    birthdate = Column(DateTime, default=None)
+    confirmed = Column(Boolean,default=True)
+    ktp_number = Column(String(16), default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+    def _data(self, _id):
+        response = {}
+        response['status'] = '50'
+        session = Session()
+        try:
+           _sales_id = session.query(Hop_Sales).filter_by(id=_id, status=True).first()
+           _sales_username = session.query(Hop_Sales).filter_by(username=_id, status=True).first()
+           _sales_phone = session.query(Hop_Sales).filter_by(phone_number=_id, status=True).first()
+           _sales_email = session.query(Hop_Sales).filter_by(email=_id, status=True).first()
+           if _sales_id is not None:
+               response['id'] = _sales_id.id
+               response['name'] = _sales_id.name
+               response['status'] = '00'
+           elif _sales_username is not None:
+               response['id'] = _sales_username.id
+               response['name'] = _sales_username.name
+               response['status'] = '00'
+           elif _sales_phone is not None:
+               response['id'] = _sales_phone.id
+               response['name'] = _sales_phone.name
+               response['status'] = '00'
+           elif _sales_email is not None:
+               response['id'] = _sales_email.id
+               response['name'] = _sales_email.name
+               response['status'] = '00'
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return response
+
+
+class Hop_Sales_Role(Base):
+    __tablename__ = 'sales_role'
+
+    id = Column(Integer,primary_key=True)
+    name = Column(String(100), default=None)
+    first_bonus = Column(DECIMAL(10,2), default=None)
+    bonus = Column(DECIMAL(10,2), default=None)
+    lifetime = Column(DateTime, default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+    def _data(self, _id):
+        response = {}
+        session = Session_hop()
+        try :
+            _sales_role = session.query(Hop_Sales_Role).filter_by(id = _id, status = True).first()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        if _sales_role is not None:
+            response['id'] = _sales_role.id
+            response['name'] = _sales_role.name
+        else:
+            response = None
+        return response
+
+class Hop_Sales_Cash_Flow(Base):
+    __tablename__ = 'sales_cash_flow'
+
+    id = Column(Integer,primary_key=True)
+    sales_id = Column(Integer,ForeignKey('sales.id'), default=None)
+    amount = Column(DECIMAL(10,2), default=None)
+    used = Column(Boolean, default=False)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+class Hop_Partner_Bank_Account(Base):
+    __tablename__ = 'partner_bank_account'
+
+    id = Column(Integer,primary_key=True)
+    name = Column(String(100),primary_key=True)
+    sales_id = Column(Integer,ForeignKey('sales.id'), default=None)
+    partner_bank_id = Column(Integer,ForeignKey('partner_bank.id'), default=None)
+    uid = Column(String(20), default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+class Hop_Partner_Bank(Base):
+    __tablename__ = 'partner_bank'
+
+    id = Column(Integer,primary_key=True)
+    name = Column(String(100),primary_key=True)
+    uid = Column(String(20), default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+class Hop_Partner_Promo(Base):
+    __tablename__ = 'partner_promo'
+
+    id = Column(Integer,primary_key=True)
+    name = Column(String(100),primary_key=True)
+    value = Column(DECIMAL(10,2), default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+class Hop_Log_Action(Base):
+    __tablename__ = 'log_action'
+
+    id = Column(Integer,primary_key=True)
+    objectid = Column(String(100),default=None)
+    id_transaction = Column(String(100),default=None)
+    code_struk = Column(String(100),default=None)
+    user_id = Column(Integer,ForeignKey('user.id'),default=None)
+    time = Column(DateTime,default=None)
+    type = Column(Integer,default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+    def _insert(self,objectid, idtransac, codestruk, userid, time, type):
+        session = Session_hop()
+        try:
+            insert = Hop_Log_Action()
+            insert.objectid = objectid
+            insert.id_transaction = idtransac
+            insert.code_struk = codestruk
+            insert.user_id = userid
+            insert.time = time
+            insert.type = type
+            session.add(insert)
+            session.commit()
+            insert.id
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return insert
+
+    def _countbyobjectid(self, _objectid):
+        session = Session_hop()
+        response = 0
+        try:
+            _logaction = session.query(Hop_Log_Action).filter_by(objectid = _objectid, status = True).count()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return _logaction
+
+class Hop_Log_Action_Detail(Base):
+    __tablename__ = 'log_action_detail'
+
+    id = Column(Integer,primary_key=True)
+    log_action_id = Column(Integer,ForeignKey('log_action.id'),default=None)
+    pid = Column(Integer,ForeignKey('product_item.id'),default=None)
+    vid = Column(Integer,ForeignKey('variant_list.id'),default=None)
+    price_id = Column(Integer,ForeignKey('price.id'),default=None)
+    quantity = Column(Integer,default=None)
+    type = Column(Integer,default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+    def _insert(self, logactionid, pid, vid, priceid, quantity, type):
+        session = Session_hop()
+        response = {}
+        try:
+            insert = Hop_Log_Action_Detail()
+            insert.log_action_id = logactionid
+            insert.pid = pid
+            insert.vid = vid
+            insert.price_id = priceid
+            insert.quantity = quantity
+            insert.type = type
+            session.add(insert)
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return None
+
+    def _countbylogactiondetail(self, _logactionid):
+        session = Session_hop()
+        response = {}
+        try:
+            _logactiondetail = session.query(Hop_Log_Action_Detail).filter_by(log_action_id = _logactionid, status = True).count()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return _logactiondetail
+
+class Hop_Language(Base):
+    __tablename__ = 'language'
+
+    id = Column(Integer,primary_key=True)
+    name = Column(String(50),default=1)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
 
 
 # REINIT FUNCTION

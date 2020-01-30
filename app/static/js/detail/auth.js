@@ -41,12 +41,17 @@ function register() {
   _loading(0); view_pass();
   $('form').submit(function (e) {
       e.preventDefault();
+      let refferal = null;
+      if($('#refferal').val().trim().length > 0 ){
+        refferal = $('#refferal').val()
+      }
       $.post('/v1/api/auth/register',{
         data: JSON.stringify({
           name: $('#name').val(),
           phone: $('#phone').val(),
           email: $('#email').val(),
-          password: $('#password').val()
+          password: $('#password').val(),
+          refferal: refferal
         })
       }, function(e){
         if(e.status === '00'){
