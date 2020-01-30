@@ -80,7 +80,7 @@ function _submit_data_account(){
           if(e.data.status == '00'){
             $('#edit_account_name, #edit_account_email, #edit_account_phone').val('');
             $('._name').text(e.data.name);
-            $('._phone').text(e.data.phone);
+            $('._phone').text(e.data.phone_number);
             $('._email').text(e.data.email);
             userData['token'] = e.data.token;
             notif('success', 'Sucessfully Updated', 'Your data has been updated');

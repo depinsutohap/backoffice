@@ -31,14 +31,22 @@ async def _api_tax(request):
                 response['outlet_list'] = Hop_User_Outlet()._list(_user_id=user.id)
                 response['status'] = '00'
             elif int(apidata['status']) == 1:
-                response['data'] = Hop_Tax()._insert(name=apidata['tax_name'], tax_type_id=apidata['tax_type_id'], value=apidata['tax_value'], outlet_list=apidata['outlet_list'], owner_id=user.owner_id)
-                response['status'] = '00'
+                if float(apidata['tax_value']) < 100:
+                    response['data'] = Hop_Tax()._insert(name=apidata['tax_name'], tax_type_id=apidata['tax_type_id'], value=apidata['tax_value'], outlet_list=apidata['outlet_list'], owner_id=user.owner_id)
+                    response['status'] = '00'
+                else:
+                    response['status'] = '50'
+                    response['message'] = 'Please, fill the value of the tax and services less than 100%'
             elif int(apidata['status']) == 2:
                 response['data'] = Hop_Tax()._data(_id=apidata['tax_id'], owner_id=user.owner_id)
                 response['status'] = '00'
             elif int(apidata['status']) == 3:
-                response['data'] = Hop_Tax()._update(_id=apidata['tax_id'], name=apidata['tax_name'], tax_type_id=apidata['tax_type_id'], value=apidata['tax_value'], outlet_list=apidata['outlet_list'], owner_id=user.owner_id)
-                response['status'] = '00'
+                if float(apidata['tax_value']) < 100:
+                    response['data'] = Hop_Tax()._update(_id=apidata['tax_id'], name=apidata['tax_name'], tax_type_id=apidata['tax_type_id'], value=apidata['tax_value'], outlet_list=apidata['outlet_list'], owner_id=user.owner_id)
+                    response['status'] = '00'
+                else:
+                    response['status'] = '50'
+                    response['message'] = 'Please, fill the value of the tax and services less than 100%'
             elif int(apidata['status']) == 4:
                 response['data'] = Hop_Tax()._remove(_id=apidata['tax_id'], owner_id=user.owner_id)
                 response['status'] = '00'

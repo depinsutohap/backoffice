@@ -174,13 +174,18 @@ function _submit_data_tax(){
             '</tr>'
           )
           $('.no_data').css('display', 'none');
-          close_sideform();
           _menu_dropdown();_check();
+          notif('success', 'Sucessfully Added', 'Your data has been added');
+        }else{
+          notif('danger', 'Invalid Value', e.message);
         }
       }).fail(function(){
         notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
       }).done(function(){
+        //
+      }).always(function(){
         _loading(0);
+        close_sideform();
       });
   });
 
@@ -213,12 +218,18 @@ function _submit_data_tax(){
           $('.data_tax_type_' + e.data.id).text(e.data.tax_type.name);
           $('.data_tax_value_' + e.data.id).text(e.data.value);
           close_sideform();
+          notif('success', 'Sucessfully Updated', 'Your data has been updated');
+        }else{
+          notif('warning', 'Invalid Value', e.message);
         }
       }).fail(function(){
         notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
       }).done(function(){
+        //
+      }).always(function(){
         _loading(0);
-      });
+        close_sideform();
+      });;
   });
 
   // SUBMIT REMOVE DATA TAX & SERVICES

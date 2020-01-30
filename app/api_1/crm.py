@@ -74,17 +74,21 @@ async def _api_promo(request):
                 if len(apidata['type_id']) > 0 and  apidata['requirement_id'] != '' \
                 and apidata['requirement_value'] != '' and apidata['reward_id'] != '' \
                 and apidata['reward_value'] != '':
-                    response['data'] = Hop_Ap_Detail()._insert(
-                        ap_type_id=apidata['type_id'], ap_requirement_id=apidata['requirement_id'],
-                        requirement_value=apidata['requirement_value'], requirement_relation=apidata['requirement_relation'],
-                        ap_reward_id=apidata['reward_id'], reward_value=apidata['reward_value'],
-                        reward_relation=apidata['reward_relation'], multiple=apidata['multiple'],
-                        promo_date_status=apidata['promo_date_status'], startdate=apidata['promo_start_date'],
-                        enddate=apidata['promo_end_date'], starttime=apidata['promo_start_time'],
-                        endtime=apidata['promo_end_time'], apply_time_status=apidata['promo_applied_time_status'],
-                        applied_day=apidata['applied_day'], outlet_list=apidata['promo_outlet'],
-                        owner_id=user.owner_id)
-                    response['status'] = '00'
+                    if int(apidata['reward_id']) == 4 and float(apidata['reward_value']) >= 100:
+                        response['status'] = '50'
+                        response['message'] = 'Please, fill the value of the reward less than 100%'
+                    else:
+                        response['data'] = Hop_Ap_Detail()._insert(
+                            ap_type_id=apidata['type_id'], ap_requirement_id=apidata['requirement_id'],
+                            requirement_value=apidata['requirement_value'], requirement_relation=apidata['requirement_relation'],
+                            ap_reward_id=apidata['reward_id'], reward_value=apidata['reward_value'],
+                            reward_relation=apidata['reward_relation'], multiple=apidata['multiple'],
+                            promo_date_status=apidata['promo_date_status'], startdate=apidata['promo_start_date'],
+                            enddate=apidata['promo_end_date'], starttime=apidata['promo_start_time'],
+                            endtime=apidata['promo_end_time'], apply_time_status=apidata['promo_applied_time_status'],
+                            applied_day=apidata['applied_day'], outlet_list=apidata['promo_outlet'],
+                            owner_id=user.owner_id)
+                        response['status'] = '00'
                 else:
                     response['status'] = '50'
                     response['message'] = 'Please fill all required fields'
@@ -98,17 +102,21 @@ async def _api_promo(request):
                 if len(apidata['type_id']) > 0 and  apidata['requirement_id'] != '' \
                 and apidata['requirement_value'] != '' and apidata['reward_id'] != '' \
                 and apidata['reward_value'] != '':
-                    response['data'] = Hop_Ap_Detail()._update( promo_id=apidata['promo_id'],
-                        ap_type_id=apidata['type_id'], ap_requirement_id=apidata['requirement_id'],
-                        requirement_value=apidata['requirement_value'], requirement_relation=apidata['requirement_relation'],
-                        ap_reward_id=apidata['reward_id'], reward_value=apidata['reward_value'],
-                        reward_relation=apidata['reward_relation'], multiple=apidata['multiple'],
-                        promo_date_status=apidata['promo_date_status'], startdate=apidata['promo_start_date'],
-                        enddate=apidata['promo_end_date'], starttime=apidata['promo_start_time'],
-                        endtime=apidata['promo_end_time'], apply_time_status=apidata['promo_applied_time_status'],
-                        applied_day=apidata['applied_day'], outlet_list=apidata['promo_outlet'],
-                        owner_id=user.owner_id)
-                    response['status'] = '00'
+                    if int(apidata['reward_id']) == 4 and float(apidata['reward_value']) >= 100:
+                        response['status'] = '50'
+                        response['message'] = 'Please, fill the value of the reward less than 100%'
+                    else:
+                        response['data'] = Hop_Ap_Detail()._update( promo_id=apidata['promo_id'],
+                            ap_type_id=apidata['type_id'], ap_requirement_id=apidata['requirement_id'],
+                            requirement_value=apidata['requirement_value'], requirement_relation=apidata['requirement_relation'],
+                            ap_reward_id=apidata['reward_id'], reward_value=apidata['reward_value'],
+                            reward_relation=apidata['reward_relation'], multiple=apidata['multiple'],
+                            promo_date_status=apidata['promo_date_status'], startdate=apidata['promo_start_date'],
+                            enddate=apidata['promo_end_date'], starttime=apidata['promo_start_time'],
+                            endtime=apidata['promo_end_time'], apply_time_status=apidata['promo_applied_time_status'],
+                            applied_day=apidata['applied_day'], outlet_list=apidata['promo_outlet'],
+                            owner_id=user.owner_id)
+                        response['status'] = '00'
                 else:
                     response['status'] = '50'
                     response['message'] = 'Please fill all required fields'
