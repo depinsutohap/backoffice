@@ -12,22 +12,22 @@ function _productsales(){
     _loading(1);
     _detail()
   });
-
 }
-
 function _detail(){
   _loading(1);
   $.post('/v1/api/data/subreport',{
-      data: JSON.stringify({
-        'id': userData['id'],
-        'token': userData['token'],
-        'outlet': $('#outlet').val(),
-        'dari': $('#startdate').val(),
-        'sampai': $('#enddate').val(),
-        'business_id': $('#business').val(),
-        'status': 2,
-      })
+    data: JSON.stringify({
+      'id': userData['id'],
+      'token': userData['token'],
+      'outlet': $('#outlet').val(),
+      'dari': $('#startdate').val(),
+      'sampai': $('#enddate').val(),
+      'business_id': $('#business').val(),
+      'status': 2,
+    })
     }, function (e) {
+      console.log('product sales')
+      console.log(e)
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){

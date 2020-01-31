@@ -153,12 +153,11 @@ class TransLog:
             session.close()
         return response
 
-    def _dashboard_sales_all(self, _ownerid, _outletid, _dashon, _dari, _sampai): #dashboard dan report - sales per hour
+    def _dashboard_sales_all(self, _ownerid, _outletid, _dashon, _dari, _sampai, _business_id): #dashboard dan report - sales per hour
         response = {}
         sales_data = []
         per_hour = []
         hours = []
-        source_data = []
         merge_sales = []
         df2 = pd.DataFrame()
         date_from = _from_converted(_dari)
@@ -192,10 +191,10 @@ class TransLog:
             if len(merge_sales) > 0: #jika data tersedia
                 if int(_dashon) == 0: #jika typenya untuk dashboard
                     #munculkan data category dan product
-                    category = TransLog()._sales_per_category_all(_ownerid, _outletid, _dari, _sampai)
-                    product = TransLog()._product_sales_all(_ownerid, _outletid, _dari, _sampai)
-                    if len(category['datas']) > 0:
-                        response['category_sales'] = category['datas']
+                    category = TransLog()._per_category_sales(_ownerid, _outletid, _dari, _sampai, _business_id)
+                    product = TransLog()._product_sales_all(_ownerid, _outletid, _dari, _sampai, _business_id)
+                    if len(category['data']) > 0:
+                        response['category_sales'] = category['data']
                     else:
                         response['category_sales'] = 0
                     if len(product['product_sales']) > 0:
@@ -247,7 +246,7 @@ class TransLog:
                         average = 0
                         hour = i
                     avg += average
-                    temp_data.append({'hour' : hour, 'revenue':revenue , 'total_trans':total_trans, 'average':average})
+                    temp_data.append({'hour' : hour, 'revenue':revenue , 'total_trans':total_trans, 'average':round(average, 2)})
                 total_revenue = sum(get_revenue['revenue'] for get_revenue in temp_data)
                 total_sold = sum(get_total['total_trans'] for get_total in temp_data)
                 response['average'] = avg
@@ -267,95 +266,78 @@ class TransLog:
             session.close()
         return response
 
-    def _summary(self, _outletid, _dari, _sampai): #done
+    def _summary_co(selfm, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
+        summary = []
+        sales = []
+        merge_sales = []
+        total_revenue = 0
+        total_discount = 0
+        total_void = 0
+        total_tax = 0
         date_from = _from_converted(_dari)
         date_to = _to_converted(_sampai)
         dari = date_from['dari']
         sampai = date_to['sampai']
-        success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": int(_outletid)}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-        if success_trans is not None:
-            subtotal=[{ "$match": { "$and": [ {"outlet_id":int(_outletid)}, { "status_transaction": 3 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "sub_total" : {"$sum" : "$sub_total"}}}]
-            value_subtotal = list(mongo.trx_log.aggregate(subtotal))
-            response['success_st'] = (value_subtotal[0]['sub_total'])
-
-            disc_sc_st=[{ "$match": { "$and": [ {"outlet_id":int(_outletid)}, { "status_transaction": 3 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "discount" : {"$sum" : "$discount"}}}]
-            val_disc_sc_st = list(mongo.trx_log.aggregate(disc_sc_st))
-            response['discount_success_st'] = (val_disc_sc_st[0]['discount'])
-
-            tax_sc_st=[{ "$match": { "$and": [ {"outlet_id":int(_outletid)}, { "status_transaction": 3 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "tax" : {"$sum" : "$tax"}}}]
-            val_tax_sc_st = list(mongo.trx_log.aggregate(tax_sc_st))
-            taxservice = (val_tax_sc_st[0]['tax'])
-            response['tax_success_st'] = round(taxservice)
-
-            total=[{ "$match": { "$and": [ {"outlet_id":int(_outletid)}, { "status_transaction": 3 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "total" : {"$sum" : "$total"}}}]
-            val_total = list(mongo.trx_log.aggregate(total))
-            total_revenue = (val_total[0]['total'])
-            response['total'] = total_revenue
-            response['nettrevenue']= int(total_revenue) - int(taxservice)
-        else:
-            response['success_st'] = 0
-            response['discount_success_st'] = 0
-            response['tax_success_st'] = 0
-            response['nettrevenue'] = 0
-            response['total'] = 0
-
-        void = mongo.trx_log.find_one({"$and": [{ "outlet_id" : int(_outletid) },{ "status_transaction": 4 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]})
-        if void is not None:
-            void_subtotal=[{ "$match": { "$and": [ {"outlet_id":int(_outletid)}, { "status_transaction": 4 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "sub_total" : {"$sum" : "$sub_total"}}}]
-            void_value_subtotal = list(mongo.trx_log.aggregate(void_subtotal))
-            response['void_st'] = (void_value_subtotal[0]['sub_total'])
-        else:
-            response['void_st'] = 0
-
-        for i in mongo.trx_log.find({ "$and": [{"outlet_id": int(_outletid)}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
-            print(i)
-        return response
-
-    def _summary_all(self, _ownerid, _dari, _sampai): #done
-        response = {}
         session = Session()
         try:
-            business = session.query(Hop_Business).filter_by(owner_id= _ownerid).first()
-            for o in session.query(Hop_Outlet).filter_by(business_id = business.id).all():
-                date_from = _from_converted(_dari)
-                date_to = _to_converted(_sampai)
-                dari = date_from['dari']
-                sampai = date_to['sampai']
-                success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": o.id}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-                if success_trans is not None:
-                    subtotal=[{ "$match": { "$and": [ {"outlet_id":o.id}, { "status_transaction": 3 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "sub_total" : {"$sum" : "$sub_total"}}}]
-                    value_subtotal = list(mongo.trx_log.aggregate(subtotal))
-                    response['success_st'] = (value_subtotal[0]['sub_total'])
-
-                    disc_sc_st=[{ "$match": { "$and": [ {"outlet_id":o.id}, { "status_transaction": 3 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "discount" : {"$sum" : "$discount"}}}]
-                    val_disc_sc_st = list(mongo.trx_log.aggregate(disc_sc_st))
-                    response['discount_success_st'] = (val_disc_sc_st[0]['discount'])
-
-                    tax_sc_st=[{ "$match": { "$and": [ {"outlet_id":o.id}, { "status_transaction": 3 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "tax" : {"$sum" : "$tax"}}}]
-                    val_tax_sc_st = list(mongo.trx_log.aggregate(tax_sc_st))
-                    taxservice = (val_tax_sc_st[0]['tax'])
-                    response['tax_success_st'] = taxservice
-
-                    total=[{ "$match": { "$and": [ {"outlet_id":o.id}, { "status_transaction": 3 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "total" : {"$sum" : "$total"}}}]
-                    val_total = list(mongo.trx_log.aggregate(total))
-                    total_revenue = (val_total[0]['total'])
-                    response['total'] = total_revenue
-                    response['nettrevenue']= int(total_revenue) - int(taxservice)
-                else:
-                    response['success_st'] = 0
-                    response['discount_success_st'] = 0
-                    response['tax_success_st'] = 0
-                    response['nettrevenue'] = 0
-                    response['total'] = 0
-
-                void = mongo.trx_log.find_one({"$and": [{ "outlet_id" : o.id },{ "status_transaction": 4 }]})
-                if void is not None:
-                    void_subtotal=[{ "$match": { "$and": [ {"outlet_id":o.id}, { "status_transaction": 4 }, {"datePayment": {'$gte': dari, '$lte': sampai}}]}},{"$group" : {"_id" : None, "sub_total" : {"$sum" : "$sub_total"}}}]
-                    void_value_subtotal = list(mongo.trx_log.aggregate(void_subtotal))
-                    response['void_st'] = (void_value_subtotal[0]['sub_total'])
-                else:
-                    response['void_st'] = 0
+            int(_outletid)
+            int(_business_id)
+        except:
+            response['status'] = 50
+            return response
+        try :
+            if int(_outletid) == 0 and int(_business_id) == 0:
+                for o in session.query(Hop_Outlet).filter_by(owner_id = _ownerid).all():
+                    all_sales = []
+                    for i in mongo.trx_log.find({"$and" :[{"outlet_id": o.id},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                        sales_data = {}
+                        void_sales = {}
+                        if i is not None and i['status_transaction'] == 3:
+                            total_revenue += i['sub_total']
+                            total_discount += i['discount']
+                        elif i is not None and i['status_transaction'] == 4:
+                            total_void += i['sub_total']
+                netrevenue = total_revenue - total_discount - total_void
+                response['success_st'] = total_revenue
+                response['void_st'] = total_void
+                response['discount_success_st'] = total_discount
+                response['nettrevenue'] = netrevenue
+                response['tax_sc_st'] = total_tax
+            elif int(_outletid) == 0 and int(_business_id) != 0:
+                _business = session.query(Hop_Business).filter_by(id=_business_id).first()
+                for o in session.query(Hop_Outlet).filter_by(business_id = _business.id).all():
+                    all_sales = []
+                    for i in mongo.trx_log.find({"$and" :[{"outlet_id": o.id},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                        sales_data = {}
+                        void_sales = {}
+                        if i is not None and i['status_transaction'] == 3:
+                            total_revenue += i['sub_total']
+                            total_discount += i['discount']
+                        elif i is not None and i['status_transaction'] == 4:
+                            total_void += i['sub_total']
+                netrevenue = total_revenue - total_discount - total_void
+                response['success_st'] = total_revenue
+                response['void_st'] = total_void
+                response['discount_success_st'] = total_discount
+                response['nettrevenue'] = netrevenue
+                response['tax_sc_st'] = total_tax
+            elif int(_outletid) != 0:
+                all_sales = []
+                for i in mongo.trx_log.find({"$and" :[{"outlet_id": int(_outletid)},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                    sales_data = {}
+                    void_sales = {}
+                    if i is not None and i['status_transaction'] == 3:
+                        total_revenue += i['sub_total']
+                        total_discount += i['discount']
+                    elif i is not None and i['status_transaction'] == 4:
+                        total_void += i['sub_total']
+                netrevenue = total_revenue - total_discount - total_void
+                response['success_st'] = total_revenue
+                response['void_st'] = total_void
+                response['discount_success_st'] = total_discount
+                response['nettrevenue'] = netrevenue
+                response['tax_sc_st'] = total_tax
         except:
             session.rollback()
             raise
@@ -388,7 +370,7 @@ class TransLog:
                     for d in v:
                         for i in d['product']:
                             id_price = i['price'][0]['id']
-                            get_price =  session.query(Hop_Price).filter_by(id=int(id_price), status=True).first()
+                            get_price =  session.query(Hop_Price).filter_by(id=int(id_price)).first()
                             total = i['quantity'] * get_price.value
                             product_data.append({'id': str(i['id']), 'price':int(total), 'quantity': i['quantity'], 'id_price': id_price})
                 product_data.sort(key=lambda x:x['id'])
@@ -397,15 +379,15 @@ class TransLog:
                     sold = 0
                     for d in v:
                         sold += d['quantity']
-                        get_variant = session.query(Hop_Price).filter_by(id=int(d['id_price']), status=True).first()
+                        get_variant = session.query(Hop_Price).filter_by(id=int(d['id_price'])).first()
                         po = session.query(Hop_Product_Item).filter_by(id=int(k)).first()
                         if get_variant.variant_type is True:
                             vid = get_variant.vid
-                            var = session.query(Hop_Variant_List).filter_by(id=vid, status=True).first()
-                            var_item_1 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_1, status=True).first()
-                            var_item_2 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_2, status=True).first()
-                            var_item_3 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_3, status=True).first()
-                            var_item_4 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_4, status=True).first()
+                            var = session.query(Hop_Variant_List).filter_by(id=vid).first()
+                            var_item_1 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_1).first()
+                            var_item_2 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_2).first()
+                            var_item_3 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_3).first()
+                            var_item_4 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_4).first()
                             if var_item_2 is None:
                                 variant2 = ''
                             else:
@@ -433,7 +415,7 @@ class TransLog:
                 response['total_sold'] = count_text
                 response['product_sales'] = product_price
             else:
-                response['data'] = []
+                response['product_sales'] = []
                 response['total_revenue'] = 0
                 response['total_sold'] = 0
         except:
@@ -443,7 +425,7 @@ class TransLog:
             session.close()
         return response
 
-    def _product_sales_all(self, _ownerid, _outletid, _dari, _sampai):
+    def _product_sales_all(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['sales'] = []
         response['profit'] = []
@@ -459,7 +441,7 @@ class TransLog:
         df2 = pd.DataFrame()
         session = Session()
         try:
-            if int(_outletid) == 0:
+            if int(_outletid) == 0 and int(_business_id) == 0:
                 for o in session.query(Hop_Outlet).filter_by(owner_id = _ownerid).all():
                     all_sales = []
                     for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'product': 1, 'reward': 1, 'quantity':1, 'price': 1, '_id': 0 }):
@@ -468,9 +450,21 @@ class TransLog:
                             sales_data.update({'datePayment' : i['datePayment'], 'product': i['product']})
                         all_sales.append(sales_data)
                     merge_sales.append(all_sales)
+            elif int(_outletid) == 0 and int(_business_id) != 0:
+                _business = session.query(Hop_Business).filter_by(id=_business_id).first()
+                for o in session.query(Hop_Outlet).filter_by(business_id = _business.id).all():
+                    all_sales = []
+                    for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'product': 1, 'reward': 1, 'quantity':1, 'price': 1, '_id': 0 }):
+                        sales_data = {}
+                        sales_data.update({
+                            'datePayment' : i['datePayment'],
+                            'product': i['product']
+                        })
+                        all_sales.append(sales_data)
+                    merge_sales.append(all_sales)
             else:
                 all_sales = []
-                for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'product': 1, 'reward': 1, 'quantity':1, 'price': 1, '_id': 0 }):
+                for i in mongo.trx_log.find({ "$and": [{"outlet_id": int(_outletid)} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'product': 1, 'reward': 1, 'quantity':1, 'price': 1, '_id': 0 }):
                     sales_data = {}
                     sales_data.update({
                         'datePayment' : i['datePayment'],
@@ -502,7 +496,7 @@ class TransLog:
                         po = session.query(Hop_Product_Item).filter_by(id=int(k)).first()
                         if get_variant.variant_type is True:
                             vid = get_variant.vid
-                            var = session.query(Hop_Variant_List).filter_by(id=vid, status=True).first()
+                            var = session.query(Hop_Variant_List).filter_by(id=vid).first()
                             var_item_1 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_1).first()
                             var_item_2 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_2).first()
                             var_item_3 = session.query(Hop_Variant_Item).filter_by(id=var.variant_item_3).first()
@@ -542,7 +536,102 @@ class TransLog:
             session.close()
         return response
 
-    def _daily_sales(self, _outletid, _dari, _sampai, _business_id):
+    def _daily_sales_co(self, _ownerid, _outletid, _dari, _sampai, _business_id):
+        response = {}
+        df2 = pd.DataFrame()
+        merge_sales = []
+        date_from = _from_converted(_dari)
+        date_to = _to_converted(_sampai)
+        dari = date_from['dari']
+        sampai = date_to['sampai']
+        response['data'] = []
+        response['profit'] = []
+        xyz = []
+        qwe = []
+        session = Session()
+        try:
+            if int(_outletid) == 0 and int(_business_id) == 0:
+                for o in session.query(Hop_Outlet).filter_by(owner_id = _ownerid).all():
+                    all_sales = []
+                    for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'sub_total': 1, 'tax': 1, 'discount': 1, '_id': 0 }):
+                        sales_data = {}
+                        if i is not None:
+                            sales_data.update({
+                                'datePayment' : i['datePayment'].strftime("%Y-%m-%d"),
+                                'sub_total': i['sub_total'],
+                                'tax': i['tax'],
+                                'discount': i['discount'],
+                            })
+                        all_sales.append(sales_data)
+                    merge_sales.append(all_sales)
+            elif int(_outletid) == 0 and int(_business_id) != 0:
+                _business = session.query(Hop_Business).filter_by(id=_business_id).first()
+                for o in session.query(Hop_Outlet).filter_by(business_id = _business.id).all():
+                    all_sales = []
+                    for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'sub_total': 1, 'tax': 1, 'discount': 1, '_id': 0 }):
+                        sales_data = {}
+                        if i is not None:
+                            sales_data.update({
+                                'datePayment' : i['datePayment'].strftime("%Y-%m-%d"),
+                                'sub_total': i['sub_total'],
+                                'tax': i['tax'],
+                                'discount': i['discount'],
+                            })
+                        all_sales.append(sales_data)
+                    merge_sales.append(all_sales)
+            else:
+                all_sales = []
+                for i in mongo.trx_log.find({ "$and": [{"outlet_id": int(_outletid)} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'sub_total': 1, 'tax': 1, 'discount': 1, '_id': 0 }):
+                    sales_data = {}
+                    sales_data.update({
+                        'datePayment' : i['datePayment'].strftime("%Y-%m-%d"),
+                        'sub_total': i['sub_total'],
+                        'tax': i['tax'],
+                        'discount': i['discount'],
+                    })
+                    all_sales.append(sales_data)
+                merge_sales.append(all_sales)
+            merge_sales = [x for x in merge_sales if x != []]
+            if len(merge_sales) > 0: #jika data tersedia
+                for i in range(len(merge_sales)): #hanya sales per hour
+                    df = pd.DataFrame(merge_sales[i])
+                    # df2 = df2.append(df)
+                master_data = df.to_dict('r')
+                for k,v in groupby(master_data,key=lambda x:x['datePayment']):
+                    sums = 0
+                    taxes = 0
+                    discount = 0
+                    total = 0
+                    avg = 0
+                    for d in v:
+                        sums += d['sub_total']
+                        taxes += d['tax']
+                        discount += d['discount']
+                        total += 1
+                    avg = sums/total
+                    xyz.append({'datePayment':k, 'revenue': sums, 'total_trans':total, 'average':round(avg, 2)})
+                    qwe.append({'datePayment':k, 'revenue': sums, 'tax':taxes, 'discount':discount})
+                response['data'] = xyz
+                response['profit'] = qwe
+                total_revenue = sum(get_revenue['revenue'] for get_revenue in response['data'])
+                total_trans = sum(get_total['total_trans'] for get_total in response['data'])
+                avg = int(total_revenue) / int(total_trans)
+                response['avg_revenue'] = round(avg, 2)
+                response['total_revenue'] = total_revenue
+                response['count_trx'] = total_trans
+            else:
+                response['data'] = []
+                response['avg_revenue'] = 0
+                response['total_revenue'] = 0
+                response['count_trx'] = 0
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return response
+
+    def _daily_sales(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         response['profit'] = []
@@ -589,7 +678,7 @@ class TransLog:
             response['avg_revenue'] = 0
         return response
 
-    def _daily_sales_all(self, _ownerid, _dari, _sampai, _business_id):
+    def _daily_sales_all(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         response['profit'] = []
@@ -685,13 +774,13 @@ class TransLog:
             session.close()
         return response
 
-    def _data_sales_trx_all(self, _ownerid, _dari, _sampai):
+    def _data_sales_trx_all(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         session = Session()
         try:
             business = session.query(Hop_Business).filter_by(owner_id= _ownerid).first()
-            trx = TransLog()._summary_all(_ownerid, _dari, _sampai)
+            trx = TransLog()._summary_co(_ownerid, _outletid, _dari, _sampai, _business_id)
             for o in session.query(Hop_Outlet).filter_by(business_id = business.id).all():
                 date_from = _from_converted(_dari)
                 date_to = _to_converted(_sampai)
@@ -716,7 +805,7 @@ class TransLog:
                             'statustrx' : status,
                             'total': i['sub_total']
                         })
-                        response['total_revenue'] = trx['success_st']
+                    response['total_revenue'] = trx['success_st']
                 else:
                     response['total_revenue'] = 0
                     response['data'] = []
@@ -727,48 +816,73 @@ class TransLog:
             session.close()
         return response #done
 
-    def _sales_per_category(self, _outletid, _dari, _sampai):
+    def _data_sales_trx_co(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
-        app = []
         date_from = _from_converted(_dari)
         date_to = _to_converted(_sampai)
         dari = date_from['dari']
         sampai = date_to['sampai']
-        success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": int(_outletid)}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-        trx = TransLog()._product_sales(_outletid, _dari, _sampai)
-        if success_trans is not None:
-            for xy in trx['product_sales']:
-                app.append({
-                    'id_product': xy['id'],
-                    'category': xy['category'].lower(),
-                    'revenue': xy['revenue'],
-                    'sold' : xy['sold_item']
-                })
-            app.sort(key=lambda x:x['category'])
-            for k,v in groupby(app,key=lambda x:x['category']):
-                sold_per_cat = 0
-                total_revenue = 0
-                avg = 0
-                for d in v:
-                    sold_per_cat += d['sold']
-                    total_revenue += d['revenue']
-                avg = total_revenue / sold_per_cat
-                response['data'].append({'category':k, 'sold': sold_per_cat, 'total_revenue': total_revenue, 'average': round(avg)})
-            total_revenue = sum(get_revenue['total_revenue'] for get_revenue in response['data'])
-            total_sold = sum(get_total['sold'] for get_total in response['data'])
-            avg = int(total_revenue) / int(total_sold)
-            response['total_average'] = round(avg)
-            response['total_revenue'] = total_revenue
-            response['total_sold'] = total_sold
-        else:
-            response['data'] = []
-            response['total_revenue'] = 0
-            response['total_sold'] = 0
-            response['total_average'] = 0
-        return response
+        session = Session()
+        try:
+            int(_outletid)
+            int(_business_id)
+        except:
+            response['status'] = 50
+            return response
+        try:
+            trx = TransLog()._summary_co(_ownerid, _outletid, _dari, _sampai, _business_id)['success_st']
+            if int(_outletid) == 0 and int(_business_id) == 0:
+                for o in session.query(Hop_Outlet).filter_by(owner_id = _ownerid).all():
+                    all_sales = []
+                    for i in mongo.trx_log.find({"$and" :[{"outlet_id": o.id},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                        operator = session.query(Hop_User).filter_by(id=i['kasir_id']).first()
+                        if i['status_transaction'] == 1:
+                            status = 'On Going'
+                        elif i['status_transaction'] == 2:
+                            status = 'Cancelled'
+                        elif i['status_transaction'] == 3:
+                            status = 'Successful'
+                        elif i['status_transaction'] == 4:
+                            status = 'void'
+                        response['data'].append({'time': i['dateSaved'],'operator': operator.name,'idtrx': i['id_transaction'],'statustrx' : status,'total': i['sub_total']})
+            elif int(_outletid) == 0 and int(_business_id) != 0:
+                _business = session.query(Hop_Business).filter_by(id=_business_id).first()
+                for o in session.query(Hop_Outlet).filter_by(business_id = _business.id).all():
+                    all_sales = []
+                    for i in mongo.trx_log.find({"$and" :[{"outlet_id": o.id},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                        operator = session.query(Hop_User).filter_by(id=i['kasir_id']).first()
+                        if i['status_transaction'] == 1:
+                            status = 'On Going'
+                        elif i['status_transaction'] == 2:
+                            status = 'Cancelled'
+                        elif i['status_transaction'] == 3:
+                            status = 'Successful'
+                        elif i['status_transaction'] == 4:
+                            status = 'void'
+                        response['data'].append({'time': i['dateSaved'],'operator': operator.name,'idtrx': i['id_transaction'],'statustrx' : status,'total': i['sub_total']})
+            elif int(_outletid) != 0:
+                all_sales = []
+                for i in mongo.trx_log.find({"$and" :[{"outlet_id": int(_outletid)},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                    operator = session.query(Hop_User).filter_by(id=i['kasir_id']).first()
+                    if i['status_transaction'] == 1:
+                        status = 'On Going'
+                    elif i['status_transaction'] == 2:
+                        status = 'Cancelled'
+                    elif i['status_transaction'] == 3:
+                        status = 'Successful'
+                    elif i['status_transaction'] == 4:
+                        status = 'void'
+                    response['data'].append({'time': i['dateSaved'],'operator': operator.name,'idtrx': i['id_transaction'],'statustrx' : status,'total': i['sub_total']})
+            response['total_revenue'] = trx
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return response #done
 
-    def _sales_per_category_all(self, _ownerid, _outletid, _dari, _sampai):
+    def _sales_per_category_all(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         category_sales = []
         date_from = _from_converted(_dari)
@@ -782,7 +896,7 @@ class TransLog:
             for o in session.query(Hop_Outlet).filter_by(business_id = business.id).all():
                 app = []
                 success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": o.id}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-                trx = TransLog()._product_sales_all(_ownerid, _outletid, _dari, _sampai)
+                trx = TransLog()._product_sales_all(_ownerid, _outletid, _dari, _sampai, _business_id)
                 if success_trans is not None:
                     for xy in trx['product_sales']:
                         app.append({
@@ -800,21 +914,19 @@ class TransLog:
                             sold_per_cat += d['sold']
                             total_revenue += d['revenue']
                         avg = total_revenue / sold_per_cat
-                        category_sales.append({'category':k, 'sold': sold_per_cat, 'total_revenue': total_revenue, 'average': round(avg)})
+                        category_sales.append({'category':k, 'sold': sold_per_cat, 'total_revenue': total_revenue, 'average': round(avg, 2)})
                     revenue_all = sum(get_revenue['total_revenue'] for get_revenue in category_sales)
                     sold_all = sum(get_total['sold'] for get_total in category_sales)
-                    print(sold_all)
-                    print(revenue_all)
                     response['datas'] = category_sales
                     avg = int(revenue_all) / int(sold_all)
-                    response['total_average'] = round(avg)
-                    response['total_revenue'] = revenue_all
-                    response['total_sold'] = sold_all
+                    response['avg'] = round(avg, 2)
+                    response['revenue'] = revenue_all
+                    response['sold'] = sold_all
                 else:
                     response['data'] = []
                     response['total_revenue'] = 0
                     response['total_sold'] = 0
-                    response['total_average'] = 0
+                    response['avg'] = 0
         except:
             session.rollback()
             raise
@@ -822,14 +934,72 @@ class TransLog:
             session.close()
         return response
 
-    def _sales_per_outlet(self, _outletid, _dari, _sampai):
+    def _per_category_sales(self, _ownerid, _outletid, _dari, _sampai, _business_id):
+        response = {}
+        df2 = pd.DataFrame()
+        merge_sales = []
+        date_from = _from_converted(_dari)
+        date_to = _to_converted(_sampai)
+        dari = date_from['dari']
+        sampai = date_to['sampai']
+        session = Session()
+        try:
+            if int(_outletid) == 0:
+                for o in session.query(Hop_Outlet).filter_by(owner_id = _ownerid).all():
+                    all_sales = []
+                    trx = TransLog()._product_sales_all(_ownerid, _outletid, _dari, _sampai, _business_id)
+                    for i in trx['product_sales']:
+                        sales_data = {}
+                        if i is not None:
+                            sales_data.update({'id_product': i['id'],'category': i['category'].lower(),'revenue': i['revenue'],'sold' : i['sold_item']})
+                        all_sales.append(sales_data)
+                    merge_sales.append(all_sales)
+            else:
+                all_sales = []
+                trx = TransLog()._product_sales_all(_ownerid, _outletid, _dari, _sampai, _business_id)
+                for i in trx['product_sales']:
+                    sales_data = {}
+                    # if i is not None:
+                    sales_data.update({'id_product': i['id'],'category': i['category'].lower(),'revenue': i['revenue'],'sold' : i['sold_item']})
+                    all_sales.append(sales_data)
+                merge_sales.append(all_sales)
+            merge_sales = [x for x in merge_sales if x != []]
+            if len(merge_sales) > 0: #jika data tersedia
+                for i in range(len(merge_sales)): #hanya sales per hour
+                    df = pd.DataFrame(merge_sales[i])
+                    df = df.groupby('category', as_index=False).sum()
+                    df['average'] = df['revenue'] / df['sold']
+                    df['average'] = round(df['average'],2)
+                    # df2 = df2.append(df)
+                data_map = df.groupby('category', as_index=False).sum()
+                master_data = data_map.to_dict('r')
+                revenue_all = sum(get_revenue['revenue'] for get_revenue in master_data)
+                sold_all = sum(get_total['sold'] for get_total in master_data)
+                avg = int(revenue_all) / int(sold_all)
+                response['data'] = master_data
+                response['avg'] = round(avg,2)
+                response['total_revenue'] = revenue_all
+                response['total_sold'] = sold_all
+            else:
+                response['data'] = []
+                response['avg'] = 0
+                response['total_revenue'] = 0
+                response['total_sold'] = 0
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return response
+
+    def _sales_per_outlet(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         date_from = _from_converted(_dari)
         date_to = _to_converted(_sampai)
         dari = date_from['dari']
         sampai = date_to['sampai']
-        trx = TransLog()._daily_sales(_outletid, _dari, _sampai)
+        trx = TransLog()._daily_sales(_ownerid, _outletid, _dari, _sampai, _business_id)
         session = Session()
         try:
             success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": int(_outletid)}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
@@ -861,7 +1031,7 @@ class TransLog:
             session.close()
         return response #done
 
-    def _sales_per_outlet_all(self, _ownerid, _dari, _sampai):
+    def _sales_per_outlet_all(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         session = Session()
@@ -872,7 +1042,7 @@ class TransLog:
                 date_to = _to_converted(_sampai)
                 dari = date_from['dari']
                 sampai = date_to['sampai']
-                trx = TransLog()._daily_sales_all(_ownerid, _dari, _sampai, _business_id)
+                trx = TransLog()._daily_sales_co(_ownerid, _outletid, _dari, _sampai, _business_id)
                 success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": o.id}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
                 if success_trans is not None:
                     outlet = session.query(Hop_Outlet).filter_by(id = o.id).first()
@@ -887,9 +1057,12 @@ class TransLog:
                         'revenue': success_trx,
                         'avg': round(avg)
                     })
-                    response['avg_revenue'] = trx['avg_revenue']
-                    response['total_revenue'] = trx['total_revenue']
-                    response['count_trx'] = trx['count_trx']
+                    total_revenue = sum(get_revenue['revenue'] for get_revenue in response['data'])
+                    total_trans = sum(get_total['sold'] for get_total in response['data'])
+                    avg = int(total_revenue) / int(total_trans)
+                    response['avg_revenue'] = avg
+                    response['total_revenue'] = total_revenue
+                    response['count_trx'] = total_trans
                 else:
                     response['data'] = []
                     response['avg_revenue'] = 0
@@ -902,67 +1075,28 @@ class TransLog:
             session.close()
         return response #done
 
-    def _tax_revenue(self, _outletid, _dari, _sampai):
+    def _tax_revenue_co(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
-        product_sales = [] #temporary pecahan data pertama
-        product_data = [] #temporary pecahan data kedua
         date_from = _from_converted(_dari)
         date_to = _to_converted(_sampai)
         dari = date_from['dari']
         sampai = date_to['sampai']
-        success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": int(_outletid)}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-        trx = TransLog()._summary(_outletid, _dari, _sampai)
         session = Session()
         try:
-            if success_trans is not None:
-                for i in mongo.trx_log.find({ "$and": [{"outlet_id": int(_outletid)} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'tax_list': 1, 'quantity':1, 'price': 1, '_id': 0 }):
-                    x = i['datePayment']
-                    product_sales.append({
-                        'datePayment' : x,
-                        'tax': i['tax_list']
-                    })
-                for k,v in groupby(product_sales,key=lambda x:x['datePayment']):
-                    for d in v:
-                        for i in d['tax']:
-                            product_data.append({'id': str(i['id'])})
-                product_data.sort(key=lambda x:x['id'][0:])
-                for k,v in groupby(product_data,key=lambda x:x['id']):
-                    po = session.query(Hop_Tax).filter_by(id = int(k)).first()
-                    end_price = 0
-                    end_price = (po.value/100) * trx['nettrevenue']
-                    response['data'].append({'id':int(k),
-                            'name':po.name,
-                            'value':str(po.value),
-                            'total_tax': round(int(end_price)),
-                            'grand_total': trx['tax_success_st']
-                    })
-            else:
-                response['data'] = []
+            int(_outletid)
+            int(_business_id)
         except:
-            session.rollback()
-            raise
-        finally:
-            session.close()
-        return response
-
-    def _tax_revenue_all(self, _ownerid, _dari, _sampai):
-        response = {}
-        response['data'] = []
-        product_sales = [] #temporary pecahan data pertama
-        product_data = [] #temporary pecahan data kedua
-        session = Session()
+            response['status'] = 50
+            return response
         try:
-            business = session.query(Hop_Business).filter_by(owner_id= _ownerid).first()
-            for o in session.query(Hop_Outlet).filter_by(business_id = business.id).all():
-                date_from = _from_converted(_dari)
-                date_to = _to_converted(_sampai)
-                dari = date_from['dari']
-                sampai = date_to['sampai']
-                success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": o.id}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-                trx = TransLog()._summary_all(_ownerid, _dari, _sampai)
-                if success_trans is not None:
-                    for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'tax_list': 1, 'quantity':1, 'price': 1, '_id': 0 }):
+            trx = TransLog()._summary_co(_ownerid, _outletid, _dari, _sampai, _business_id)
+            print(trx)
+            if int(_outletid) == 0 and int(_business_id) == 0:
+                for o in session.query(Hop_Outlet).filter_by(owner_id = _ownerid).all():
+                    product_sales = []
+                    product_data = []
+                    for i in mongo.trx_log.find({"$and" :[{"outlet_id": o.id},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
                         x = i['datePayment']
                         product_sales.append({
                             'datePayment' : x,
@@ -981,15 +1115,64 @@ class TransLog:
                                 'name':po.name,
                                 'value':str(po.value),
                                 'total_tax': round(int(end_price)),
-                                'grand_total': trx['tax_success_st']
+                                'grand_total': trx['tax_sc_st']
                         })
-                else:
-                    response['data'] = []
+            elif int(_outletid) == 0 and int(_business_id) != 0:
+                _business = session.query(Hop_Business).filter_by(id=_business_id).first()
+                for o in session.query(Hop_Outlet).filter_by(business_id = _business.id).all():
+                    product_sales = []
+                    product_data = []
+                    for i in mongo.trx_log.find({"$and" :[{"outlet_id": o.id},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                        x = i['datePayment']
+                        product_sales.append({
+                            'datePayment' : x,
+                            'tax': i['tax_list']
+                        })
+                    for k,v in groupby(product_sales,key=lambda x:x['datePayment']):
+                        for d in v:
+                            for i in d['tax']:
+                                product_data.append({'id': str(i['id'])})
+                    product_data.sort(key=lambda x:x['id'][0:])
+                    for k,v in groupby(product_data,key=lambda x:x['id']):
+                        po = session.query(Hop_Tax).filter_by(id = int(k)).first()
+                        end_price = 0
+                        end_price = (po.value/100) * trx['nettrevenue']
+                        response['data'].append({'id':int(k),
+                                'name':po.name,
+                                'value':str(po.value),
+                                'total_tax': round(int(end_price)),
+                                'grand_total': trx['tax_sc_st']
+                        })
+            elif int(_outletid) != 0:
+                product_sales = []
+                product_data = []
+                for i in mongo.trx_log.find({"$and" :[{"outlet_id": int(_outletid)},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                    x = i['datePayment']
+                    product_sales.append({
+                        'datePayment' : x,
+                        'tax': i['tax_list']
+                    })
+                for k,v in groupby(product_sales,key=lambda x:x['datePayment']):
+                    for d in v:
+                        for i in d['tax']:
+                            product_data.append({'id': str(i['id'])})
+                product_data.sort(key=lambda x:x['id'][0:])
+                for k,v in groupby(product_data,key=lambda x:x['id']):
+                    po = session.query(Hop_Tax).filter_by(id = int(k)).first()
+                    end_price = 0
+                    end_price = (po.value/100) * trx['nettrevenue']
+                    response['data'].append({'id':int(k),
+                            'name':po.name,
+                            'value':str(po.value),
+                            'total_tax': round(int(end_price)),
+                            'grand_total': trx['tax_sc_st']
+                    })
         except:
             session.rollback()
             raise
         finally:
             session.close()
+
         return response
 
     def _discount_revenue(self, _outletid, _dari, _sampai):
@@ -1013,7 +1196,6 @@ class TransLog:
             if success_trans is not None:
                 for i in mongo.trx_log.find({ "$and": [{"outlet_id": int(_outletid)} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'special_promo': 1, 'auto_promo': 1, 'discount': 1, 'sub_total': 1}):
                     x = i['datePayment']
-                    # print(i['auto_promo'])
                     product_sales.append({
                         'datePayment' : x,
                         'specialpromo': i['special_promo'],
@@ -1023,7 +1205,6 @@ class TransLog:
                     })
                 for k,v in groupby(product_sales,key=lambda x:x['datePayment']):
                     for d in v:
-                        # print(d['subtotal'])
                         for i in d['specialpromo']:
                             product_data.append({'id': str(i['id']), 'disc_total':d['disc_total'], 'subtotal': d['subtotal']})
                         for j in d['autopromo']:
@@ -1153,7 +1334,7 @@ class TransLog:
             session.close()
         return response
 
-    def _discount_revenue_all(self, _ownerid, _dari, _sampai):
+    def _discount_revenue_all(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         response['nominal_disc'] = []
@@ -1170,11 +1351,10 @@ class TransLog:
                 dari = date_from['dari']
                 sampai = date_to['sampai']
                 success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": o.id}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-                trx = TransLog()._summary_all(_ownerid, _dari, _sampai)
+                trx = TransLog()._summary_co(_ownerid, _outletid, _dari, _sampai, _business_id)
                 if success_trans is not None:
                     for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'special_promo': 1, 'auto_promo': 1, 'discount': 1, 'sub_total': 1}):
                         x = i['datePayment']
-                        # print(i['auto_promo'])
                         product_sales.append({
                             'datePayment' : x,
                             'discount': i['special_promo'],
@@ -1253,46 +1433,380 @@ class TransLog:
             session.close()
         return
 
-    def _daily_profit(self, _outletid, _dari, _sampai):
+    def _discount_revenue_co(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
-        response['data'] = []
         app = []
         date_from = _from_converted(_dari)
         date_to = _to_converted(_sampai)
         dari = date_from['dari']
         sampai = date_to['sampai']
-        success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": int(_outletid)}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-        trx = TransLog()._daily_sales(_outletid, _dari, _sampai)
-        product_cost = TransLog()._product_profit(_outletid, _dari, _sampai)
-        if success_trans is not None:
-            for xy in trx['profit']:
-                app.append({
-                    'datePayment': xy['datePayment'],
-                    'discount': xy['discount'],
-                    'revenue': xy['revenue'],
-                    'tax' : xy['tax']
-                })
-            app.sort(key=lambda x:x['datePayment'])
-            for k,v in groupby(app,key=lambda x:x['datePayment']):
-                total_profit = 0
-                cost = product_cost['cost']
-                for d in v:
-                    total_profit = (int(d['revenue']) + int(d['tax'])) - int(d['discount']) - cost
-                    response['data'].append({'datePayment': d['datePayment'],
-                    'discount': d['discount'],
-                    'revenue': d['revenue'],
-                    'tax' : d['tax'],
-                    'cost' : cost,
-                    'profit': total_profit
+        response['data'] = []
+        response['nominal_disc'] = []
+        response['nominal_ap'] = []
+        response['count_trx'] = 0
+        response['total_amount'] = 0
+        session = Session()
+        try:
+            int(_outletid)
+            int(_business_id)
+        except:
+            response['status'] = 50
+            return response
+        try :
+            if int(_outletid) == 0 and int(_business_id) == 0:
+                for o in session.query(Hop_Outlet).filter_by(owner_id = _ownerid).all():
+                    product_sales = [] #temporary pecahan data pertama
+                    product_data = [] #temporary pecahan data kedua
+                    auto_promo = []
+                    for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'special_promo': 1, 'auto_promo': 1, 'discount': 1, 'sub_total': 1}):
+                        x = i['datePayment']
+                        product_sales.append({
+                            'datePayment' : x,
+                            'discount': i['special_promo'],
+                            'autopromo': i['auto_promo'],
+                            'disc_total': i['discount'],
+                            'subtotal': i['sub_total']
+                        })
+                    for k,v in groupby(product_sales,key=lambda x:x['datePayment']):
+                        for d in v:
+                            for i in d['discount']:
+                                product_data.append({'id': str(i['id']), 'disc_total':d['disc_total'], 'subtotal': d['subtotal']})
+                            for j in d['autopromo']:
+                                if j['take_it']==True:
+                                    auto_promo.append({'id': str(j['id']), 'status': j['take_it'], 'subtotal': d['subtotal']})
+                    auto_promo.sort(key=lambda x:x['id'][0:])
+                    product_data.sort(key=lambda x:x['id'][0:])
+                    disc_total = 0
+                    nominal = 0
+                    value = 0
+                    for k,v in groupby(product_data,key=lambda x:x['id']):
+                        count = 0
+                        for d in v:
+                          po = session.query(Hop_Special_Promo).filter_by(id = int(k)).first()
+                          if po.percent is True:
+                              nominal = (int(d['subtotal'])/100) * int(po.value)
+                              count += int(k)
+                              total = count/int(k)
+                              value = str(po.value) + '%'
+                              response['nominal_disc'].append({'id': str(i['id']), 'nominal':nominal})
+                              disc_total = sum(get_revenue['nominal'] for get_revenue in response['nominal_disc'])
+                          elif po.percent is False:
+                              count += int(k)
+                              total = count/int(k)
+                              value = 'Rp. ' + str(po.value)
+                              disc_total = int(total)*po.value
+                              response['nominal_disc'].append({'id': str(i['id']), 'nominal':int(disc_total)})
+                        response['data'].append({'id':int(k),
+                                'name':po.name,
+                                'value': value,
+                                'count': total,
+                                'total_disc': int(disc_total),
+                        })
+                    for k,v in groupby(auto_promo,key=lambda x:x['id']):
+                        count = 0
+                        for d in v:
+                            ap = session.query(Hop_Ap_Detail).filter_by(id = int(k)).first()
+                            if (ap.ap_reward_id == 4):
+                                nominal = (int(d['subtotal'])/100) * int(ap.reward_value)
+                                count += int(k)
+                                total = count/int(k)
+                                value = str(ap.reward_value) + '%'
+                                response['nominal_ap'].append({'id': str(i['id']), 'nominal': round(nominal)})
+                                disc_total = sum(get_revenue['nominal'] for get_revenue in response['nominal_ap'])
+                            elif (ap.ap_reward_id == 3):
+                                count += int(k)
+                                total = count/int(k)
+                                value = 'Rp. ' + str(ap.reward_value)
+                                disc_total = int(total)*ap.reward_value
+                        if(ap.ap_reward_id ==4 or ap.ap_reward_id ==3):
+                            response['data'].append({'id':int(k),
+                                    'name':ap.name,
+                                    'value': value,
+                                    'count': total,
+                                    'total_disc': int(disc_total),
+                            })
+                    response['count_trx'] = sum(get_total['count'] for get_total in response['data'])
+                    response['total'] = sum(get_amount['total_disc'] for get_amount in response['data'])
+            elif int(_outletid) == 0 and int(_business_id) != 0:
+                _business = session.query(Hop_Business).filter_by(id=_business_id).first()
+                for o in session.query(Hop_Outlet).filter_by(business_id = _business.id).all():
+                    product_sales = [] #temporary pecahan data pertama
+                    product_data = [] #temporary pecahan data kedua
+                    auto_promo = []
+                    for i in mongo.trx_log.find({ "$and": [{"outlet_id": o.id} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'special_promo': 1, 'auto_promo': 1, 'discount': 1, 'sub_total': 1}):
+                        x = i['datePayment']
+                        product_sales.append({
+                            'datePayment' : x,
+                            'discount': i['special_promo'],
+                            'autopromo': i['auto_promo'],
+                            'disc_total': i['discount'],
+                            'subtotal': i['sub_total']
+                        })
+                    for k,v in groupby(product_sales,key=lambda x:x['datePayment']):
+                        for d in v:
+                            for i in d['discount']:
+                                product_data.append({'id': str(i['id']), 'disc_total':d['disc_total'], 'subtotal': d['subtotal']})
+                            for j in d['autopromo']:
+                                if j['take_it']==True:
+                                    auto_promo.append({'id': str(j['id']), 'status': j['take_it'], 'subtotal': d['subtotal']})
+                    auto_promo.sort(key=lambda x:x['id'][0:])
+                    product_data.sort(key=lambda x:x['id'][0:])
+                    disc_total = 0
+                    nominal = 0
+                    value = 0
+                    for k,v in groupby(product_data,key=lambda x:x['id']):
+                        count = 0
+                        for d in v:
+                          po = session.query(Hop_Special_Promo).filter_by(id = int(k)).first()
+                          if po.percent is True:
+                              nominal = (int(d['subtotal'])/100) * int(po.value)
+                              count += int(k)
+                              total = count/int(k)
+                              value = str(po.value) + '%'
+                              response['nominal_disc'].append({'id': str(i['id']), 'nominal':nominal})
+                              disc_total = sum(get_revenue['nominal'] for get_revenue in response['nominal_disc'])
+                          elif po.percent is False:
+                              count += int(k)
+                              total = count/int(k)
+                              value = 'Rp. ' + str(po.value)
+                              disc_total = int(total)*po.value
+                              response['nominal_disc'].append({'id': str(i['id']), 'nominal':int(disc_total)})
+                        response['data'].append({'id':int(k),
+                                'name':po.name,
+                                'value': value,
+                                'count': total,
+                                'total_disc': int(disc_total),
+                        })
+                    for k,v in groupby(auto_promo,key=lambda x:x['id']):
+                        count = 0
+                        for d in v:
+                            ap = session.query(Hop_Ap_Detail).filter_by(id = int(k)).first()
+                            if (ap.ap_reward_id == 4):
+                                nominal = (int(d['subtotal'])/100) * int(ap.reward_value)
+                                count += int(k)
+                                total = count/int(k)
+                                value = str(ap.reward_value) + '%'
+                                response['nominal_ap'].append({'id': str(i['id']), 'nominal': round(nominal)})
+                                disc_total = sum(get_revenue['nominal'] for get_revenue in response['nominal_ap'])
+                            elif (ap.ap_reward_id == 3):
+                                count += int(k)
+                                total = count/int(k)
+                                value = 'Rp. ' + str(ap.reward_value)
+                                disc_total = int(total)*ap.reward_value
+                        if(ap.ap_reward_id ==4 or ap.ap_reward_id ==3):
+                            response['data'].append({'id':int(k),
+                                    'name':ap.name,
+                                    'value': value,
+                                    'count': total,
+                                    'total_disc': int(disc_total),
+                            })
+                    response['count_trx'] = sum(get_total['count'] for get_total in response['data'])
+                    response['total_amount'] = sum(get_amount['total_disc'] for get_amount in response['data'])
+            elif int(_outletid) != 0:
+                product_sales = [] #temporary pecahan data pertama
+                product_data = [] #temporary pecahan data kedua
+                auto_promo = []
+                for i in mongo.trx_log.find({ "$and": [{"outlet_id": int(_outletid)} ,{"status_transaction":3} , {"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}, { 'datePayment': 1, 'special_promo': 1, 'auto_promo': 1, 'discount': 1, 'sub_total': 1}):
+                    x = i['datePayment']
+                    product_sales.append({
+                        'datePayment' : x,
+                        'discount': i['special_promo'],
+                        'autopromo': i['auto_promo'],
+                        'disc_total': i['discount'],
+                        'subtotal': i['sub_total']
                     })
-            response['total_trans'] = trx['count_trx']
-            response['total_tax'] = sum(get_tax['tax'] for get_tax in response['data'])
-            response['total_discount'] = sum(get_discount['discount'] for get_discount in response['data'])
-            response['total_cost'] = sum(get_cost['cost'] for get_cost in response['data'])
-            response['total_profit'] = sum(get_profit['profit'] for get_profit in response['data'])
+                for k,v in groupby(product_sales,key=lambda x:x['datePayment']):
+                    for d in v:
+                        for i in d['discount']:
+                            product_data.append({'id': str(i['id']), 'disc_total':d['disc_total'], 'subtotal': d['subtotal']})
+                        for j in d['autopromo']:
+                            if j['take_it']==True:
+                                auto_promo.append({'id': str(j['id']), 'status': j['take_it'], 'subtotal': d['subtotal']})
+                auto_promo.sort(key=lambda x:x['id'][0:])
+                product_data.sort(key=lambda x:x['id'][0:])
+                disc_total = 0
+                nominal = 0
+                value = 0
+                for k,v in groupby(product_data,key=lambda x:x['id']):
+                    count = 0
+                    for d in v:
+                      po = session.query(Hop_Special_Promo).filter_by(id = int(k)).first()
+                      if po.percent is True:
+                          nominal = (int(d['subtotal'])/100) * int(po.value)
+                          count += int(k)
+                          total = count/int(k)
+                          value = str(po.value) + '%'
+                          response['nominal_disc'].append({'id': str(i['id']), 'nominal':nominal})
+                          disc_total = sum(get_revenue['nominal'] for get_revenue in response['nominal_disc'])
+                      elif po.percent is False:
+                          count += int(k)
+                          total = count/int(k)
+                          value = 'Rp. ' + str(po.value)
+                          disc_total = int(total)*po.value
+                          response['nominal_disc'].append({'id': str(i['id']), 'nominal':int(disc_total)})
+                    response['data'].append({'id':int(k),
+                            'name':po.name,
+                            'value': value,
+                            'count': total,
+                            'total_disc': int(disc_total),
+                    })
+                for k,v in groupby(auto_promo,key=lambda x:x['id']):
+                    count = 0
+                    for d in v:
+                        ap = session.query(Hop_Ap_Detail).filter_by(id = int(k)).first()
+                        if (ap.ap_reward_id == 4):
+                            nominal = (int(d['subtotal'])/100) * int(ap.reward_value)
+                            count += int(k)
+                            total = count/int(k)
+                            value = str(ap.reward_value) + '%'
+                            response['nominal_ap'].append({'id': str(i['id']), 'nominal': round(nominal)})
+                            disc_total = sum(get_revenue['nominal'] for get_revenue in response['nominal_ap'])
+                        elif (ap.ap_reward_id == 3):
+                            count += int(k)
+                            total = count/int(k)
+                            value = 'Rp. ' + str(ap.reward_value)
+                            disc_total = int(total)*ap.reward_value
+                    if(ap.ap_reward_id ==4 or ap.ap_reward_id ==3):
+                        response['data'].append({'id':int(k),
+                                'name':ap.name,
+                                'value': value,
+                                'count': total,
+                                'total_disc': int(disc_total),
+                        })
+                response['count_trx'] = sum(get_total['count'] for get_total in response['data'])
+                response['total_amount'] = sum(get_amount['total_disc'] for get_amount in response['data'])
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
         return response
 
-    def _daily_profit_all(self, _ownerid, _dari, _sampai):
+    def _daily_profit_co(self, _ownerid, _outletid, _dari, _sampai, _business_id):
+        response = {}
+        response['data'] = []
+        date_from = _from_converted(_dari)
+        date_to = _to_converted(_sampai)
+        dari = date_from['dari']
+        sampai = date_to['sampai']
+        session = Session()
+        try:
+            int(_outletid)
+            int(_business_id)
+        except:
+            response['status'] = 50
+            return response
+        try:
+            if int(_outletid) == 0 and int(_business_id) == 0:
+                for o in session.query(Hop_Outlet).filter_by(owner_id = _ownerid).all():
+                    product_sales = []
+                    product_data = []
+                    for i in mongo.trx_log.find({"$and" :[{"outlet_id": o.id},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                        trx = TransLog()._daily_sales_co(_ownerid, _outletid, _dari, _sampai, _business_id)
+                        product_cost = TransLog()._product_profit_all(_ownerid, _outletid, _dari, _sampai, _business_id)
+                        for xy in trx['profit']:
+                            app.append({
+                                'datePayment': xy['datePayment'],
+                                'discount': xy['discount'],
+                                'revenue': xy['revenue'],
+                                'tax' : xy['tax']
+                            })
+                        app.sort(key=lambda x:x['datePayment'])
+                        for k,v in groupby(app,key=lambda x:x['datePayment']):
+                            total_profit = 0
+                            cost = product_cost['cost']
+                            for d in v:
+                                total_profit = (int(d['revenue']) + int(d['tax'])) - int(d['discount']) - cost
+                                response['data'].append({'datePayment': d['datePayment'],
+                                'discount': d['discount'],
+                                'revenue': d['revenue'],
+                                'tax' : d['tax'],
+                                'cost' : cost,
+                                'profit': total_profit
+                                })
+                        response['total_trans'] = trx['count_trx']
+                        response['total_tax'] = sum(get_tax['tax'] for get_tax in response['data'])
+                        response['total_discount'] = sum(get_discount['discount'] for get_discount in response['data'])
+                        response['total_cost'] = sum(get_cost['cost'] for get_cost in response['data'])
+                        response['total_profit'] = sum(get_profit['profit'] for get_profit in response['data'])
+                        response['total_revenue'] = sum(get_revenue['revenue'] for get_revenue in response['data'])
+
+            elif int(_outletid) == 0 and int(_business_id) != 0:
+                _business = session.query(Hop_Business).filter_by(id=_business_id).first()
+                for o in session.query(Hop_Outlet).filter_by(business_id = _business.id).all():
+                    product_sales = []
+                    product_data = []
+                    for i in mongo.trx_log.find({"$and" :[{"outlet_id": o.id},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                        trx = TransLog()._daily_sales_co(_ownerid, _outletid, _dari, _sampai, _business_id)
+                        product_cost = TransLog()._product_profit_all(_ownerid, _outletid, _dari, _sampai, _business_id)
+                        for xy in trx['profit']:
+                            app.append({
+                                'datePayment': xy['datePayment'],
+                                'discount': xy['discount'],
+                                'revenue': xy['revenue'],
+                                'tax' : xy['tax']
+                            })
+                        app.sort(key=lambda x:x['datePayment'])
+                        for k,v in groupby(app,key=lambda x:x['datePayment']):
+                            total_profit = 0
+                            cost = product_cost['cost']
+                            for d in v:
+                                total_profit = (int(d['revenue']) + int(d['tax'])) - int(d['discount']) - cost
+                                response['data'].append({'datePayment': d['datePayment'],
+                                'discount': d['discount'],
+                                'revenue': d['revenue'],
+                                'tax' : d['tax'],
+                                'cost' : cost,
+                                'profit': total_profit
+                                })
+                        response['total_trans'] = trx['count_trx']
+                        response['total_tax'] = sum(get_tax['tax'] for get_tax in response['data'])
+                        response['total_discount'] = sum(get_discount['discount'] for get_discount in response['data'])
+                        response['total_cost'] = sum(get_cost['cost'] for get_cost in response['data'])
+                        response['total_profit'] = sum(get_profit['profit'] for get_profit in response['data'])
+                        response['total_revenue'] = sum(get_revenue['revenue'] for get_revenue in response['data'])
+            elif int(_outletid) != 0:
+                product_sales = []
+                product_data = []
+                for i in mongo.trx_log.find({"$and" :[{"outlet_id": int(_outletid)},{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]}):
+                    trx = TransLog()._daily_sales_co(_ownerid, _outletid, _dari, _sampai, _business_id)
+                    product_cost = TransLog()._product_profit_all(_ownerid, _outletid, _dari, _sampai, _business_id)
+                    for xy in trx['profit']:
+                        app.append({
+                            'datePayment': xy['datePayment'],
+                            'discount': xy['discount'],
+                            'revenue': xy['revenue'],
+                            'tax' : xy['tax']
+                        })
+                    app.sort(key=lambda x:x['datePayment'])
+                    for k,v in groupby(app,key=lambda x:x['datePayment']):
+                        total_profit = 0
+                        cost = product_cost['cost']
+                        for d in v:
+                            total_profit = (int(d['revenue']) + int(d['tax'])) - int(d['discount']) - cost
+                            response['data'].append({'datePayment': d['datePayment'],
+                            'discount': d['discount'],
+                            'revenue': d['revenue'],
+                            'tax' : d['tax'],
+                            'cost' : cost,
+                            'profit': total_profit
+                            })
+                    response['total_trans'] = trx['count_trx']
+                    response['total_tax'] = sum(get_tax['tax'] for get_tax in response['data'])
+                    response['total_discount'] = sum(get_discount['discount'] for get_discount in response['data'])
+                    response['total_cost'] = sum(get_cost['cost'] for get_cost in response['data'])
+                    response['total_profit'] = sum(get_profit['profit'] for get_profit in response['data'])
+                    response['total_revenue'] = sum(get_revenue['revenue'] for get_revenue in response['data'])
+
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+
+        return response
+
+    def _daily_profit_all(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         app = []
@@ -1305,8 +1819,8 @@ class TransLog:
                 dari = date_from['dari']
                 sampai = date_to['sampai']
                 success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": o.id}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-                trx = TransLog()._daily_sales_all(_ownerid, _dari, _sampai, _business_id)
-                product_cost = TransLog()._product_profit_all(_ownerid, _dari, _sampai)
+                trx = TransLog()._daily_sales_co(_ownerid, _outletid, _dari, _sampai, _business_id)
+                product_cost = TransLog()._product_profit_all(_ownerid, _outletid, _dari, _sampai, _business_id)
                 if success_trans is not None:
                     for xy in trx['profit']:
                         app.append({
@@ -1333,6 +1847,7 @@ class TransLog:
                     response['total_discount'] = sum(get_discount['discount'] for get_discount in response['data'])
                     response['total_cost'] = sum(get_cost['cost'] for get_cost in response['data'])
                     response['total_profit'] = sum(get_profit['profit'] for get_profit in response['data'])
+                    response['total_revenue'] = sum(get_revenue['revenue'] for get_revenue in response['data'])
         except:
             session.rollback()
             raise
@@ -1340,7 +1855,7 @@ class TransLog:
             session.close()
         return response
 
-    def _product_profit(self, _outletid, _dari, _sampai):
+    def _product_profit(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         response['cost'] = []
@@ -1395,7 +1910,7 @@ class TransLog:
             session.close()
         return response
 
-    def _product_profit_all(self, _ownerid, _dari, _sampai):
+    def _product_profit_all(self, _ownerid, _outletid, _dari, _sampai, _business_id):
         response = {}
         response['data'] = []
         response['cost'] = []
@@ -1411,7 +1926,7 @@ class TransLog:
                 dari = date_from['dari']
                 sampai = date_to['sampai']
                 success_trans = mongo.trx_log.find_one({ "$and": [{"outlet_id": o.id}, { "status_transaction": 3 },{"datePayment" : { "$gte" :  dari, "$lte" : sampai}}]})
-                trx = TransLog()._product_sales_all(_ownerid, _dari, _sampai)
+                trx = TransLog()._product_sales_all(_ownerid, _outletid, _dari, _sampai, _business_id)
                 if success_trans is not None:
                     for xy in trx['profit']:
                         app.append({
@@ -1687,6 +2202,7 @@ class TransLog:
         response['data'] = []
         count = []
         total = 0
+        arb = []
         session = Session()
         try:
             for j in session.query(Hop_Product_Item).filter_by(owner_id=_ownerid, composed_type=False, status=True).all():
@@ -1705,24 +2221,27 @@ class TransLog:
                     })
             count.sort(key=lambda x:x['id'])
             for k,v in groupby(count, key=lambda x:x['id']):
-                for i in db.session.query(db.func.max(Hop_Inventory.added_time), Hop_Inventory.pid).group_by(Hop_Inventory.pid).filter_by(pid=int(k)).all():
+                for i in session.query(func.max(Hop_Inventory.added_time), Hop_Inventory.pid).group_by(Hop_Inventory.pid).filter_by(pid=int(k)).all():
                     item = session.query(Hop_Inventory).filter(Hop_Inventory.pid == i[1]).filter(Hop_Inventory.added_time == i[0]).first()
-                    sum = 0
+                    sums = 0
                     for d in v:
-                        sum += int(d['total'])
+                        sums += int(d['total'])
                     for z in session.query(Hop_Product_Item).filter_by(id=int(k), composed_type=False, status=True).all():
-                        measurement = session.query(Hop_Measurement_List).filter_by(id = z.measurement_id).first()
+                        measurement = '-'
+                        if z.measurement_id is not None :
+                            measurement = session.query(Hop_Measurement_List).filter_by(id = z.measurement_id).first()
+                            measurement = measurement.name
                         category = session.query(Hop_Product_Category).filter_by(id = z.product_category_id).first()
                         response['data'].append({
                             'name': z.name,
                             'sku': z.sku if j.sku != None else '-',
                             'barcode': z.barcode if z.barcode != None else '-',
-                            'unit': measurement.name,
+                            'unit': measurement,
                             'category': category.name,
                             'stock': int(item.fs),
-                            'revenue': sum
+                            'revenue': sums
                         })
-                        # response['total_grand'] = sum(get_revenue['revenue'] for get_revenue in response['data'])
+            response['total_grand'] = sum(get_revenue['revenue'] for get_revenue in response['data'])
         except:
             session.rollback()
             raise
@@ -1735,6 +2254,7 @@ class TransLog:
         response['data'] = []
         count = []
         total = 0
+        arb = []
         session = Session()
         try:
             for j in session.query(Hop_Product_Item).filter_by(owner_id=_ownerid, composed_type=False, status=True).all():
@@ -1753,25 +2273,27 @@ class TransLog:
                     })
             count.sort(key=lambda x:x['id'])
             for k,v in groupby(count, key=lambda x:x['id']):
-                for i in db.session.query(db.func.max(Hop_Inventory.added_time), Hop_Inventory.pid).group_by(Hop_Inventory.pid).filter_by(pid=int(k)).all():
+                for i in session.query(func.max(Hop_Inventory.added_time), Hop_Inventory.pid).group_by(Hop_Inventory.pid).filter_by(pid=int(k)).all():
                     item = session.query(Hop_Inventory).filter(Hop_Inventory.pid == i[1]).filter(Hop_Inventory.added_time == i[0]).first()
-                    print(k)
-                    sum = 0
+                    sums = 0
                     for d in v:
-                        sum += d['total']
+                        sums += d['total']
                     for z in session.query(Hop_Product_Item).filter_by(id=int(k), composed_type=False, status=True).all():
-                        measurement = session.query(Hop_Measurement_List).filter_by(id = z.measurement_id).first()
+                        measurement = ''
+                        if z.measurement_id is not None :
+                            measurement = session.query(Hop_Measurement_List).filter_by(id = z.measurement_id).first()
+                            measurement = measurement.name
                         category = session.query(Hop_Product_Category).filter_by(id = z.product_category_id).first()
                         response['data'].append({
                             'name': z.name,
                             'sku': z.sku if j.sku != None else '-',
                             'barcode': z.barcode if z.barcode != None else '-',
-                            'unit': measurement.name,
+                            'unit': measurement,
                             'category': category.name,
                             'stock': int(item.fs),
-                            'revenue': int(sum)
+                            'revenue': sums
                         })
-                # response['grand_total'] = sum(get_grand['revenue'] for get_grand in response['data'])
+            response['total_grand'] = sum(get_revenue['revenue'] for get_revenue in response['data'])
         except:
             session.rollback()
             raise

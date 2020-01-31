@@ -26,6 +26,8 @@ function _detail(){
         'status': 1,
       })
     }, function (e) {
+      console.log(e)
+      console.log(e.data.nettrevenue)
       let i;
       if(e.status == '00'){
         if ( userData['id'] > 0){
