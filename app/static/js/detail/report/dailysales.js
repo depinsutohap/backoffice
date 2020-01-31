@@ -14,7 +14,6 @@ function _dailysales(){
     _detail()
   });
 }
-
 function _detail(){
   _loading(1);
   $.post('/v1/api/data/subreport',{
@@ -28,8 +27,8 @@ function _detail(){
       'status': 3,
     })
     }, function (e) {
+      console.log(e)
       let i;
-      console.log(e.data.length)
       $('#data_body').empty();
       if(e['status'] === '00'){
         $('#count_trx').text(e.data.count_trx);

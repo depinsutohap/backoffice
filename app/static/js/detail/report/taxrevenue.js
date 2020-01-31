@@ -28,7 +28,6 @@ function _detail(){
     })
     }, function (e) {
       let i;
-      console.log(e.data.length)
       $('#data_body').empty();
       if(e['status'] === '00'){
         if(e.data.data.length > 0){

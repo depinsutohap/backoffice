@@ -46,77 +46,59 @@ async def _api_summary(request):
         # app = current_app._get_current_object()
         response = {}
         user = Hop_User().verify_auth(apidata['id'])
-        print('=======')
-        print(apidata)
         if user is not None and user.verify_token(apidata['token']):
             if int(apidata['status']) == 1:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._summary_all(user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._summary(apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._summary_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
             if int(apidata['status']) == 2:
-                response['data'] = TransLog()._product_sales_all(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'])
+                response['data'] = TransLog()._product_sales_all(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                 response['status'] = '00'
             if int(apidata['status']) == 3:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._daily_sales_all(user.owner_id, apidata['dari'], apidata['sampai'], apidata['business_id'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._daily_sales(apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._daily_sales_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
             if int(apidata['status']) == 4:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._data_sales_trx_all(user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._data_sales_trx(apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._data_sales_trx_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
             if int(apidata['status']) == 5:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._sales_per_category_all(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._sales_per_category(apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._per_category_sales(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
             if int(apidata['status']) == 6:
                 if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._sales_per_outlet_all(user.owner_id, apidata['dari'], apidata['sampai'])
+                    response['data'] = TransLog()._sales_per_outlet_all(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                     response['status'] = '00'
                 elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._sales_per_outlet(apidata['outlet'], apidata['dari'], apidata['sampai'])
+                    response['data'] = TransLog()._sales_per_outlet(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                     response['status'] = '00'
             if int(apidata['status']) == 7:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._tax_revenue_all(user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._tax_revenue(apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._tax_revenue_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
             if int(apidata['status']) == 8:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._discount_revenue_all(user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._discount_revenue(apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._discount_revenue_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
+                # if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
+                #     response['data'] = TransLog()._discount_revenue_all(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                #     response['status'] = '00'
+                # elif int(apidata['outlet']) != 0:
+                #     response['data'] = TransLog()._discount_revenue(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                #     response['status'] = '00'
             if int(apidata['status']) == 9:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._daily_profit_all(user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._daily_profit(apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._daily_profit_co(user.owner_id,apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
+                # if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
+                #     response['data'] = TransLog()._daily_profit_all(user.owner_id,apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                #     response['status'] = '00'
+                # elif int(apidata['outlet']) != 0:
+                #     response['data'] = TransLog()._daily_profit(user.owner_id,apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                #     response['status'] = '00'
             if int(apidata['status']) == 10:
                 if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._product_profit_all(user.owner_id, apidata['dari'], apidata['sampai'])
+                    response['data'] = TransLog()._product_profit_all(user.owner_id,apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                     response['status'] = '00'
                 elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._product_profit(apidata['outlet'], apidata['dari'], apidata['sampai'])
+                    response['data'] = TransLog()._product_profit(user.owner_id,apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                     response['status'] = '00'
             if int(apidata['status']) == 11:
-                response['data'] = TransLog()._dashboard_sales_all(user.owner_id, apidata['outlet'], apidata['dash_on'], apidata['dari'], apidata['sampai'])
+                response['data'] = TransLog()._dashboard_sales_all(user.owner_id, apidata['outlet'], apidata['dash_on'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                 response['status'] = '00'
             if int(apidata['status']) == 12:
                 if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
@@ -148,7 +130,7 @@ async def _api_dashboard(request):
         response = {}
         user = Hop_User().verify_auth(apidata['id'])
         if user is not None and user.verify_token(apidata['token']):
-            response['data'] = TransLog()._dashboard_sales_all(user.owner_id, apidata['outlet'], apidata['dash_on'], apidata['dari'], apidata['sampai'])
+            response['data'] = TransLog()._dashboard_sales_all(user.owner_id, apidata['outlet'], apidata['dash_on'], apidata['dari'], apidata['sampai'], apidata['business_id'])
             response['status'] = '00'
         else:
             response['status'] = '50'

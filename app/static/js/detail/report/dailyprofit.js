@@ -28,6 +28,7 @@ function _detail(){
         'status': 9,
       })
     }, function (e) {
+      console.log(e)
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){
@@ -37,6 +38,7 @@ function _detail(){
           $('#total_discount').text("Rp."+ formatNumber(e.data.total_discount));
           $('#total_cost').text("Rp."+ formatNumber(e.data.total_cost));
           $('#total_profit').text("Rp."+ formatNumber(e.data.total_profit));
+          $('#total_revenue').text("Rp."+ formatNumber(e.data.total_revenue));
           for(i=0; i < e.data.data.length; i++){
             daily_profit_append(e.data.data[i]);
           }

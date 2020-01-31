@@ -26,6 +26,8 @@ function _detail(){
         'status': 6,
       })
     }, function (e) {
+      console.log('sales per outler')
+      console.log(e)
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){

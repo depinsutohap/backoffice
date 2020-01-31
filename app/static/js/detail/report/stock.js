@@ -27,12 +27,12 @@ function _detail(){
       'status': 13,
     })
     }, function (e) {
+      console.log(e)
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){
         if(e.data.data.length > 0){
-          // $('#sold_total').text(e.data.total_sold);
-          // $('#revenue_total').text("Rp."+ formatNumber(e.data.total_revenue));
+          $('#grand_total').text("Rp."+ formatNumber(e.data.total_grand));
           for(i=0; i < e.data.data.length; i++){
             stock_append(e.data.data[i]);
           }

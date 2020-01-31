@@ -46,44 +46,43 @@ function _detail(){
 }
 
 function graph(data_sell, product_sell, category_sell){
-_loading(0);
-var data_sales = []
-var product_sell_data = []
-var category_sell_data = []
-if (typeof data_sell !== 'undefined') {
-    product_sell.sort((a, b) => parseFloat(b.sold_item) - parseFloat(a.sold_item));
-    category_sell.sort((a, b) => parseFloat(b.sold) - parseFloat(a.sold));
-    for(i=0; i < data_sell.length; i++){
-      data_sales.push([data_sell[i]['hour'],data_sell[i]['revenue']])
-    }
-    for(i=0; i < product_sell.length; i++){
-      product_sell_data.push([product_sell[i]['name'],product_sell[i]['sold_item']])
-    }
-    for(i=0; i < category_sell.length; i++){
-      category_sell_data.push([category_sell[i]['category'],category_sell[i]['sold']])
-    }
-}
-else {
-    for (i=0; i<24; i++){
-        x = i.toString().length
-        if (x < 2){
-          y = '0'+i+':00';
-        }
-        else{
-          y = i+':00';
-        }
-        data_sales.push([y,0]);
-    }
-    for (i=0; i<5; i++){
-      product_sell_data.push(['-',0])
-    }
-    for (i=0; i<5; i++){
-      category_sell_data.push(['-',0])
-    }
-}
-sorted_product = product_sell_data.slice(0, 5).sort((a,b) => b.sold_item - a.sold_item);
-sorted_category = category_sell_data.slice(0, 5).sort((a,b) => b.sold - a.sold);
-graph_single_line('sales_line_chart', data_sales);
-graph_bar('product_bar_chart', sorted_product);
-graph_bar('category_bar_chart', sorted_category);
+  _loading(0);
+  var data_sales = []
+  var product_sell_data = []
+  var category_sell_data = []
+  if (typeof data_sell !== 'undefined') {
+      product_sell.sort((a, b) => parseFloat(b.sold_item) - parseFloat(a.sold_item));
+      category_sell.sort((a, b) => parseFloat(b.sold) - parseFloat(a.sold));
+      for(i=0; i < data_sell.length; i++){
+        data_sales.push([data_sell[i]['hour'],data_sell[i]['revenue']])
+      }
+      for(i=0; i < product_sell.length; i++){
+        product_sell_data.push([product_sell[i]['name'],product_sell[i]['sold_item']])
+      }
+      for(i=0; i < category_sell.length; i++){
+        category_sell_data.push([category_sell[i]['category'],category_sell[i]['sold']])
+      }
+  }else {
+      for (i=0; i<24; i++){
+          x = i.toString().length
+          if (x < 2){
+            y = '0'+i+':00';
+          }
+          else{
+            y = i+':00';
+          }
+          data_sales.push([y,0]);
+      }
+      for (i=0; i<5; i++){
+        product_sell_data.push(['-',0])
+      }
+      for (i=0; i<5; i++){
+        category_sell_data.push(['-',0])
+      }
+  }
+  sorted_product = product_sell_data.slice(0, 5).sort((a,b) => b.sold_item - a.sold_item);
+  sorted_category = category_sell_data.slice(0, 5).sort((a,b) => b.sold - a.sold);
+  graph_single_line('sales_line_chart', data_sales);
+  graph_bar('product_bar_chart', sorted_product);
+  graph_bar('category_bar_chart', sorted_category);
 }

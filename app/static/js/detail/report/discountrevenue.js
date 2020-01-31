@@ -27,6 +27,8 @@ function _detail(){
         'status': 8,
       })
     }, function (e) {
+      console.log('discountervenue')
+      console.log(e)
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){

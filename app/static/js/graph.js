@@ -87,5 +87,10 @@ function spread_data(data){
 }
 
 function formatNumber(x) {
+  try {
+    x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }catch(err){
+    return 0;
+  }
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
