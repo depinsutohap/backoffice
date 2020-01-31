@@ -9,16 +9,16 @@ function _report(){
       })
     }, function (e) {
       let i;
-        if(e['status'] === '00'){
-          if (userData['id'] > 0){
-            $('#totaltrans').text(e.data.total_trans);
-            $('#successtrans').text(e.data.success_trans);
-            $('#ongoingtrans').text(e.data.ongoing_trans);
-            $('#cancelled').text(e.data.cancelled_trans);
-            $('#voidtrans').text(e.data.void_trans);
-          }else{
-            notif('danger', 'user tidak terdaftar')
-          }
+      if(e['status'] === '00'){
+        if (userData['id'] > 0){
+          $('#totaltrans').text(e.data.total_trans);
+          $('#successtrans').text(e.data.success_trans);
+          $('#ongoingtrans').text(e.data.ongoing_trans);
+          $('#cancelled').text(e.data.cancelled_trans);
+          $('#voidtrans').text(e.data.void_trans);
+        }else{
+          notif('danger', 'user tidak terdaftar')
+        }
       }else{
         notif('danger', e.message);
       }

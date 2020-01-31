@@ -34,6 +34,7 @@ function _detail(){
           for(i=0; i < e.data.data.length; i++){
             data_sales_trx_append(e.data.data[i]);
           }
+          $('.no_data').css('display', 'none')
         }else{
           $('.no_data').css('display', 'flex')
         }
@@ -56,7 +57,26 @@ function _detail(){
       '<td>'+data.idtrx + '</td>' +
       '<td>'+data.statustrx + '</td>' +
       '<td>'+"Rp."+formatNumber(data.total) + '</td>' +
+      '<td><a onclick="_data_trx(\'' + data.idtrx + '\')"><i class="fas fa-ellipsis-h"></i></a></td>' +
       '</tr>'+
       '</table>'
     )
+  }
+
+  function _data_trx(trx_id){
+    _loading(1);
+    $.post('/v1/api/data/subreport',{
+      data: JSON.stringify({
+        'id': userData['id'],
+        'token': userData['token'],
+        'trx_id': trx_id,
+        'status': 15,
+      })
+      }, function (e) {
+        console.log(e)
+      }).fail(function(){
+        notif('danger', 'Mohon kontak IT Administrator');
+      }).done(function(){
+        _loading(0);
+      });
   }
