@@ -37,6 +37,7 @@ function _detail(){
           for(i=0; i < e.data.product_sales.length; i++){
             product_sales_append(e.data.product_sales[i]);
           }
+          $('.no_data').css('display', 'none')
         }else{
           $('.no_data').css('display', 'flex')
         }

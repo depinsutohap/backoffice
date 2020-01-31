@@ -1,6 +1,6 @@
 function _sales_per_hour(){
   nav_lang('report');
-  business_list(); _date();
+  business_list(); _date(); _detail()
   _loading(1);
 
   $("#business").change(function () {
@@ -25,10 +25,11 @@ function _detail(){
         'dari': $('#startdate').val(),
         'sampai': $('#enddate').val(),
         'business_id': $('#business').val(),
-        'status': 11,
-        'dash_on': 0,
+        'status': 14,
       })
     }, function (e) {
+      console.log('usiaudsiasdui')
+      console.log(e)
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){
@@ -39,6 +40,7 @@ function _detail(){
           for(i=0; i < e.data.hourly_sales.length; i++){
             sales_per_hour_append(e.data.hourly_sales[i]);
           }
+          $('.no_data').css('display', 'none')
         }else{
           $('.no_data').css('display', 'flex')
         }

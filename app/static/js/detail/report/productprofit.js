@@ -28,6 +28,8 @@ function _detail(){
         'status': 10,
       })
     }, function (e) {
+      console.log(e)
+      console.log('ddddddd')
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){
@@ -39,6 +41,7 @@ function _detail(){
           for(i=0; i < e.data.data.length; i++){
             product_profit_append(e.data.data[i]);
           }
+          $('.no_data').css('display', 'none')
         }else{
           $('.no_data').css('display', 'flex')
         }

@@ -42,6 +42,7 @@ function _detail(){
           for(i=0; i < e.data.data.length; i++){
             daily_profit_append(e.data.data[i]);
           }
+          $('.no_data').css('display', 'none')
         }else{
           $('.no_data').css('display', 'flex')
         }

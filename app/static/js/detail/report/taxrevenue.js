@@ -34,6 +34,7 @@ function _detail(){
           for(i=0; i < e.data.data.length; i++){
             tax_revenue_append(e.data.data[i], e.data);
           }
+          $('.no_data').css('display', 'none')
         }else{
           $('.no_data').css('display', 'flex')
         }
