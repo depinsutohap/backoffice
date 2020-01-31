@@ -4,11 +4,13 @@ from flask import current_app, request, url_for, Flask
 from flask_login import UserMixin, AnonymousUserMixin
 from .utils import hmac_sha256
 from . import mongo, Base, Session
-import pymongo, requests, time, itertools, ast
+import pymongo, requests, time, itertools, ast, jwt
 from sqlalchemy import *
 from itertools import permutations
 from decimal import *
 from bson.objectid import ObjectId
+from time import time
+from app import app
 
 # CLASS FOR USER
 
@@ -331,6 +333,21 @@ class Hop_User(Base, UserMixin):
         finally:
             session.close()
         return response
+
+    def get_reset_password_token(self, expires_in=3600):
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return Hop_User().verify_auth(id)
+
 
 class Hop_Gender(Base):
     __tablename__ = 'gender'
@@ -3344,14 +3361,17 @@ class Hop_Log_Inventory(Base):
     pid = Column(Integer,ForeignKey('product_item.id'),default=None)
     vid = Column(Integer,ForeignKey('variant_list.id'),default=None)
     cid = Column(Integer,ForeignKey('product_category.id'),default=None)
+    inventory_list_id = Column(Integer,ForeignKey('inventory_list.id'),default=None)
+    inventory_id = Column(Integer,ForeignKey('inventory.id'),default=None)
     outlet_id = Column(Integer,ForeignKey('outlet.id'),default=None)
     owner_id = Column(Integer,ForeignKey('user.id'),default=None)
     type_id = Column(Integer,ForeignKey('inventory_type.id'),default=None)
-    quantity = Column(Numeric(36,2), default=0)
-    inventory_list_id = Column(Integer,ForeignKey('inventory_list.id'),default=None)
-    inventory_id = Column(Integer,ForeignKey('inventory.id'),default=None)
     cost_id = Column(Integer,ForeignKey('cost.id'),default=None)
-    date = Column(Date,default=datetime.now().date())
+    quantity = Column(DECIMAL(36,2), default=0)
+    date = Column(Date,default=None)
+    expire = Column(Date,default=None)
+    used_quantity = Column(DECIMAL(36,2), default=0)
+    used_id = Column(Integer,default=None)
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
 
@@ -3941,7 +3961,6 @@ class Hop_Payment_Name(Base):
     type_id = Column(Integer,ForeignKey('payment_type.id'))
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
-
 
 class Hop_Payment_Detail(Base):
     __tablename__ = 'payment_detail'

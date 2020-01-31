@@ -27,16 +27,16 @@ async def allowed_file(filename):
 # @main.route('/send')
 # async def send(request):
 #     attachments = {}
-#     # async with aiofiles.open("source/README.md", "rb") as f:
-#     #     attachments["README.md"] = await f.read()
-#     # async with aiofiles.open('source/猫.jpg', "rb") as f:
-#     #     attachments['猫.jpg'] = await f.read()
-#
-#     return json({"result": "ok"})
-#
+    # async with aiofiles.open("source/README.md", "rb") as f:
+    #     attachments["README.md"] = await f.read()
+    # async with aiofiles.open('source/猫.jpg', "rb") as f:
+    #     attachments['猫.jpg'] = await f.read()
+
+    # return json({"result": "ok"})
+
 # @main.route('/email-test')
 # async def email_test_register(request):
-#     return jinja.render("mail/register.html", request)
+#     return jinja.render("mail/reset-password.html", request, name='Yeye', token="hahah213i13012321njnjn")
 
 @main.route('/')
 async def index(request):

@@ -128,19 +128,68 @@ async def _add_detail(request):
         return redirect('/')
 
 
-# @api_1.route('/auth/reset_password', methods=['GET', 'POST'])
-# async def _reset_password(request):
-#     if request.method == "POST":
-#         response = {}
-#         apidata = _json.loads(request.form['data'][0])
-#         print(apidata)
-#         if len(apidata['email']) > 0:
-#             Hop_User()._insertowner(apidata['email'])
-#             response['status'] = '00'
-#             response['messages'] = 'success'
-#         else:
-#             response['status'] = '50'
-#             response['messages'] = 'email sudah ada yang pakai'
-#         return json(response)
-#     else:
-#         return redirect('/')
+@api_1.route('/auth/forgot', methods=['GET', 'POST'])
+async def _add_token(request):
+    if request.method == "POST":
+        response = {}
+        apidata = _json.loads(request.form['data'][0])
+        if len(apidata['email']) > 0:
+            user = Hop_User().verify_auth(apidata['email'])
+            if user is not None:
+                    Hop_Login_Log()._insert(user.id, 2)
+                    token = user.get_reset_password_token()
+                    subject = "Hey, " + user.name + "! Lets finish your password reset."
+                    content = jinja.env.get_template('mail/reset-password.html').render(
+                        name=user.name, subject=subject, token=token
+                    )
+                    await app.send_email(
+                        targetlist=user.email,
+                        subject=subject,
+                        content=content,
+                        html=True,
+                    )
+                    response['status'] = '00'
+                    response['message'] = 'Please check your email to reset your HOP account\'s password !'
+            else:
+                response['status'] = '50'
+                response['message'] = 'Sorry, this email is invalid.'
+        else:
+            response['status'] = '50'
+            response['message'] = 'Please fill your email to reset yout Hop account\'s password'
+        return json(response)
+    else:
+        return redirect('/')
+
+@api_1.route('/auth/reset-password', methods=['GET', 'POST'])
+async def _add_reset(request):
+    if request.method == "POST":
+        response = {}
+        apidata = _json.loads(request.form['data'][0])
+        if len(apidata['token']) > 0:
+            user = Hop_User.verify_reset_password_token(apidata['token'])
+            if user is not None:
+                if len(apidata['password1'].strip()) >= 8:
+                    if apidata['password1'] == apidata['password2']:
+                        response['data'] = Hop_User()._update_password(user.id, apidata['password1'])
+                        response['status'] = '00'
+                        response['message'] = 'Password has been successfully updated!'
+                    else:
+                        response['status'] = '50'
+                        response['message'] = 'New Password and New Password confirmation does not match.'
+                else:
+                    response['status'] = '50'
+                    response['message'] = 'Password must be at least 8 characters in length.'
+            else:
+                response['status'] = '50'
+                response['message'] = 'Your credential is invalid.'
+        else:
+            response['status'] = '50'
+            field = 'name'
+            if len(apidata['phone']) == 0:
+                field = 'phone number'
+            elif len(apidata['email']) == 0:
+                field = 'E-mail'
+            response['message'] = 'Please fill your ' + field + ' to register to hop.cash.'
+        return json(response)
+    else:
+        return redirect('/')

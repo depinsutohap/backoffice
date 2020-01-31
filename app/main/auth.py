@@ -6,6 +6,7 @@ from sanic.views import HTTPMethodView
 from sanic.exceptions import ServerError
 from sanic_jwt import protected
 import jinja2_sanic
+from ..models import Hop_User
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
@@ -29,6 +30,16 @@ async def detail(request):
     if cur_user is not None and Hop_User().verify_detail(cur_user.id):
         return redirect('/')
     return jinja.render("auth/detail.html", request, cur_user=cur_user)
+
+@main.route('/reset-password/<token>')
+async def reset(request, token):
+    cur_user = _auth.current_user(request)
+    if cur_user is not None:
+        return redirect('/')
+    user=Hop_User.verify_reset_password_token(token)
+    if not user:
+        return redirect('/')
+    return jinja.render("auth/reset.html", request,  cur_user=cur_user, token=token)
 
 # @main.before_app_request
 # async def before_request(request):

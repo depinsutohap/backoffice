@@ -74,6 +74,53 @@ function register() {
   })
 }
 
+function forgot() {
+  _loading(0); view_pass();
+  $('form').submit(function (e) {
+      e.preventDefault();
+      $.post('/v1/api/auth/forgot',{
+        data: JSON.stringify({
+          email: $('#email').val(),
+        })
+      }, function(e){
+        if(e.status === '00'){
+          notif('success', e.message)
+          location.href = window.location.origin;
+        }else{
+            notif('danger', e.message)
+        }
+      }).fail(function () {
+          $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
+      });
+
+      $('#notification-box').delay(200).css('display','inherit').fadeIn('slow');
+
+  })
+}
+
+function reset() {
+  _loading(0); view_pass();
+  $('form').submit(function (e) {
+      e.preventDefault();
+      $.post('/v1/api/auth/reset-password',{
+          data: JSON.stringify({
+            token: $('.token').val(),
+            password1: $('.password1').val(),
+            password2: $('.password2').val()
+          })
+      }, function(e){
+        if(e.status === '00'){
+            notif('success', e.message)
+            location.href = window.location.origin;
+        }else{
+            notif('danger', e.message)
+        }
+      }).fail(function () {
+        notif('warning', 'Maaf, sistem sedang ada gangguan...')
+      });
+  })
+}
+
 function detail() {
   userData = localStorage;
   _business_category_list('business_category');
