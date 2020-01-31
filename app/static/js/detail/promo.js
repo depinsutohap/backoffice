@@ -12,7 +12,7 @@ function _promo_index(){
     $('.total_special_promo').text(e.data_sp);
     $('.total_auto_promo').text(e.data_ap);
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -81,7 +81,7 @@ function _special_promo(){
       $('.no_data').css('display', 'flex');
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -163,7 +163,7 @@ function _open_promo_modal(id){
         open_sideform('edit_special_promo_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -185,7 +185,7 @@ function _remove_promo_modal(id){
         open_sideform('remove_special_promo_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -270,13 +270,13 @@ function _submit_data_special_promo(){
             $('.no_data').css('display', 'none');
             close_sideform();
             _menu_dropdown();_check();
-            notif('success', 'Special Promo Added', 'a new special promo has been successfully added');
+            notif('success','a new special promo has been successfully added');
           }else{
             notif('danger', 'Add Special Promo Failed', e.data.message);
           }
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -328,13 +328,13 @@ function _submit_data_special_promo(){
             $('.data_promo_value_' + e.data.id).text(promo_value);
             _clear_input_sp('edit');
             close_sideform();
-            notif('success', 'Special Promo Edited', 'a special promo has been successfully edited');
+            notif('success','a special promo has been successfully edited');
           }else{
             notif('danger', 'Edit Special Promo Failed', e.data.message);
           }
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -360,7 +360,7 @@ function _submit_data_special_promo(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -391,7 +391,7 @@ function _submit_data_special_promo(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
         $('.check_all').prop('checked', false).change();
@@ -448,7 +448,7 @@ function _auto_promo_index(){
       $('.no_data').css('display', 'flex');
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -500,7 +500,7 @@ function _add_auto_promo(){
       }
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -667,7 +667,7 @@ function _edit_auto_promo(){
     $('#edit_auto_promo_id').val(e.data.id);
 
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -691,7 +691,7 @@ function _remove_auto_promo_modal(id){
         open_sideform('remove_auto_promo_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -813,13 +813,13 @@ function _submit_data_auto_promo(){
           if(e.data.status == '00'){
             sub_href('/page/promo/auto-promo')
           }else{
-            notif('danger', 'Add Auto Promo Failed', e.data.message);
+            notif('danger', e.data.message);
           }
         }else{
-          notif('danger', 'Add Auto Promo Failed', e.message);
+          notif('danger', e.message);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -921,13 +921,13 @@ function _submit_data_auto_promo(){
         if(e.data.status == '00'){
           sub_href('/page/promo/auto-promo')
         }else{
-          notif('danger', 'Edit Auto Promo Failed', e.data.message);
+          notif('danger', e.data.message);
         }
       }else{
-        notif('danger', 'Edit Auto Promo Failed', e.message);
+        notif('danger', e.message);
       }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -953,7 +953,7 @@ function _submit_data_auto_promo(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -987,7 +987,7 @@ function _submit_data_auto_promo(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
         $('.check_all').prop('checked', false).change();

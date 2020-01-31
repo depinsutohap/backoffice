@@ -92,7 +92,7 @@ function _stock_opname_detail(id, outlet_id){
     }
     open_sideform('stock_opname_modal')
   }).fail(function(){
-    notif('warning', 'Please try again', 'An unknown error has occured')
+    notif('warning', 'An unknown error has occured')
   }).always(function(){
     _loading(0);
   })

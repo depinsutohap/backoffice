@@ -53,7 +53,7 @@ function _billing_overview(){
       }
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -106,7 +106,7 @@ function _billing_order(){
       }
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -144,7 +144,7 @@ function _billing_history(){
     }
 
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -176,7 +176,7 @@ function _detail_payment(){
     }
 
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -234,7 +234,7 @@ function _submit_billing(){
           _loading(0);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -295,7 +295,7 @@ function _submit_billing(){
           _loading(0);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -321,7 +321,7 @@ function _submit_billing(){
           _loading(0);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).always(function(){
         _loading(0);
       });

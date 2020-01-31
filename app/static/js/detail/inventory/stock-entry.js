@@ -348,7 +348,7 @@ function _submit_form(){
     let _data = $('.item'), _data_list = []
     for(i=0;i<_data.length;i++){
       if($(_data[i]).attr('data-id') == '0'){
-        notif('info', 'Fill the empty item field', 'Don\'t forget to fill your item item to add the stock entry');
+        notif('info', 'Don\'t forget to fill your item item to add the stock entry');
         return false;
       }else{
         let row = $(_data[i]).attr('data-row')
@@ -360,7 +360,7 @@ function _submit_form(){
           if($('.variant_' + row).val() !== '0'){
             _detail_data[2] = $('.variant_' + row).val();
           }else{
-            notif('info', 'Choose the empty variant field', 'Don\'t forget to choose your variant to add the stock entry');
+            notif('info', 'Don\'t forget to choose your variant to add the stock entry');
             return false;
           }
         }

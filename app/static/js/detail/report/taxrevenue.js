@@ -39,10 +39,10 @@ function _detail(){
           $('.no_data').css('display', 'flex')
         }
       }else{
-        notif('danger', 'System Error !', e.message);
+        notif('danger', e.message);
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });

@@ -17,7 +17,7 @@ function login() {
           })
       }, function(e){
         if(e.status === '00'){
-            notif('success', 'Login successful!', e.message)
+            notif('success', e.message)
             localStorage.setItem('name', e.name);
             localStorage.setItem('id', e.user_id);
             localStorage.setItem('role_id', e.role_id);
@@ -28,10 +28,10 @@ function login() {
             localStorage.setItem('permission', JSON.stringify(e.permission));
             location.reload();
         }else{
-            notif('danger', 'Authentication failed', e.message)
+            notif('danger', e.message)
         }
       }).fail(function () {
-        notif('warning', 'Authentication failed', 'Maaf, sistem sedang ada gangguan...')
+        notif('warning', 'Maaf, sistem sedang ada gangguan...')
       });
   })
 }
@@ -55,7 +55,7 @@ function register() {
         })
       }, function(e){
         if(e.status === '00'){
-          notif('success', 'Registration successful!', e.message)
+          notif('success', e.message)
           localStorage.setItem('name', e.data.name);
           localStorage.setItem('id', e.data.id);
           localStorage.setItem('phone_number', e.data.phone_number);
@@ -63,7 +63,7 @@ function register() {
           localStorage.setItem('token', e.data.token);
           location.reload();
         }else{
-            notif('danger', 'Authentication failed', e.message)
+            notif('danger', e.message)
         }
       }).fail(function () {
           $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
@@ -100,7 +100,7 @@ function detail() {
         if(result.status === '00'){
             location.reload();
         }else{
-            notif('danger', 'Authentication failed', result.message)
+            notif('danger', result.message)
         }
       }).fail(function () {
           $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
@@ -128,7 +128,7 @@ function change_password() {
               localStorage.setItem('token', result.token);
               location.reload();
           }else{
-              notif('danger', 'Authentication failed', result.message)
+              notif('danger', result.message)
           }
         }).fail(function () {
             $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');

@@ -580,18 +580,19 @@ class Hop_Business(Base):
             })
         return response
 
-    def _listbyownerid_all(self, owner_id):
+    def _listbyownerid_all(self, user_id):
         response = []
         session = Session()
         try:
-            _business = session.query(Hop_Business).filter_by(owner_id=owner_id, status=True).all()
+            _user = session.query(Hop_User).filter_by(id=user_id, status=True).first()
+            _business = session.query(Hop_Business).filter_by(owner_id=_user.owner_id, status=True).all()
         except:
             session.rollback()
             raise
         finally:
             session.close()
         for i in _business:
-            response += Hop_Outlet()._list(i.id)
+            response += Hop_Outlet()._list(i.id, _user.id)
         return response
 
     def _outlet_list_exception(self, business_id, user_id):

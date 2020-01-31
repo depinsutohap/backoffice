@@ -26,7 +26,7 @@ function _account_data(){
       $('._last_login').text(e.data.log_time)
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -50,7 +50,7 @@ function _open_account_modal(){
         open_sideform('edit_account_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -83,13 +83,13 @@ function _submit_data_account(){
             $('._phone').text(e.data.phone_number);
             $('._email').text(e.data.email);
             userData['token'] = e.data.token;
-            notif('success', 'Sucessfully Updated', 'Your data has been updated');
+            notif('success', 'Your data has been updated');
             close_sideform();
           }else{
-            notif('danger', 'Update Failed', e.message);
+            notif('danger',  e.message);
           }
         }).fail(function(){
-          notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+          notif('danger', 'Mohon kontak IT Administrator');
         }).done(function(){
           _loading(0);
         });
@@ -114,13 +114,13 @@ function _submit_data_account(){
           if(e.status == '00'){
             $('#_cur_pass, #_new_pass, #_ver_pass').val('');
             userData['token'] = e.data.token;
-            notif('success', 'Sucessfully Updated', 'Your password has been updated');
+            notif('success', 'Your password has been updated');
             close_sideform();
           }else{
-            notif('danger', 'Update Failed', e.message);
+            notif('danger',  e.message);
           }
         }).fail(function(){
-          notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+          notif('danger', 'Mohon kontak IT Administrator');
         }).done(function(){
           _loading(0);
         });

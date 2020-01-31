@@ -32,7 +32,7 @@ function _business_category_list(t){
         )
       }
     }else{
-        notif('danger', 'Authentication failed', result.message)
+        notif('danger', result.message)
     }
   }).fail(function () {
       $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
@@ -55,7 +55,7 @@ function _outlet_num_emp(t){
         )
       }
     }else{
-        notif('danger', 'Authentication failed', result.message)
+        notif('danger', result.message)
     }
   }).fail(function () {
       $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
@@ -83,7 +83,7 @@ function _country_list(t){
       }
       $('#' + t).val(102);
     }else{
-        notif('danger', 'Authentication failed', result.message)
+        notif('danger', result.message)
     }
   }).fail(function () {
       $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
@@ -103,7 +103,7 @@ function _general_owner_phone(cbox, t){
             if(result.status === '00'){
               $('input#' + t).prop('disabled', true).val(result['data']['phone_number']);
             }else{
-                notif('danger', 'Authentication failed', result.message)
+                notif('danger', result.message)
             }
           }).fail(function () {
               $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
@@ -138,7 +138,7 @@ function _product_category_list(t){
         )
       }
     }else{
-        notif('danger', 'Authentication failed', result.message)
+        notif('danger', result.message)
     }
   }).fail(function () {
       $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
@@ -216,10 +216,10 @@ function outlet_list(){
       }
       $('.outlet').change()
     }else{
-      notif('danger', 'System Error!', e.message);
+      notif('danger', e.message);
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -253,10 +253,10 @@ function outlet_list_b(){
         )
       }
     }else{
-      notif('danger', 'System Error!', e.message);
+      notif('danger', e.message);
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -281,10 +281,10 @@ function business_list(){
         }
       }
     }else{
-      notif('danger', 'System Error!', e.message);
+      notif('danger', e.message);
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });

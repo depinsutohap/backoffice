@@ -45,19 +45,21 @@ div#notification-box
   transition: 1500ms
   >div
     height: auto
+    min-height: 75px
     box-shadow: 0 0 5px 0px
     margin-top: 15px
     display: flex
     align-items: center
     position: relative
     transition: 2000ms
+    border-radius: px
     right: 0
     &.danger
       background-color: lighten($danger, 37.5%)
     &.notif
       background-color: lighten($dark, 25%)
     &.success
-      background-color: lighten($green, 1%)
+      background-color: lighten(rgb(0, 135, 90), 1%)
     &.warning
       background-color: darken($orange, 5%)
     &.info
@@ -73,39 +75,16 @@ div#notification-box
       >i
         color: $light
         font-size: 20px
-    >.right
-      width: 275px
-      display: flex
-      flex-direction: column
-      align-items: left
-      padding: 15px 10px
-      height: 100%
-      color: $dark
+    >p
+      width: calc(100% - 100px)
       font-family: $primary-font
-      >h5
-        font-size: 15px
-        font-family: $primary-font
-      >p
-        font-family: $secondary-font
-        color: $dark
-        font-size: 13px
-      &.danger
-        background-color: lighten($danger, 50%)
-        color: $dark
-      &.notif
-        background-color: lighten($dark, 40%)
-        color: $dark
-      &.success
-        background-color: lighten($green, 20%)
-        color: $dark
-      &.warning
-        background-color: darken($orange, 10%)
-        color: $dark
-      &.info
-        background-color: lighten($primary-color, 40%)
-        color: $dark
+      color: $light
+      font-size: 13px
+      font-weight: bolder
+      margin: 0
+      letter-spacing: 1px
     >a
-      width: 25px
+      width: 50px
       background-color: $netral
       display: flex
       align-items: center
@@ -571,7 +550,7 @@ div#mainBody
 @media only screen and (max-width: 880px)
   .col_1, .col_2
     width: calc(50% - 10px)
-  .col_4, .col_5, .col_6, .col_7, .col_8, .col_9 
+  .col_4, .col_5, .col_6, .col_7, .col_8, .col_9
     width: 100%
 
 @media only screen and (max-width: 660px)

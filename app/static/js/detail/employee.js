@@ -53,7 +53,7 @@ function _employee_list(){
       $('.no_data').css('display', 'flex');
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
 
   }).always(function(){
@@ -123,7 +123,7 @@ function _edit_manage_access(){
 
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -162,7 +162,7 @@ function _edit_employee_data(){
 
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -189,7 +189,7 @@ function _remove_employee_modal(_id){
         open_sideform('remove_employee_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -213,13 +213,13 @@ function _submit_data_employee(){
       $('#add_employee_password').val().length == 0
     ){
       _loading(0)
-      notif('danger', 'Required Fields', 'Please fill required fields.');
+      notif('danger','Please fill required fields.');
       return false
     }
 
     if($('#add_employee_password').val().length < 8){
       _loading(0)
-      notif('danger', 'Required Password', 'Password must be at least 8 characters in length.');
+      notif('danger','Password must be at least 8 characters in length.');
       return false
     }
 
@@ -273,10 +273,10 @@ function _submit_data_employee(){
 
 
         }else{
-          notif('danger', 'Authentication failed', e.message);
+          notif('danger', e.message);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -304,7 +304,7 @@ function _submit_data_employee(){
           nav_href('employee');
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -357,7 +357,7 @@ function _submit_data_employee(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -378,11 +378,11 @@ function _submit_data_employee(){
       _loading(0)
 
       if(_password.length > 0 && _password.length < 8){
-        notif('danger', 'Required Fields', 'Minimum password length 8 characters');
+        notif('danger','Minimum password length 8 characters');
         return false
       }
 
-      notif('danger', 'Required Fields', 'Please fill required fields.');
+      notif('danger','Please fill required fields.');
       return false
     }
 
@@ -408,7 +408,7 @@ function _submit_data_employee(){
           nav_href('employee');
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -434,7 +434,7 @@ function _submit_data_employee(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -483,7 +483,7 @@ function _open_modal_permission(t, id){
         if(e.data.bo_daily_report == true){$("#add_employee_bo_email").prop('checked', true)}
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });

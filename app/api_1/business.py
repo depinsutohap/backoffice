@@ -54,7 +54,7 @@ async def _api_business(request):
             elif int(apidata['status']) == 4:
             # SUBMIT NEW BUSINESS AND GET EXISTING OUTLET BASED ON OWNER ID
                 response['data'] = Hop_Business()._insert_detail(_name=apidata['business_name'], _businesscategory=apidata['business_category'], _description=apidata['business_description'], owner_id=user.owner_id)
-                response['data_outlet'] = Hop_Business()._listbyownerid_all(owner_id=user.owner_id)
+                response['data_outlet'] = Hop_Business()._listbyownerid_all(user_id=user.id)
                 response['status'] = '00'
             elif int(apidata['status']) == 5:
             # MOVE BUSINESS LIST INTO NEW BUSINESS

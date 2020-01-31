@@ -40,13 +40,13 @@ function _products_category_list(){
       }
       _menu_dropdown();_check();
     }else{
-      notif('info', 'Please, create category!', 'Please, create at least a product category before you create your product item');
+      notif('info', 'Please, create at least a product category before you create your product item');
       $('.no_data').css('display', 'flex');
       $('a.mm').removeClass('actived');
       $('#nav_product-category').addClass('actived');
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -69,7 +69,7 @@ function _open_category_modal(cat_id){
         open_sideform('edit_category_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -91,7 +91,7 @@ function _remove_category_modal(cat_id){
         open_sideform('remove_category_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -133,13 +133,13 @@ function _submit_data_category(){
             )
             close_sideform();
             _menu_dropdown();_check();
-            notif('success', 'Product Category Added', 'Product category has been successfully added');
+            notif('success', 'Product category has been successfully added');
           }else{
-            notif('danger', 'Adding Product Category Failed', e.data.message);
+            notif('danger', e.data.message);
           }
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -166,7 +166,7 @@ function _submit_data_category(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -194,11 +194,11 @@ function _submit_data_category(){
               $('.no_data').css('display', 'flex');
             }
           }else{
-            notif('info', 'Remove Category Failed', e.data.message);
+            notif('info', e.data.message);
           }
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -233,7 +233,7 @@ function _submit_data_category(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
         $('.check_all').prop('checked', false).change();
@@ -303,7 +303,7 @@ function _products_item_list(){
       $('.no_data').css('display', 'flex');
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).always(function(){
     _loading(0);
   });
@@ -484,7 +484,7 @@ function _open_item_data(){
                 open_sideform('manage_variant_modal');
               }
             }).fail(function(){
-              notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+              notif('danger', 'Mohon kontak IT Administrator');
             }).done(function(){
               _loading(0);
             });
@@ -502,7 +502,7 @@ function _open_item_data(){
         })
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -611,7 +611,7 @@ function _remove_item_modal(cat_id){
         open_sideform('remove_item_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -682,13 +682,13 @@ function _submit_data_item(){
       if(e.status == '00'){
         if(e.data.status == '00'){
           nav_href('product-item');
-          notif('success', 'Item Added', 'Product item has been added successfully');
+          notif('success','Product item has been added successfully');
         }else{
-          notif('danger', 'Adding Product Item Failed', e.data.message);
+          notif('danger', e.data.message);
         }
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -728,10 +728,10 @@ function _submit_data_item(){
     }, function (e) {
         if(e.status == '00'){
           nav_href('product-item');
-          notif('success', 'Item Edited', 'Product item has been edited successfully');
+          notif('success','Product item has been edited successfully');
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -757,13 +757,13 @@ function _submit_data_item(){
             })
           }
         }else{
-          notif('danger', 'Required fields', 'Please, fill all required fields.');
+          notif('danger','Please, fill all required fields.');
           _loading(0);
           return false
         }
         _data.push(_detail)
       }else{
-        notif('danger', 'Required fields', 'Please, fill all required fields.');
+        notif('danger','Please, fill all required fields.');
         _loading(0);
         return false
       }
@@ -792,12 +792,12 @@ function _submit_data_item(){
             })
           }
         }else{
-          notif('danger', 'Required fields', 'Please, fill all required fields.');
+          notif('danger','Please, fill all required fields.');
           return false
         }
         _data.push(_detail)
       }else{
-        notif('danger', 'Required fields', 'Please, fill all required fields.');
+        notif('danger','Please, fill all required fields.');
         return false
       }
     }
@@ -814,7 +814,7 @@ function _submit_data_item(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -838,7 +838,7 @@ function _submit_data_item(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -873,7 +873,7 @@ function _submit_data_item(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
         $('.check_all').prop('checked', false).change();
@@ -924,7 +924,7 @@ function _submit_data_item(){
           nav_href('product-item');
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -966,7 +966,7 @@ function _submit_data_item(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -1021,7 +1021,7 @@ function _submit_data_item(){
           nav_href('product-item');
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -1081,7 +1081,7 @@ function _submit_data_item(){
           nav_href('product-item');
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -1125,7 +1125,7 @@ function _submit_data_item(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -1215,7 +1215,7 @@ function _open_item_price(){
       $('.main_sold').change();
 
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -1297,7 +1297,7 @@ function _open_manage_outlet_price(oid){
       open_sideform('manage_outlet_price');
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -1345,7 +1345,7 @@ function _open_item_ingredients(){
 
 
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -1568,7 +1568,7 @@ function _ingredients_import(mpid, mvid){
       $('#import_item').attr('data-mpid', mpid).attr('data-mvid', mvid).change()
       open_sideform('manage_import_ingredients');
     }else{
-      notif('info', 'No saved Ingredients', 'You don\'t have any saved ingredients yet');
+      notif('info', 'You don\'t have any saved ingredients yet');
     }
   })
 }
@@ -1668,7 +1668,7 @@ function _open_item_stock(){
       $('.main_alert').change()
 
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });

@@ -23,7 +23,7 @@ function _loading(t){
   }
 }
 
-function notif(type, title, content) {
+function notif(type, message) {
   let icon;
   if(type === 'danger'){
     icon = 'times-circle';
@@ -39,10 +39,7 @@ function notif(type, title, content) {
   $('div#notification-box').prepend(
     '<div class="notification-box ' + type + '">' +
     '<div class="left"><i class="fas fa-' + icon + '"></i></div>' +
-    '<div class="right ' + type + '">' +
-    '<h5>' + title + '</h5>' +
-    '<p>' + content + '</p>' +
-    '</div>' +
+    '<p>' + message + '</p>' +
     '<a onclick="close_notif(this)"><i class="glyphicon glyphicon-menu-right notif"></i></a>' +
     '</div>'
   );

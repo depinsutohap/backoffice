@@ -77,7 +77,7 @@ function _search(){
           console.log(e)
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -202,10 +202,10 @@ function _nav_business_list(){
         }
       }
     }else{
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });

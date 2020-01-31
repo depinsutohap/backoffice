@@ -69,7 +69,7 @@ function _tax_list(){
       $('.no_data').css('display', 'flex');
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -101,7 +101,7 @@ function _open_tax_modal(_id){
         open_sideform('edit_tax_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -123,7 +123,7 @@ function _remove_tax_modal(_id){
         open_sideform('remove_tax_modal');
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -175,12 +175,12 @@ function _submit_data_tax(){
           )
           $('.no_data').css('display', 'none');
           _menu_dropdown();_check();
-          notif('success', 'Sucessfully Added', 'Your data has been added');
+          notif('success', 'Your data has been added');
         }else{
-          notif('danger', 'Invalid Value', e.message);
+          notif('danger', e.message);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         //
       }).always(function(){
@@ -218,12 +218,12 @@ function _submit_data_tax(){
           $('.data_tax_type_' + e.data.id).text(e.data.tax_type.name);
           $('.data_tax_value_' + e.data.id).text(e.data.value);
           close_sideform();
-          notif('success', 'Sucessfully Updated', 'Your data has been updated');
+          notif('success', 'Your data has been updated');
         }else{
-          notif('warning', 'Invalid Value', e.message);
+          notif('warning', e.message);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         //
       }).always(function(){
@@ -256,7 +256,7 @@ function _submit_data_tax(){
           $('#remove_tax_id').val('');
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -291,7 +291,7 @@ function _submit_data_tax(){
           $('._remove_all').css('display', 'none')
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
         $('.check_all').prop('checked', false).change();

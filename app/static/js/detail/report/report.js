@@ -17,13 +17,13 @@ function _report(){
             $('#cancelled').text(e.data.cancelled_trans);
             $('#voidtrans').text(e.data.void_trans);
           }else{
-            notif('danger', 'System Error!', 'user tidak terdaftar')
+            notif('danger', 'user tidak terdaftar')
           }
       }else{
-        notif('danger', 'System Error!', e.message);
+        notif('danger', e.message);
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });

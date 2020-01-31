@@ -343,14 +343,14 @@ function _submit_form(){
     e.preventDefault();
 
     if($('#from_outlet').val() == $('#to_outlet').val()){
-      notif('info', 'Don\'t transfer to the same outlet ', 'Please, transfer your inventory to the different outlet');
+      notif('info', 'Please, transfer your inventory to the different outlet');
       _loading(0);
       return false;
     }
     let _data = $('.item'), _data_list = []
     for(i=0;i<_data.length;i++){
       if($(_data[i]).attr('data-id') == '0'){
-        notif('info', 'Fill the empty item field', 'Don\'t forget to fill your item item to add the stock transfer');
+        notif('info', 'Don\'t forget to fill your item item to add the stock transfer');
         _loading(0);
         return false;
       }else{
@@ -361,7 +361,7 @@ function _submit_form(){
           if($('.variant_' + row).val() !== '0'){
             _detail_data[2] = $('.variant_' + row).val();
           }else{
-            notif('info', 'Choose the empty variant field', 'Don\'t forget to choose your variant to add the stock transfer');
+            notif('info', 'Don\'t forget to choose your variant to add the stock transfer');
             _loading(0);
             return false;
           }

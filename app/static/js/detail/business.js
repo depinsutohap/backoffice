@@ -43,7 +43,7 @@ function _business_data(b_id){
     $('#business_name, .move_outlet_title_business_name').text(e.data.name);
     $('#title_business_category').text(e.data.business_category_id.name);
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   });
 }
 
@@ -66,7 +66,7 @@ function _outlet_list_with_exception(b_id){
     }
 
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   });
 }
 
@@ -88,7 +88,7 @@ function _move_outlet_current(){
           nav_href_business('business', e.business_id);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       });
   });
 }
@@ -147,7 +147,7 @@ function _outlet_list(b_id){
       $('.no_data').css('display', 'flex')
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -264,7 +264,7 @@ function _edit_outlet(t){
 
     open_sideform('edit_outlet_modal');
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -290,7 +290,7 @@ function _edit_category_outlet(t){
     }
   open_sideform('edit_category_outlet_modal');
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -316,7 +316,7 @@ function _edit_item_outlet(t){
     }
   open_sideform('edit_item_outlet_modal');
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -375,7 +375,7 @@ function submit_edit_outlet(){
       }
       close_sideform();
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -403,7 +403,7 @@ function submit_edit_outlet(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -429,7 +429,7 @@ function submit_edit_outlet(){
           close_sideform();
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -458,7 +458,7 @@ function _remove_outlet(t){
 
     open_sideform('remove_outlet_modal');
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -488,7 +488,7 @@ function submit_remove_outlet(){
       close_sideform();
 
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -549,7 +549,7 @@ function _submit_new_business(){
           _loading(0);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -572,7 +572,7 @@ function _submit_new_business(){
           nav_href_business('business', e.business_id);
         }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -607,7 +607,7 @@ function _business_list(){
       )
     }
   }).fail(function(){
-    notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+    notif('danger', 'Mohon kontak IT Administrator');
   }).done(function(){
     _loading(0);
   });
@@ -635,7 +635,7 @@ function _submit_new_outlet(){
         nav_href_business('business', e.data.business_id.id);
       }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
@@ -676,7 +676,7 @@ function _business_settings_detail(){
       }
     }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -705,7 +705,7 @@ function _form_business_settings(){
         notif('danger', 'Empty Fields', e.message);
       }
     }).fail(function(){
-      notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+      notif('danger', 'Mohon kontak IT Administrator');
     }).done(function(){
       _loading(0);
     });
@@ -735,7 +735,7 @@ function _form_business_delete(){
         $('#nav_business_' + userData['b_id']).remove();
       }
       }).fail(function(){
-        notif('danger', 'System Error!', 'Mohon kontak IT Administrator');
+        notif('danger', 'Mohon kontak IT Administrator');
       }).done(function(){
         _loading(0);
       });
