@@ -1,0 +1,31 @@
+{% extends "nav/base.html" %}
+
+{% block body %}
+
+  {% include 'macros/_auth_header.html' %}
+
+  <link rel="stylesheet" type="text/css" href="/static/css/auth.min.css">
+  <main id="main_auth">
+      <form method="post">
+          <h1>RESET PASSWORD</h1>
+          <div class="pass">
+              <input id="password" name="password" class="password1" type="password" placeholder="New Password">
+              <input type="checkbox" id="view_pass">
+              <label for="view_pass" class="glyphicon glyphicon-eye-close"></label>
+          </div>
+          <div class="pass">
+              <input style="margin-top: 0;" id="password" class="password2" name="password" type="password" placeholder="New Password Confirmation">
+              <input type="checkbox" id="view_pass">
+              <label for="view_pass" class="glyphicon glyphicon-eye-close"></label>
+          </div>
+          <input type="hidden" class="token" value="{{token}}">
+          <button class="login" type="submit">Submit</button>
+          <hr>
+          <p>Please to keep your password as safe as possible</p>
+      </form>
+  </main>
+  <script src="/static/js/detail/auth.js"></script>
+  <script>
+      reset();
+  </script>
+{% endblock %}
