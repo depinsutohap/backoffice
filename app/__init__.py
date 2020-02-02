@@ -1,6 +1,3 @@
-from config import config
-# from flask_login import LoginManager
-
 from sanic import Sanic
 from sanic_session import Session as _Session
 from sanic_mail import Sanic_Mail
@@ -9,6 +6,7 @@ from sanic_auth import Auth, User
 from sanic_cors import CORS, cross_origin
 from pymongo import MongoClient
 from sanic_jwt import Initialize as init_jwt
+from config import config
 
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -23,17 +21,16 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 app = Sanic(__name__)
 jinja = SanicJinja2()
 _auth = Auth(app)
-engine = create_engine('mysql://hop_bo:!2345hopbo0005432!@178.128.93.105:3306/uta_hop_db_000')
-# engine = create_engine('mysql://hop_bo:!2345HopBo0005432!@157.230.46.218:3306/uta_hop_dev_db_000')
+# engine = create_engine('mysql://hop_bo:!2345hopbo0005432!@178.128.93.105:3306/uta_hop_db_000')
+engine = create_engine('mysql://hop_bo:!2345HopBo0005432!@157.230.46.218:3306/uta_hop_dev_db_000', echo_pool=True)
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 sm=Sanic_Mail()
 
-
-client = MongoClient("mongodb://hop_ag:!2345hopag0005432!@178.128.93.105:27017/uta_mongo_hop_db_000")
-mongo = client.uta_mongo_hop_db_000
-# client = MongoClient("mongodb://hop_bo:!2345hopbo0005432!@157.230.46.218:27017/uta_mongo_hop_dev_db_000")
-# mongo = client.uta_mongo_hop_dev_db_000
+# client = MongoClient("mongodb://hop_ag:!2345hopag0005432!@178.128.93.105:27017/uta_mongo_hop_db_000")
+# mongo = client.uta_mongo_hop_db_000
+client = MongoClient("mongodb://hop_bo:!2345hopbo0005432!@157.230.46.218:27017/uta_mongo_hop_dev_db_000")
+mongo = client.uta_mongo_hop_dev_db_000
 
 def create_app(config_name):
     app.config.from_object(config[config_name])
