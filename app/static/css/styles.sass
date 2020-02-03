@@ -425,14 +425,15 @@ div#mainBody
   position: relative
   div.inmain_nav
     background: $light
-    position: absolute
+    position: fixed
     width: calc(100% - 200px)
     box-shadow: 0 0 5px -3px
     height: 60px
     display: flex
     align-items: center
     padding: 0 10px
-    top: 0
+    top: 70px
+    z-index: 11
     display: flex
     justify-content: space-between
     ._filter

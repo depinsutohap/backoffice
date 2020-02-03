@@ -21,10 +21,10 @@ function _detail(){
       data: JSON.stringify({
         'id': userData['id'],
         'token': userData['token'],
+        'business_id': $('#business').val(),
         'outlet': $('#outlet').val(),
         'dari': $('#startdate').val(),
         'sampai': $('#enddate').val(),
-        'business_id': $('#business').val(),
         'status': 9,
       })
     }, function (e) {

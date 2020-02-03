@@ -6,7 +6,7 @@ app = create_app('development')
 manager = Manager(app)
 
 if __name__ == '__main__':
-    serv_coro = app.create_server(host="0.0.0.0", port=7000, debug=True, return_asyncio_server=True)
+    serv_coro = app.create_server(host="0.0.0.0", port=8000, debug=True, return_asyncio_server=True)
     loop = asyncio.get_event_loop()
     serv_task = asyncio.ensure_future(serv_coro, loop=loop)
     server = loop.run_until_complete(serv_task)

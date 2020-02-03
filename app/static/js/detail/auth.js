@@ -55,13 +55,16 @@ function register() {
         })
       }, function(e){
         if(e.status === '00'){
+          console.log(e)
           notif('success', e.message)
           localStorage.setItem('name', e.data.name);
           localStorage.setItem('id', e.data.id);
           localStorage.setItem('phone_number', e.data.phone_number);
           localStorage.setItem('email', e.data.email);
+          localStorage.setItem('role_id', e.data.role_id);
           localStorage.setItem('token', e.data.token);
-          location.reload();
+          localStorage.setItem('permission', JSON.stringify(e.data.permission));
+          // location.reload();
         }else{
             notif('danger', e.message)
         }

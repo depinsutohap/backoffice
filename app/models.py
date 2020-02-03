@@ -63,6 +63,7 @@ class Hop_User(Base, UserMixin):
            response['id'] = user.id
            response['name'] = user.name
            response['phone_number'] = user.phone_number
+           response['role_id'] = user.role_id
            response['email'] = user.email
            response['token'] = user.generate_token()
         except:
@@ -279,6 +280,7 @@ class Hop_User(Base, UserMixin):
             raise
         finally:
             session.close()
+        print(response)
         return response
 
     # ALL AUTHENTICION METHODS
@@ -327,6 +329,21 @@ class Hop_User(Base, UserMixin):
                 response = check_email
             elif check_phone is not None:
                 response = check_phone
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return response
+
+    def verify_reg(self, email, phone):
+        response = False
+        session = Session()
+        try:
+            check_email = session.query(Hop_User).filter_by(email=email, status=True).count()
+            check_phone = session.query(Hop_User).filter_by(phone_number=phone, status=True).count()
+            if check_email == 0 and check_phone == 0:
+                response = True
         except:
             session.rollback()
             raise
@@ -3370,8 +3387,6 @@ class Hop_Log_Inventory(Base):
     quantity = Column(DECIMAL(36,2), default=0)
     date = Column(Date,default=None)
     expire = Column(Date,default=None)
-    used_quantity = Column(DECIMAL(36,2), default=0)
-    used_id = Column(Integer,default=None)
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
 

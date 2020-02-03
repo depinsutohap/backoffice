@@ -62,28 +62,44 @@ async def _add_register(request):
         response = {}
         apidata = _json.loads(request.form['data'][0])
         if(len(apidata['name']) > 0 and len(apidata['email']) > 0 and len(apidata['phone']) > 0):
-            check_email = Hop_User().verify_auth(apidata['email'])
-            check_phone = Hop_User().verify_auth(apidata['phone'])
-            if check_email is None and check_phone is None:
+            _check = Hop_User().verify_reg(apidata['email'], apidata['phone'])
+            if _check:
                 if len(apidata['password'].strip()) >= 8:
-                    response['data'] = Hop_User()._insertowner(apidata['name'],apidata['phone'],apidata['email'], apidata['password'], apidata['refferal'])
-                    response['status'] = '00'
-                    response['message'] = 'Welcome to Hop! Be ready to Hop and Grow!'
-                    user = Hop_User().verify_auth(response['data']['id'])
-                    _auth.login_user(request, user)
-                    Hop_Login_Log()._insert(user.id, 2)
+                    if apidata['refferal'] is not None:
+                        _data_ref = Hop_Sales()._data(apidata['refferal'])
+                        if _data_ref['status'] == '00':
+                            response['data'] = Hop_User()._insertowner(apidata['name'],apidata['phone'],apidata['email'], apidata['password'], apidata['refferal'])
+                            response['status'] = '00'
+                            response['message'] = 'Welcome to Hop! Be ready to Hop and Grow!'
+                        else:
+                            response['status'] = '50'
+                            response['message'] = 'Your refferal code is invalid.'
+                    else:
+                        response['data'] = Hop_User()._insertowner(apidata['name'],apidata['phone'],apidata['email'], apidata['password'], None)
+                        response['status'] = '00'
+                        response['message'] = 'Welcome to Hop! Be ready to Hop and Grow!'
+                    if response['status'] == '00':
+                        response['data'].update({'permission': None})
+                        user = Hop_User().verify_auth(response['data']['id'])
+                        _auth.login_user(request, user)
+                        Hop_Login_Log()._insert(user.id, 2)
+                        try:
+                            subject = "Hey, " + user.name + "! Awalilah perjalanan usahamu dengan Hop sekarang."
+                            content = jinja.env.get_template('mail/register.html').render(
+                                name=user.name, subject=subject
+                            )
+                            await app.send_email(
+                                targetlist=user.email,
+                                subject=subject,
+                                content=content,
+                                html=True,
+                                # attachments=attachments
+                            )
+                        except Exception as e:
+                            raise
+                        finally:
+                            pass
 
-                    subject = "Hey, " + user.name + "! Awalilah perjalanan usahamu dengan Hop sekarang."
-                    content = jinja.env.get_template('mail/register.html').render(
-                        name=user.name, subject=subject
-                    )
-                    await app.send_email(
-                        targetlist=user.email,
-                        subject=subject,
-                        content=content,
-                        html=True,
-                        # attachments=attachments
-                    )
                 else:
                     response['status'] = '50'
                     response['message'] = 'Password must be at least 8 characters in length.'

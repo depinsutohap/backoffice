@@ -1,14 +1,15 @@
-
-
-    <script src="{{ url_for('static', filename='js/detail/report/summary.js') }}"></script>
-
-    <script>
-      _summary();
-    </script>
+  <script src="{{ url_for('static', filename='js/detail/report/summary.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/detail/report/export.js') }}"></script>
+  <script>
+    _summary();
+  </script>
   <main id="dashboard_index">
     <div class="inmain_nav">
       <div class="title">
         <h1><a class="report" onclick="sub_href('{{ url_for('main._page', sector='report') }}')">Report</a> > <span class="summary">Summary</span</h1>
+      </div>
+      <div class="_filter">
+        <a class="nav_create" onclick="_export('1')"><p>Export</p></a>
       </div>
     </div>
     <div class="_container">
