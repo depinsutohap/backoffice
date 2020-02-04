@@ -5,12 +5,20 @@
   </div>
   <form id="form_add_permission">
     <div class="mobile_permission">
-      <div class="column_header">Mobile Application</div>
+      <div class="column_header">
+        <div class="colum_input">
+            Mobile Application
+            <label class="switch">
+              <input class="check_permission check_all_mobile" type="checkbox">
+              <span class="slider"></span>
+            </label>
+        </div>
+      </div>
       <div class="colum_input">
         <p>Order</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_order" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_order" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -19,7 +27,7 @@
         <p>Payment</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_payment" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_payment" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -28,7 +36,7 @@
         <p>Void</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_void" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_void" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -37,7 +45,7 @@
         <p>Change transactions</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_change_trx" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_change_trx" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -46,7 +54,7 @@
         <p>Make custom product's price</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_custom_price" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_custom_price" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -55,7 +63,7 @@
         <p>Make custom discount</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_custom_discount" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_custom_discount" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -64,7 +72,7 @@
         <p>Re-print reciept</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_reprint_reciept" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_reprint_reciept" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -73,16 +81,16 @@
         <p>Re-print kitchen's reciept</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_reprint_kitchen" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_reprint_kitchen" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
       </div>
       <div class="colum_input">
-        <p>Print invoice's reciept_print_invoice</p>
+        <p>Print invoice's reciept</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_print_invoice" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_print_invoice" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -91,7 +99,7 @@
         <p>History transactions</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_history" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_history" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -100,7 +108,7 @@
         <p>Customer Management</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_mobile_customer" class="check_permission" type="checkbox">
+            <input id="add_employee_mobile_customer" class="check_permission check_mobile" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -109,12 +117,20 @@
 
 
     <div class="bo_permission">
-      <div class="column_header">Backoffice (backoffice.hop.cash)</div>
+      <div class="column_header">
+        <div class="colum_input">
+            Backoffice (backoffice.hop.cash)
+            <label class="switch">
+              <input id="add_employee_mobile_void" class="check_permission check_all_bo" type="checkbox">
+              <span class="slider"></span>
+            </label>
+        </div>
+      </div>
       <div class="colum_input">
         <p>Outlet Management</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_outlet" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_outlet" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -123,7 +139,7 @@
         <p>Report</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_report" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_report" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -132,7 +148,7 @@
         <p>Management Product</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_product" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_product" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -141,7 +157,7 @@
         <p>Management Inventory</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_inventory" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_inventory" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -150,7 +166,7 @@
         <p>Management Tax</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_tax" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_tax" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -159,7 +175,7 @@
         <p>Management Employee</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_employee" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_employee" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -168,7 +184,7 @@
         <p>Management Promo</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_promo" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_promo" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -177,7 +193,7 @@
         <p>Customer Management</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_customer" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_customer" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -186,7 +202,7 @@
         <p>Billing</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_billing" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_billing" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
@@ -195,14 +211,12 @@
         <p>Daily Report (E-mail)</p>
         <div class="div_input">
           <label class="switch">
-            <input id="add_employee_bo_email" class="check_permission" type="checkbox">
+            <input id="add_employee_bo_email" class="check_permission check_bo" type="checkbox">
             <span class="slider"></span>
           </label>
         </div>
       </div>
     </div>
-
-
 
     <div class="footer">
       <h5>Kolom bertanda  wajib disini</h5>

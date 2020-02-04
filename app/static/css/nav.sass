@@ -172,8 +172,23 @@ nav.sidenav
   overflow-y: auto
   overflow-x: hidden
   transition: 300ms
-  >div
+  >div.menu
     position: relative
+    padding-bottom: 60px
+  >div.note
+    position: fixed
+    width: 200px
+    height: 50px
+    display: flex
+    background: $light
+    align-items: center
+    bottom: 0
+    justify-content: center
+    >img
+      width: 40px
+      height: auto
+      position: relative
+      margin-right: 5px
   img.companyLogo
     width: 45px
     margin: 15px 10px
@@ -237,6 +252,8 @@ nav.sidenav
   @media only screen and (max-width: 991px)
     left: -300px
     width: 300px
+    >div.note
+      width: 300px
     a.close_menu
       cursor: pointer
       display: inherit
