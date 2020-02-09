@@ -28,8 +28,6 @@ Base = declarative_base()
 Session = sessionmaker(bind=engine)
 sm=Sanic_Mail()
 
-# client = MongoClient("mongodb://hop_ag:!2345hopag0005432!@178.128.93.105:27017/uta_mongo_hop_db_000")
-# mongo = client.uta_mongo_hop_db_000
 client = MongoClient("mongodb://hop_bo:!2345hopbo0005432!@157.230.46.218:27017/uta_mongo_hop_dev_db_000")
 mongo = client.uta_mongo_hop_dev_db_000
 
