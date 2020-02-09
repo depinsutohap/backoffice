@@ -1,7 +1,5 @@
 from datetime import date, datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import current_app, request, url_for, Flask
-from flask_login import UserMixin, AnonymousUserMixin
 from .utils import hmac_sha256
 from . import mongo, Base, Session
 import pymongo, requests, time, itertools, ast, jwt
@@ -36,7 +34,7 @@ class Hop_Role(Base):
             session.close()
         return response
 
-class Hop_User(Base, UserMixin):
+class Hop_User(Base):
     __tablename__ = 'user'
     id = Column(Integer,primary_key=True)
     name = Column(String(100))
@@ -1726,7 +1724,7 @@ class Hop_Product_Item(Base):
             response['variant_list'] = []
             response['ingredients_list'] = []
             if _item.variant_type is False:
-                response['ingredients_list'].append(Hop_Composed_Product()._list(mpid=_item.id, mvid=0, owner_id=owner_id))
+                response['ingredients_list'].append(Hop_Composed_Product()._list(mpid=_item.id, mvid=None, owner_id=owner_id))
             else:
                 response['variant_list'] = Hop_Variant_List()._list(item_id=_item.id)
                 for i in response['variant_list']:
@@ -2936,9 +2934,9 @@ class Hop_Composed_Product(Base):
 
     id = Column(Integer,primary_key=True)
     main_product_id = Column(Integer,ForeignKey('product_item.id'),default=None)
-    main_variant_list_id = Column(Integer,ForeignKey('variant_list.id'),default=0)
+    main_variant_list_id = Column(Integer,ForeignKey('variant_list.id'),default=None)
     ingredients_product_id = Column(Integer,ForeignKey('product_item.id'),default=None)
-    ingredients_variant_list_id = Column(Integer,ForeignKey('variant_list.id'),default=0)
+    ingredients_variant_list_id = Column(Integer,ForeignKey('variant_list.id'),default=None)
     amount = Column(Numeric(10,2),default=0)
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
@@ -2951,14 +2949,14 @@ class Hop_Composed_Product(Base):
             for i in _list:
                 _exist = session.query(Hop_Composed_Product).filter_by(
                     main_product_id=i['mpid'],
-                    main_variant_list_id=i['mvid'] if int(i['mvid']) != 0 else 0,
+                    main_variant_list_id=i['mvid'] if i['mvid'] != None else None,
                     ingredients_product_id=i['ipid'],
-                    ingredients_variant_list_id=0,
+                    ingredients_variant_list_id=None,
                 )
                 if i['ivariant'] == True:
                     _exist = session.query(Hop_Composed_Product).filter_by(
                         main_product_id=i['mpid'],
-                        main_variant_list_id=i['mvid'] if int(i['mvid']) != 0 else 0,
+                        main_variant_list_id=i['mvid'] if i['mvid'] != None else None,
                         ingredients_product_id=i['ipid'],
                         ingredients_variant_list_id=i['ivid'],
                     )
@@ -2971,7 +2969,7 @@ class Hop_Composed_Product(Base):
                         else:
                             _composed = Hop_Composed_Product()
                             _composed.main_product_id=i['mpid']
-                            _composed.main_variant_list_id=i['mvid'] if i['mvid'] != 'null' else 0
+                            _composed.main_variant_list_id=i['mvid'] if i['mvid'] != None else None
                             _composed.ingredients_product_id=i['ipid']
                             if i['ivariant'] == True:
                                 _composed.ingredients_variant_list_id=i['ivid']
@@ -2980,7 +2978,7 @@ class Hop_Composed_Product(Base):
                 else:
                     _composed = Hop_Composed_Product()
                     _composed.main_product_id=i['mpid']
-                    _composed.main_variant_list_id=i['mvid'] if i['mvid'] != 'null' else 0
+                    _composed.main_variant_list_id=i['mvid'] if i['mvid'] != None else None
                     _composed.ingredients_product_id=i['ipid']
                     if i['ivariant'] == True:
                         _composed.ingredients_variant_list_id=i['ivid']
@@ -3012,26 +3010,29 @@ class Hop_Composed_Product(Base):
         finally:
             session.close()
 
-    def _list(self, mpid=None, mvid=0, owner_id=None):
-        if mvid == None:
-            mvid = 0
+    def _list(self, mpid=None, mvid=None, owner_id=None):
         response = {}
         response['mpid'] = mpid
         response['mvid'] = mvid
         response['list'] = []
         session = Session()
         try:
+            print(mpid)
+            print(mvid)
             _composed = session.query(Hop_Composed_Product).filter_by(main_product_id=mpid, main_variant_list_id=mvid, status=True).all()
+            print(len(_composed))
         except:
             session.rollback()
             raise
         finally:
             session.close()
+        print(len(_composed))
         for i in _composed:
+            print(i.id)
             _data = {}
             _data['ipid'] = Hop_Product_Item()._basic_data(i.ingredients_product_id, owner_id)
             _data['amount'] = str(i.amount)
-            _data['ivid'] =  0
+            _data['ivid'] =  None
             if i.ingredients_variant_list_id is not None:
                 _data['ivid'] = Hop_Variant_List()._data(i.ingredients_product_id, i.ingredients_variant_list_id)
             response['list'].append(_data)

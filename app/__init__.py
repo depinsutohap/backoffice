@@ -12,6 +12,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.pool import NullPool
 
 
 # db = SQLAlchemy()
@@ -22,7 +23,7 @@ app = Sanic(__name__)
 jinja = SanicJinja2()
 _auth = Auth(app)
 # engine = create_engine('mysql://hop_bo:!2345hopbo0005432!@178.128.93.105:3306/uta_hop_db_000', echo_pool=True)
-engine = create_engine('mysql://hop_bo:!2345HopBo0005432!@157.230.46.218:3306/uta_hop_dev_db_000', echo_pool=True)
+engine = create_engine('mysql://hop_bo:!2345HopBo0005432!@157.230.46.218:3306/uta_hop_dev_db_000', echo_pool=True, poolclass=NullPool)
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 sm=Sanic_Mail()
