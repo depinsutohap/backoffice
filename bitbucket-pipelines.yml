@@ -1,7 +1,7 @@
 image: atlassian/default-image:2
 
-pipelines: 
-  default: 
-    - step: 
+pipelines:
+  default:
+    - step:
         script:
           - ssh -tt root@165.22.98.235 'cd /app/backoffice-sanic;git pull;'
