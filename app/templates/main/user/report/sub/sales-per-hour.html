@@ -1,4 +1,4 @@
-    
+
     <script src="{{ url_for('static', filename='js/detail/report/salesperhour.js') }}"></script>
     <script>
       _sales_per_hour();
@@ -7,6 +7,9 @@
     <div class="inmain_nav">
       <div class="title">
         <h1><a class="report" onclick="sub_href('{{ url_for('main._page', sector='report') }}')">Report</a> > <span class="sales_per_hour">Sales Per Hour</span</h1>
+      </div>
+      <div class="_filter">
+        <a class="nav_create" onclick="_export('11')"><p>Export</p></a>
       </div>
     </div>
     <div class="_container">

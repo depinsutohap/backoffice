@@ -26,8 +26,6 @@ function _detail(){
         'status': 1,
       })
     }, function (e) {
-      console.log(e)
-      console.log(e.data.nettrevenue)
       let i;
       if(e.status == '00'){
         if ( userData['id'] > 0){
@@ -36,7 +34,7 @@ function _detail(){
           $('#void').text("Rp "+ formatNumber(e.data.void_st));
           $('#nett_revenue').text("Rp "+ formatNumber(e.data.nettrevenue));
           $('#taxservice').text("Rp "+ formatNumber(e.data.tax_success_st));
-          $('#total_revenue').text("Rp "+ formatNumber(e.data.total));
+          $('#total_revenue').text("Rp "+ formatNumber(e.data.total_revenue));
         }else{
           notif('danger', 'user tidak terdaftar')
         }
@@ -48,8 +46,4 @@ function _detail(){
     }).done(function(){
       _loading(0);
     });
-}
-
-function _export(){
-  $('#table').tableExport({type:'csv', fileName: 'summary'});
 }
