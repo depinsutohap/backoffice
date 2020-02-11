@@ -32,10 +32,4 @@
       </form>
   </main>
   <script src="{{ url_for('static', filename='js/detail/auth.js') }}"></script>
-  <script>
-    function input_formatNumberwocommas(n) {
-      $(n).val($(n).val().toString().replace(/\D/g, ""))
-    }
-    register();
-  </script>
 {% endblock %}

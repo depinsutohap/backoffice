@@ -181,3 +181,7 @@ function view_pass(){
       }
   })
 }
+
+function input_formatNumberwocommas(n) {
+  $(n).val($(n).val().toString().replace(/\D/g, ""))
+}
