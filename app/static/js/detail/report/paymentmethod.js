@@ -27,9 +27,12 @@ function _detail(){
         'status': 12,
       })
     }, function (e) {
+      console.log(e.data)
       let i;
       $('#data_body').empty();
       if(e['status'] === '00'){
+        console.log('success')
+        console.log(e.data.data)
         if(e.data.data.length > 0){
           for(i=0; i < e.data.data.length; i++){
             payment_method_append(e.data.data[i]);
@@ -51,8 +54,8 @@ function _detail(){
     console.log(data)
     $('#data_body').append(
       '<tr>'+
-      '<td>'+data.name + '</td>' +
-      '<td>'+"Rp."+formatNumber(data.total) + '</td>' +
+      '<td>'+data.payment_method + '</td>' +
+      '<td>'+"Rp."+formatNumber(data.subtotal) + '</td>' +
       '</tr>'+
       '</table>'
     )

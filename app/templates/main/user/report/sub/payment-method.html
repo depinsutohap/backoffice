@@ -1,4 +1,4 @@
-    
+
     <script src="{{ url_for('static', filename='js/detail/report/paymentmethod.js') }}"></script>
     <script>
       _payment_method();
@@ -8,6 +8,9 @@
       <div class="title">
         <h1><a class="report" onclick="sub_href('{{ url_for('main._page', sector='report') }}')">Report</a> > <span class="payment_method">Payment Method</span</h1>
         <h1><a  onclick="sub_href('{{ url_for('main._page', sector='report') }}')">Report</a> > Payment Method</h1>
+      </div>
+      <div class="_filter">
+        <a class="nav_create" onclick="_export('12')"><p>Export</p></a>
       </div>
     </div>
     <div class="_container">
@@ -43,6 +46,12 @@
         <div class="col_10">
           <div class="card chart_card table_card">
             <table class="table">
+              <thead>
+                <tr>
+                  <th onclick="sortTable(0)">Name</th>
+                  <th onclick="sortTable(1)">Revenue</th>
+                </tr>
+              </thead>
               <tbody id="data_body"></tbody>
             </table>
             <div class="no_data">

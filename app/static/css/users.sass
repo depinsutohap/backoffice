@@ -1,0 +1,747 @@
+/**
+ * Developed by UTA Developer Team
+ * URL : https://utama.tech
+
+$primary-color: #031b4d
+$secondary-color: #227BFF
+$netral: transparent
+$light: #fff
+$semilight: #f0f4f8
+$dark: #222
+$semidark: lighten($dark, 30%)
+$border-dark: #dfdfdf
+
+$danger: #8b0000
+$positive: #04B76B
+$negative: #FF5E6D
+$netral: transparent
+$green: #15CD72
+$orange: coral
+
+$font: 'Prime Regular'
+$primary-font: 'Prime Regular'
+$secondary-font: 'Prime Light'
+
+main#mainBusinessPage
+  padding: 40px 0
+  .column_status
+    margin-right: 10px
+  .column_name
+    width: 35%
+  .column_phone
+    width: 30%
+  .column_transactions
+    width: 30%
+  ._data
+    display: flex
+    margin-right: 50px
+    &._menu
+      margin-right: 0
+    a
+      padding: 5px
+      border-bottom: 1px solid $border-dark
+      color: $secondary-color
+      text-align: right
+      width: 100%
+      cursor: pointer
+      transition: 300ms
+      &:hover
+        color: $primary-color
+        border-color: $primary-color
+      &.edit_button
+        border: 1px solid $secondary-color
+        border-radius: 3px
+        margin-left: 5px
+        transition: 300ms
+        &:hover
+          color: $light
+          background-color: $secondary-color
+    .key
+      font-weight: bolder
+      color: $primary-color
+      min-width: 120px
+  form
+    max-width: 50%
+    button
+      margin-top: 20px
+      width: 150px
+  div.delete_div
+    display: flex
+    justify-content: space-between
+  @media only screen and (max-width: 762)
+    form
+      width: 100%
+
+main#new_business_index
+  >div._container
+    >div._row
+      justify-content: center
+      &#move_resources
+        display: none
+      div.title
+        font-size: 16px
+        color: lighten($secondary-color, 25%)
+        display: flex
+        align-items: center
+        transition: 300ms
+        div.number
+          border: 1px solid
+          border-radius: 100%
+          width: 35px
+          height: 35px
+          display: flex
+          align-items: center
+          justify-content: center
+          margin-right: 5px
+        &:first-child
+          margin-right: 15px
+        &.active
+          color: $primary-color
+          font-weight: bolder
+      form
+        width: 100%
+        h1, p
+          text-align: center
+        button
+          width: 100%
+          margin-top: 20px
+        a._skip
+          margin-top: 25px
+          display: flex
+          justify-content: center
+          color: $secondary-color
+          cursor: pointer
+        .ui.dropdown
+          width: 100%
+          min-height: 150px
+          font-size: 16px
+          .menu>.item
+            font-size: 1.5rem
+        @media only screen and (max-width: 767px)
+          .ui.selection.dropdown .menu
+            /*      max-height: 8.01428571rem; /* + 1.335714285 to 9.349999995rem
+            /*      max-height: 9.349999995rem; /* Adds a half
+            max-height: 16.02857142rem
+
+            /* Double size
+
+        @media only screen and (min-width: 768px)
+          .ui.selection.dropdown .menu
+            /*         max-height: 10.68571429rem; /* + 1.3357142863 to 12.0214285763rem
+            max-height: 12.0214285763rem
+
+        @media only screen and (min-width: 992px)
+          .ui.selection.dropdown .menu
+            max-height: 16.02857143rem
+
+            /* + 1.3357142858 to 17.3642857158rem
+
+main#new_employee_index
+  >div._container
+    >div._row
+      justify-content: center
+      &#move_resources
+        display: none
+      div.title
+        font-size: 16px
+        color: lighten($secondary-color, 25%)
+        display: flex
+        align-items: center
+        transition: 300ms
+        div.number
+          border: 1px solid
+          border-radius: 100%
+          width: 35px
+          height: 35px
+          display: flex
+          align-items: center
+          justify-content: center
+          margin-right: 5px
+        &:first-child
+          margin-right: 15px
+        &.active
+          color: $primary-color
+          font-weight: bolder
+      form
+        width: 100%
+        h1, p
+          text-align: center
+        button
+          width: 100%
+          margin-top: 20px
+        a._skip
+          margin-top: 25px
+          display: flex
+          justify-content: center
+          color: $secondary-color
+          cursor: pointer
+        .ui.dropdown
+          width: 100%
+          min-height: 150px
+          font-size: 16px
+          .menu>.item
+            font-size: 1.5rem
+        @media only screen and (max-width: 767px)
+          .ui.selection.dropdown .menu
+            /*      max-height: 8.01428571rem; /* + 1.335714285 to 9.349999995rem
+            /*      max-height: 9.349999995rem; /* Adds a half
+            max-height: 16.02857142rem
+
+            /* Double size
+
+        @media only screen and (min-width: 768px)
+          .ui.selection.dropdown .menu
+            /*         max-height: 10.68571429rem; /* + 1.3357142863 to 12.0214285763rem
+            max-height: 12.0214285763rem
+
+        @media only screen and (min-width: 992px)
+          .ui.selection.dropdown .menu
+            max-height: 16.02857143rem
+
+            /* + 1.3357142858 to 17.3642857158rem
+
+.unsame_type, ._outlet_list, .bo_permission, ._permission_button, .add_promo_date,
+.add_applied_time, .edit_promo_date, .edit_applied_time, .auto_promo_1, .auto_promo_2,
+.auto_promo_3, .auto_promo_time_rule, .auto_promo_table, .auto_promo_select_category,
+.variant_button, .composed_exp, .waiting, .enter, .import_variant_column, ._data_opname,
+._name_order_inv
+  display: none
+
+.promo_href
+  border-radius: 3px
+  border: 1px solid $border-dark
+  padding: 20px
+  transition: 300ms
+  display: flex
+  flex-direction: column
+  cursor: pointer
+  color: $primary-color
+  h4.title
+    margin: 0 0 10px
+  .total_promo
+    margin-top: 25px
+    border-radius: 3px
+    background-color: $border-dark
+    max-width: 100px
+    text-align: center
+    padding: 10px
+  &:hover
+    background-color: lighten($secondary-color, 40%)
+    border-color: $primary-color
+    h4, p, .total_promo
+      color: $primary-color
+
+.data_promo_name
+  .column_name
+    display: flex
+
+.data_promo_date, .data_promo_applied_day, .data_promo_applied_time
+  width: 200px
+  word-wrap: break-word
+
+.div_variant
+  display: flex
+  flex-direction: column
+  margin-top: 20px
+  >.variant_input_header, >.variant_input_body > .variant_row
+    display: flex
+    margin-bottom: 10px
+    >.category
+      width: calc(30% - 10px)
+      margin-right: 10px
+      p
+        font-family: $primary-font
+        color: $primary-color
+    >.item
+      width: 70%
+      p
+        font-family: $primary-font
+        color: $primary-color
+  >.variant_input_body
+    display: flex
+    flex-direction: column
+    >.variant_row
+      .category
+        input
+          margin: 0
+          height: 60px
+      .item
+        display: flex
+        >.tag_div
+          width: calc(100% - 50px)
+          border: 1px solid $primary-color
+          border-radius: 3px
+          display: flex
+          flex-wrap: wrap
+          padding: 10px
+          >.tag_list
+            display: flex
+            flex-wrap: wrap
+            a.tag
+              background: $border-dark
+              font-size: 16px
+              padding: 5px 10px
+              margin: 2px 5px 2px 0
+              border-radius: 3px
+              color: $primary-color
+              cursor: pointer
+              >i
+                margin-left: 10px
+          input.input_tag
+            width: auto
+            border: none
+            padding: 0
+            margin: 0
+            height: auto
+        >a
+          width: 50px
+          display: flex
+          justify-content: center
+          align-items: flex-start
+          padding-top: 10px
+          cursor: pointer
+          color: lighten($semidark, 20%)
+          transition: 300ms
+          >i
+            font-size: 15px
+          &:hover
+            color: lighten($semidark, 10%)
+  >a.add_variant_button
+    color: $primary-color
+    font-family: $primary-font
+    cursor: pointer
+    >i
+      margin-right: 10px
+
+.colum_composed
+  flex-direction: column
+  .compose_div
+    border-radius: 3px
+    border: 1px solid $secondary-color
+    width: 100%
+    padding: 10px
+    color: $secondary-color
+    p
+      width: 100%
+      margin-bottom: 0
+      min-height: auto
+
+.div_price, .div_stock
+  .price_header, .price_body > .price_row, .stock_header, .stock_body > .stock_row
+    display: -webkit-box
+    align-items: center
+    margin-top: 20px
+    width: 100%
+    >div.name
+      width: 30%
+      margin: 5px 10px
+      >span.variant
+        border-radius: 3px
+        color: #fff
+        background: #031b4d
+        margin-right: 5px
+        padding: 10px
+    >div.sku
+      width: 17.5%
+    >.price_column
+      width: calc(50% - 90px)
+      >input.price
+        margin: 0
+        width: 100%
+        background: $light
+      &.outlet_price_column
+        width: 50%
+    >.stock_min
+      width: calc(50% - 180px)
+      >input.stock
+        margin: 0
+        width: 100%
+        background: $light
+        &[readonly]
+          background: $border-dark
+    >.sell, >.mng_stock, >.alert_stock
+      width: 80px
+      padding-left: 10px
+  .price_body > .price_row, .stock_body > .stock_row
+    padding: 10px
+    transition: 300ms
+    &:hover
+      border-radius: 3px
+      background: $border-dark
+
+.div_ingredients
+  .ingredients_header
+    display: flex
+    align-items: baseline
+    margin-top: 20px
+    width: 100%
+    >div.name
+      width: 30%
+      margin: 5px 10px
+    >div.sku
+      width: 17.5%
+    >.ingredients_subhead
+      display: flex
+      width: 52.5%
+      >.ingredients
+        width: 55%
+        padding: 0 5px
+      >.value
+        width: 30%
+        padding: 0 5px
+      >.measurement
+        width: 10%
+      >.trash
+        width: 5%
+  .ingredients_body > .ingredients_row
+    display: flex
+    align-items: baseline
+    margin-top: 20px
+    width: 100%
+    >div.name
+      width: 30%
+      margin: 5px 10px
+      >span.variant
+        border-radius: 3px
+        color: #fff
+        background: #031b4d
+        margin-right: 5px
+        padding: 10px
+    >div.sku
+      width: 17.5%
+    >.ingredients
+      width: 52.5%
+      padding-right: 10px
+      display: flex
+      flex-direction: column
+      >.ingredients_href
+        margin-top: 5px
+        padding: 0 5px
+        display: flex
+        width: 55%
+        justify-content: space-between
+        >a
+          color: $primary-color
+          cursor: pointer
+          >i
+            margin-right: 5px
+      >.ingredients_list_append
+        display: flex
+        flex-direction: column
+        width: 100%
+        >.ingredients_div
+          width: 100%
+          display: flex
+          align-items: baseline
+          transition: 300ms
+          >.ingredients_column
+            position: relative
+            width: 55%
+            >.ingredients_div_input
+              padding: 5px
+              >input[readonly]
+                margin: 0
+                background-color: $light
+                cursor: pointer
+              >select
+                margin-top: 10px
+                display: none
+            >.ingredients_div_search
+              z-index: 10
+              top: 55px
+              width: 100%
+              background: #fff
+              box-shadow: 0 0 5px -3px
+              position: absolute
+              display: none
+              flex-direction: column
+              >.ingredients_div_search_input
+                padding: 5px
+                >input
+                  margin: 0
+                  background: $light
+              >.ingredients_div_search_data
+                display: flex
+                flex-direction: column
+                >a, >.waiting, >.task
+                  width: 100%
+                  padding: 5px
+                  cursor: pointer
+                >a
+                  color: $primary-color
+                  cursor: pointer
+                  transition: 100ms
+                  &:hover
+                    color: $light
+                    background: $secondary-color
+                >.waiting
+                  color: $semidark
+          >.value
+            width: 30%
+            display: flex
+            flex-direction: column
+            padding: 5px
+            >input
+              margin: 0
+              width: 100%
+              background: $light
+          >.measurement
+            width: 10%
+            margin-top: 20px
+          >.trash
+            width: 5%
+            margin-top: 20px
+            >a
+              color: $primary-color
+              cursor: pointer
+    &:hover
+      border-radius: 3px
+      background: $border-dark
+
+.measurement
+  position: relative
+  >input
+    cursor: pointer
+    &[readonly]
+      background: $light
+  >.div_search_measurement
+    background: $light
+    box-shadow: 0 0 5px -3px
+    border-radius: 3px
+    position: absolute
+    z-index: 10
+    width: 100%
+    padding: 5px
+    display: none
+    flex-direction: column
+    >.ingredients_div_search_input
+      padding: 5px
+    >.measurement_div_search_data
+      display: flex
+      flex-direction: column
+      >a, >div
+        padding: 5px 10px
+      >a
+        color: $primary-color
+        cursor: pointer
+        &:hover
+          background: $border-dark
+      >div
+        color: $semidark
+
+.div_add_stock_table
+  display: flex
+  flex-direction: column
+  >.table_header
+    >div
+      padding: 10px 0
+  >.table_body >.table_row
+    padding: 10px 0
+    transition: 300ms
+    &:hover
+      background: $border-dark
+  >.table_header, >.table_body >.table_row
+    padding: 10px
+    border-bottom: 1px solid $border-dark
+    display: flex
+    width: 100%
+    &:last-child
+      >.item_column > .div_search_stock
+        top: auto
+        bottom: 50px
+    >.item_column, >.variant_column
+      width: 22.5%
+      padding-right: 5px
+      display: flex
+      align-items: center
+      position: relative
+      >span, select
+        display: none
+      >input, select
+        margin: 0
+        width: 100%
+        background: $light
+        &[disabled]
+          background: $border-dark
+      >.div_search_stock
+        background: $light
+        box-shadow: 0 0 5px -3px
+        border-radius: 3px
+        position: absolute
+        z-index: 10
+        width: calc(100% - 5px)
+        top: 50px
+        padding: 5px
+        display: none
+        flex-direction: column
+        >.stock_div_search_input
+          padding: 5px
+          input
+            margin: 0
+        >.stock_div_search_data
+          display: flex
+          flex-direction: column
+          >a, >div
+            padding: 5px 10px
+
+          >a
+            color: $primary-color
+            cursor: pointer
+            &:hover
+              background: $border-dark
+          >div
+            color: $semidark
+    >.total_unit_column, >.unit
+      width: 10%
+      padding-right: 5px
+      display: flex
+      align-items: center
+      >input
+        margin: 0
+        width: 100%
+        background: $light
+        padding: 0 5px
+    >.cost_unit_column, >.total_cost_column
+      width: calc(22.5% - 20px)
+      padding-right: 5px
+      display: flex
+      align-items: center
+      >input
+        margin: 0
+        width: 100%
+        background: $light
+    >.trash_column
+      width: 40px
+      display: flex
+      align-items: center
+      justify-content: center
+      >a
+        color: $primary-color
+        cursor: pointer
+  >.stock_exit_table_header, >.stock_exit_table_body >.table_row
+      >.item_column, >.variant_column
+        width: calc(45% - 20px)
+  >.stock_opname_table_header, >.stock_opname_table_body >.table_row
+    >.item_column, >.variant_column
+      width: 25%
+    >.total_unit_column, >.unit
+      width: 12.5%
+  >.table_href
+    margin-top: 10px
+    padding: 0 10px
+    >a
+      margin-top: 10px
+      color: $primary-color
+      cursor: pointer
+      >i
+        margin-right: 10px
+  @media only screen and (max-width: 660px)
+    .table_header
+      display: none
+    .table_body
+      >.table_row
+        flex-wrap: wrap
+        >.item_column, >.variant_column, >.total_unit_column, >.cost_unit_column, >.total_cost_column, >.trash_column
+          width: 100%
+          margin-bottom: 10px
+          padding: 0
+        >.total_unit_column
+          >input
+            padding: 0 20px
+        >.trash_column
+          >a
+            background: $danger
+            color: $light
+            width: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            height: 45px
+            border-radius: 3px
+            font-size: 20px
+
+
+.account_card
+  ._title
+    color: $semidark
+  ._value
+    font-size: 16px
+  ._href
+    background: $green
+    padding: 7.5px 10px
+    font-size: 16px
+    border-radius: 3px
+    color: $light
+    cursor: pointer
+
+.gs
+  color: $positive
+.rs
+  color: $negative
+.ds
+  color: $dark
+
+.sub, .db_bill
+  border: 1px solid
+  border-color: $primary-color
+  color: $primary-color
+  border-radius: 3px
+  padding: 7.5px
+  &.positive
+    border-color: $positive
+    color: $positive
+  &.danger
+    border-color: $danger
+    color: $danger
+
+.db_bill
+  margin-left: 10px
+  cursor: pointer
+  color: $primary-color
+  transition: 150ms
+  &:hover
+    background: $primary-color
+    color: $light
+
+#detail_payment_index
+  .card
+    h1, h4
+      width: 100%
+      text-align: center
+    ._table_detail
+      display: flex
+      flex-direction: column
+      align-items: center
+      width: 100%
+      >.header
+        display: flex
+        flex-direction: column
+        width: 80%
+        >div
+          display: flex
+          >.title, >.value
+            padding: 10px
+            width: 50%
+            font-size: 17.5px
+          >.title
+            background-color: lighten($primary-color, 75%)
+          >.value
+            color: $light
+            background-color: lighten($primary-color, 10%)
+      >.bottom
+        display: flex
+        width: 80%
+        height: 100px
+        background-color: lighten($primary-color, 60%)
+        align-items: center
+        justify-content: center
+        >i
+          margin-right: 25px
+          font-size: 25px
+    ._list_table
+      width: 100%
+      display: flex
+      align-items: center
+      >.list_data
+        width: 80%
+        margin-bottom: 15px

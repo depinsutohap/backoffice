@@ -56,7 +56,7 @@ function _detail(){
       '<tr>'+
       '<td>'+data.datePayment + '</td>' +
       '<td>'+data.total_trans + '</td>' +
-      '<td>'+"Rp."+formatNumber(data.revenue) + '</td>' +
+      '<td>'+"Rp."+formatNumber(data.sub_total) + '</td>' +
       '<td>'+"Rp."+formatNumber(data.average) + '</td>' +
       '</tr>'+
       '</table>'

@@ -8,7 +8,23 @@ from os.path import join, dirname, realpath
 from werkzeug.utils import secure_filename
 from PIL import Image
 import requests, json
+import xlsxwriter
+import pandas as pd
 
+def xlsx_style(_filename):
+    response = {}
+    session = Session()
+    writer = pd.ExcelWriter(_filename, engine ='xlsxwriter')
+    workbook  = writer.book
+    name_format=workbook.add_format({'font':24, 'bold': 5})
+    header_format=workbook.add_format({'border':1,'align':'left','font': 'Arial','color': '#031B4D','bg_color':'#eeeeee' })
+    field_info=workbook.add_format({'border':1,'bg_color':'#36A551','align':'center_across','color' : '#ffffff'})
+    row_info=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#81db9e','color' : '#ffffff','align':'center_across','bold': 1})
+    response['name'] = name_format
+    response['header'] = header_format
+    response['field'] = field_info
+    response['record'] = row_info
+    return response
 
 def resize_files(_user_id, _image):
     response = {}

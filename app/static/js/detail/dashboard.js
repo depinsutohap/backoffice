@@ -25,7 +25,6 @@ function _detail(){
       'dash_on': 0,
     })
   }, function (e) {
-    console.log(e)
     let i;
     $('#data_body').empty();
     if(e['status'] === '00'){

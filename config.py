@@ -2,12 +2,12 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    SECRET_KEY = "Learn from the data and HOP to grow"
-    MAIL_SENDER = "hello@hop.cash"
-    MAIL_SENDER_PASSWORD = "!2345hop5432!"
-    MAIL_SEND_HOST = "mx-s3.vivawebhost.com"
-    MAIL_SEND_PORT = 465
-    MAIL_TLS = True
+    # SECRET_KEY = "Learn from the data and HOP to grow"
+    # MAIL_SENDER = "hello@hop.cash"
+    # MAIL_SENDER_PASSWORD = "!2345hop5432!"
+    # MAIL_SEND_HOST = "mx-s3.vivawebhost.com"
+    # MAIL_SEND_PORT = 465
+    # MAIL_TLS = True
 
     @staticmethod
     def init_app(app):
@@ -35,23 +35,19 @@ class ProductionConfig(Config):
         Config.init_app(app)
 
         # email errors to the administrators
-        import logging
-        from logging.handlers import SMTPHandler
-        credentials = None
-        secure = None
-        if getattr(cls, 'MAIL_USERNAME', None) is not None:
-            credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
-            if getattr(cls, 'MAIL_USE_TLS', None):
-                secure = ()
-        mail_handler = SMTPHandler(
-            mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
-            fromaddr=cls.SANIC_MAIL_SENDER,
-            toaddrs=[cls.SANIC_ADMIN],
-            subject=cls.SANIC_MAIL_SUBJECT_PREFIX + ' Application Error',
-            credentials=credentials,
-            secure=secure)
-        mail_handler.setLevel(logging.ERROR)
-        app.logger.addHandler(mail_handler)
+        # import logging
+        # from logging.handlers import SMTPHandler
+        # credentials = None
+        # secure = None
+        # if getattr(cls, 'MAIL_USERNAME', None) is not None:
+        #     credentials = (cls.MAIL_    mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
+        #     fromaddr=cls.SANIC_MAIL_SENDER,
+        #     toaddrs=[cls.SANIC_ADMIN],
+        #     subject=cls.SANIC_MAIL_SUBJECT_PREFIX + ' Application Error',
+        #     credentials=credentials,
+        #     secure=secure)
+        # mail_handler.setLevel(logging.ERROR)
+        # app.logger.addHandler(mail_handler)
 
 
 class UnixConfig(ProductionConfig):
