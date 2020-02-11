@@ -64,7 +64,7 @@ function register() {
           localStorage.setItem('role_id', e.data.role_id);
           localStorage.setItem('token', e.data.token);
           localStorage.setItem('permission', JSON.stringify(e.data.permission));
-          // location.reload();
+          location.reload();
         }else{
             notif('danger', e.message)
         }
