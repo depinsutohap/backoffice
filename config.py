@@ -2,13 +2,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    # SECRET_KEY = "Learn from the data and HOP to grow"
-    # MAIL_SENDER = "hello@hop.cash"
-    # MAIL_SENDER_PASSWORD = "!2345hop5432!"
-    # MAIL_SEND_HOST = "mx-s3.vivawebhost.com"
-    # MAIL_SEND_PORT = 465
-    # MAIL_TLS = True
-
+    SECRET_KEY = 'learn from the data and hop to grow'
     @staticmethod
     def init_app(app):
         pass
