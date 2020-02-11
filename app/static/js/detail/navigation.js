@@ -259,6 +259,24 @@ function _check(){
   });
 }
 
+function _check_spec(t, x){
+  $('.' + t).on('change', function(){
+    if($('.' + t).is(':checked')){
+      $('.' + x).prop('checked', true).change();
+    }else{
+      $('.' + x).prop('checked', false).change();
+    }
+  })
+
+  $('.' + x).on('change', function(){
+    if($('.' + x + ':checked').length == $('.' + x).length){
+      $('.' + t).prop('checked', true);
+    }else{
+      $('.' + t).prop('checked', false);
+    }
+  });
+}
+
 
 function input_formatNumberwocommas(n) {
   $(n).val($(n).val().toString().replace(/\D/g, ""))

@@ -55,7 +55,6 @@ function notif(type, message) {
       }
     }
   }
-
 }
 
 function close_notif(t){

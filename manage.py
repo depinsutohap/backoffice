@@ -6,7 +6,11 @@ app = create_app('development')
 manager = Manager(app)
 
 if __name__ == '__main__':
+# <<<<<<< HEAD
     app.run(host="0.0.0.0", port=8000, debug=True)
+# =======
+#     app.run(host="0.0.0.0", port=7001, debug=True)
+# >>>>>>> 5ab5ec543335870b2c5e28d041a8f93c49682476
     # serv_coro = app.create_server(host="0.0.0.0", port=8000, debug=True, return_asyncio_server=True)
     # loop = asyncio.get_event_loop()
     # serv_task = asyncio.ensure_future(serv_coro, loop=loop)

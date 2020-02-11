@@ -87,19 +87,11 @@ async def _api_summary(request):
                 response['data'] = TransLog()._dashboard_sales_co(user.owner_id, apidata['outlet'], apidata['dash_on'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                 response['status'] = '00'
             if int(apidata['status']) == 12:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._payment_method_all(user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._payment_method(apidata['outlet'], apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._payment_method_co(user.owner_id,apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
             if int(apidata['status']) == 13:
-                if (int(apidata['business_id']) == 0 or int(apidata['outlet']) == 0):
-                    response['data'] = TransLog()._stock_all(user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
-                elif int(apidata['outlet']) != 0:
-                    response['data'] = TransLog()._stock(apidata['outlet'], user.owner_id, apidata['dari'], apidata['sampai'])
-                    response['status'] = '00'
+                response['data'] = TransLog()._stock_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                response['status'] = '00'
             if int(apidata['status']) == 14:
                 response['data'] = TransLog()._sales_per_hour_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                 response['status'] = '00'
@@ -570,7 +562,7 @@ async def _api_export(request):
                             writer.save()
                             response['status'] = '00'
                             response['filename'] = filename
-                    elif int(apidata['export_type']) == 11: #product Profil
+                    elif int(apidata['export_type']) == 11: #sales per hour
                         filename = "Sales-PerHour-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
@@ -604,6 +596,96 @@ async def _api_export(request):
                             record_info1=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#fd9644','color' : '#ffffff','align':'center_across','bold': 1})
                             record_info=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#26de81','color' : '#ffffff','align':'center_across','bold': 1})
                             worksheet = writer.sheets['Sales Per Hour']
+                            worksheet.conditional_format( 'A1:D1' , { 'type' : 'no_blanks' , 'format' : name_format} )
+                            worksheet.conditional_format( 'A3:D4' , { 'type' : 'no_blanks' , 'format' : header_format} )
+                            worksheet.conditional_format( 'A6:L6' , { 'type' : 'no_blanks' , 'format' : field_info1} )
+                            worksheet.conditional_format( 'A7:L7' , { 'type' : 'no_blanks' , 'format' : record_info1} )
+                            worksheet.conditional_format( 'A9:L9' , { 'type' : 'no_blanks' , 'format' : field_info} )
+                            worksheet.conditional_format( 'A9:M36' , { 'type' : 'no_blanks' , 'format' : record_info} )
+                            worksheet.set_column(0, 5, 18)
+                            writer.save()
+                            response['status'] = '00'
+                            response['filename'] = filename
+                    elif int(apidata['export_type']) == 12: #payment method
+                        filename = "Payment-Method-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        our_path = excelDir+filename
+                        if os.path.isfile(our_path): #Jika file sudah dibuat
+                            response['status'] = '50'
+                            response['message'] = 'Data sudah berhasil di export'
+                            response['filename'] = filename
+                        else:
+                            datas = TransLog()._payment_method_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                            writer = pd.ExcelWriter(our_path, engine ='xlsxwriter')
+                            report_name = pd.DataFrame([['Payment Method Report']])
+                            report_header = pd.DataFrame([['Bisnis',business,'Dari', apidata['dari']],['Outlet',outlet, 'Sampai',apidata['sampai']]])
+                            print(datas)
+                            newdata = [datas['data']]
+                            newdata = [x for x in newdata if x != []]
+                            # report_total = pd.DataFrame([['Total Transaksi', 'Total Revenue', 'Revenue Rata-Rata'],[0, 0, 0]])
+                            report_detail = pd.DataFrame([['-',0, 0, 0]])
+                            if len(newdata) > 0:
+                                for i in range(len(newdata)):
+                                    report_detail = pd.DataFrame(newdata[i])
+                                # report_total = pd.DataFrame([['Total Transaction', 'Total Revenue', 'Total Average'],[datas['total_sold'], datas['total_revenue'], datas['total_average']]])
+                                report_detail = report_detail[['payment_method', 'subtotal']]
+                            report_detail.columns= ['Jenis Pembayaran', 'Total Terjual']
+                            print(report_detail)
+                            report_name.to_excel(writer, sheet_name ='Payment Method', startrow = 0, index=False, header=False)
+                            report_header.to_excel(writer, sheet_name ='Payment Method', startrow = 2, index=False, header=False)
+                            # report_total.to_excel(writer, sheet_name ='Payment Method', startrow = 5, index=False, header=False)
+                            report_detail.to_excel(writer, sheet_name ='Payment Method', startrow = 8, index=False, header=True)
+                            workbook  = writer.book
+                            name_format=workbook.add_format({'font':24, 'bold': 5})
+                            header_format=workbook.add_format({'border':1,'align':'left','font': 'Arial','color': '#031B4D','bg_color':'#eeeeee' })
+                            field_info1=workbook.add_format({'border':1,'bg_color':'#fa8231','align':'center_across','color' : '#ffffff','align':'center_across','bold': 1})
+                            field_info=workbook.add_format({'border':1,'bg_color':'#20bf6b','align':'center_across','color' : '#ffffff','align':'center_across','bold': 1})
+                            record_info1=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#fd9644','color' : '#ffffff','align':'center_across','bold': 1})
+                            record_info=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#26de81','color' : '#ffffff','align':'center_across','bold': 1})
+                            worksheet = writer.sheets['Payment Method']
+                            worksheet.conditional_format( 'A1:D1' , { 'type' : 'no_blanks' , 'format' : name_format} )
+                            worksheet.conditional_format( 'A3:D4' , { 'type' : 'no_blanks' , 'format' : header_format} )
+                            worksheet.conditional_format( 'A6:L6' , { 'type' : 'no_blanks' , 'format' : field_info1} )
+                            worksheet.conditional_format( 'A7:L7' , { 'type' : 'no_blanks' , 'format' : record_info1} )
+                            # worksheet.conditional_format( 'A9:L9' , { 'type' : 'no_blanks' , 'format' : field_info} )
+                            worksheet.conditional_format( 'A9:M36' , { 'type' : 'no_blanks' , 'format' : record_info} )
+                            worksheet.set_column(0, 5, 18)
+                            writer.save()
+                            response['status'] = '00'
+                            response['filename'] = filename
+                    elif int(apidata['export_type']) == 13: #stock
+                        filename = "Stock-Report-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        our_path = excelDir+filename
+                        if os.path.isfile(our_path): #Jika file sudah dibuat
+                            response['status'] = '50'
+                            response['message'] = 'Data sudah berhasil di export'
+                            response['filename'] = filename
+                        else:
+                            datas = TransLog()._stock_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                            writer = pd.ExcelWriter(our_path, engine ='xlsxwriter')
+                            report_name = pd.DataFrame([['Stock Report']])
+                            report_header = pd.DataFrame([['Bisnis',business,'Dari', apidata['dari']],['Outlet',outlet, 'Sampai',apidata['sampai']]])
+                            newdata = [datas['data']]
+                            newdata = [x for x in newdata if x != []]
+                            report_total = pd.DataFrame([['Grand Total'],[0]])
+                            report_detail = pd.DataFrame([['-', '-', '-', '-', 0, '-', 0]])
+                            if len(newdata) > 0:
+                                for i in range(len(newdata)):
+                                    report_detail = pd.DataFrame(newdata[i])
+                                report_total = pd.DataFrame([['Grand Total'],[datas['total_grand']]])
+                                report_detail = report_detail[['name', 'category', 'sku', 'barcode', 'stock', 'unit', 'revenue']]
+                            report_detail.columns= ['Produk', 'Kategori', 'SKU', 'Barcode', 'Stock', 'Unit', 'Revenue']
+                            report_name.to_excel(writer, sheet_name ='Stock', startrow = 0, index=False, header=False)
+                            report_header.to_excel(writer, sheet_name ='Stock', startrow = 2, index=False, header=False)
+                            report_total.to_excel(writer, sheet_name ='Stock', startrow = 5, index=False, header=False)
+                            report_detail.to_excel(writer, sheet_name ='Stock', startrow = 8, index=False, header=True)
+                            workbook  = writer.book
+                            name_format=workbook.add_format({'font':24, 'bold': 5})
+                            header_format=workbook.add_format({'border':1,'align':'left','font': 'Arial','color': '#031B4D','bg_color':'#eeeeee' })
+                            field_info1=workbook.add_format({'border':1,'bg_color':'#fa8231','align':'center_across','color' : '#ffffff','align':'center_across','bold': 1})
+                            field_info=workbook.add_format({'border':1,'bg_color':'#20bf6b','align':'center_across','color' : '#ffffff','align':'center_across','bold': 1})
+                            record_info1=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#fd9644','color' : '#ffffff','align':'center_across','bold': 1})
+                            record_info=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#26de81','color' : '#ffffff','align':'center_across','bold': 1})
+                            worksheet = writer.sheets['Stock']
                             worksheet.conditional_format( 'A1:D1' , { 'type' : 'no_blanks' , 'format' : name_format} )
                             worksheet.conditional_format( 'A3:D4' , { 'type' : 'no_blanks' , 'format' : header_format} )
                             worksheet.conditional_format( 'A6:L6' , { 'type' : 'no_blanks' , 'format' : field_info1} )

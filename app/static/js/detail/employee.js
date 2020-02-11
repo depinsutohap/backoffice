@@ -75,6 +75,8 @@ function _edit_employee_permission(_page, _id){
 
 function _edit_manage_access(){
   _submit_data_employee();
+  _check_spec('check_all_mobile', 'check_mobile');
+  _check_spec('check_all_bo', 'check_bo');
   $('#add_employee_id').val(userData['eid'])
   console.log(userData['eid'])
   $.post('/v1/api/data/employee',{
@@ -272,6 +274,9 @@ function _submit_data_employee(){
           $('._outlet_list').css('display', 'block')
 
 
+          _check_spec('check_all_mobile', 'check_mobile');
+          _check_spec('check_all_bo', 'check_bo');
+
         }else{
           notif('danger', e.message);
         }
@@ -460,27 +465,27 @@ function _open_modal_permission(t, id){
     })
   }, function (e) {
       if(e.status == '00'){
-        if(e.data.mob_order == true){$("#add_employee_mobile_order").prop('checked', true)}
-        if(e.data.mob_payment == true){$("#add_employee_mobile_payment").prop('checked', true)}
-        if(e.data.mob_void == true){$("#add_employee_mobile_void").prop('checked', true)}
-        if(e.data.mob_change_transaction == true){$("#add_employee_mobile_change_trx").prop('checked', true)}
-        if(e.data.mob_custom_price == true){$("#add_employee_mobile_custom_price").prop('checked', true)}
-        if(e.data.mob_custom_discount == true){$("#add_employee_mobile_custom_discount").prop('checked', true)}
-        if(e.data.mob_reprint_reciept == true){$("#add_employee_mobile_reprint_reciept").prop('checked', true)}
-        if(e.data.mob_reprint_kitchen_reciept == true){$("#add_employee_mobile_reprint_kitchen").prop('checked', true)}
-        if(e.data.mob_print_invoice_reciept == true){$("#add_employee_mobile_print_invoice").prop('checked', true)}
-        if(e.data.mob_history_transaction == true){$("#add_employee_mobile_history").prop('checked', true)}
-        if(e.data.mob_customer_management == true){$("#add_employee_mobile_customer").prop('checked', true)}
-        if(e.data.bo_outlet_management == true){$("#add_employee_bo_outlet").prop('checked', true)}
-        if(e.data.bo_report == true){$("#add_employee_bo_report").prop('checked', true)}
-        if(e.data.bo_management_product == true){$("#add_employee_bo_product").prop('checked', true)}
-        if(e.data.bo_management_inventory == true){$("#add_employee_bo_inventory").prop('checked', true)}
-        if(e.data.bo_management_tax == true){$("#add_employee_bo_tax").prop('checked', true)}
-        if(e.data.bo_management_employee == true){$("#add_employee_bo_employee").prop('checked', true)}
-        if(e.data.bo_management_promo == true){$("#add_employee_bo_promo").prop('checked', true)}
-        if(e.data.bo_customer_management == true){$("#add_employee_bo_customer").prop('checked', true)}
-        if(e.data.bo_billing == true){$("#add_employee_bo_billing").prop('checked', true)}
-        if(e.data.bo_daily_report == true){$("#add_employee_bo_email").prop('checked', true)}
+        if(e.data.mob_order == true){$("#add_employee_mobile_order").prop('checked', true).change()}
+        if(e.data.mob_payment == true){$("#add_employee_mobile_payment").prop('checked', true).change()}
+        if(e.data.mob_void == true){$("#add_employee_mobile_void").prop('checked', true).change()}
+        if(e.data.mob_change_transaction == true){$("#add_employee_mobile_change_trx").prop('checked', true).change()}
+        if(e.data.mob_custom_price == true){$("#add_employee_mobile_custom_price").prop('checked', true).change()}
+        if(e.data.mob_custom_discount == true){$("#add_employee_mobile_custom_discount").prop('checked', true).change()}
+        if(e.data.mob_reprint_reciept == true){$("#add_employee_mobile_reprint_reciept").prop('checked', true).change()}
+        if(e.data.mob_reprint_kitchen_reciept == true){$("#add_employee_mobile_reprint_kitchen").prop('checked', true).change()}
+        if(e.data.mob_print_invoice_reciept == true){$("#add_employee_mobile_print_invoice").prop('checked', true).change()}
+        if(e.data.mob_history_transaction == true){$("#add_employee_mobile_history").prop('checked', true).change()}
+        if(e.data.mob_customer_management == true){$("#add_employee_mobile_customer").prop('checked', true).change()}
+        if(e.data.bo_outlet_management == true){$("#add_employee_bo_outlet").prop('checked', true).change()}
+        if(e.data.bo_report == true){$("#add_employee_bo_report").prop('checked', true).change()}
+        if(e.data.bo_management_product == true){$("#add_employee_bo_product").prop('checked', true).change()}
+        if(e.data.bo_management_inventory == true){$("#add_employee_bo_inventory").prop('checked', true).change()}
+        if(e.data.bo_management_tax == true){$("#add_employee_bo_tax").prop('checked', true).change()}
+        if(e.data.bo_management_employee == true){$("#add_employee_bo_employee").prop('checked', true).change()}
+        if(e.data.bo_management_promo == true){$("#add_employee_bo_promo").prop('checked', true).change()}
+        if(e.data.bo_customer_management == true){$("#add_employee_bo_customer").prop('checked', true).change()}
+        if(e.data.bo_billing == true){$("#add_employee_bo_billing").prop('checked', true).change()}
+        if(e.data.bo_daily_report == true){$("#add_employee_bo_email").prop('checked', true).change()}
       }
     }).fail(function(){
       notif('danger', 'Mohon kontak IT Administrator');

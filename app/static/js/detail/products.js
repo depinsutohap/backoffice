@@ -1325,7 +1325,7 @@ function _open_item_ingredients(){
         $('.ingredients_body').empty();
         $('#edit_item_header_title').text(e.data.name);
         if(e.data.variant_type == false){
-          ingredients_list_append_item('main', e.data.name, e.data.sku, e.data.id, 0, e.data.ingredients_list[0])
+          ingredients_list_append_item('main', e.data.name, e.data.sku, e.data.id, 'null', e.data.ingredients_list[0])
         }else{
           for(i=0; i<e.data.variant_list.length;i++){
             let variant_name = '<span class="variant">' + e.data.variant_list[i].variant_item_1.name + '</span>';
