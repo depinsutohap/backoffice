@@ -6,6 +6,7 @@ from sanic.response import json, raw, text, redirect
 from sanic.views import HTTPMethodView
 from sanic.exceptions import ServerError
 import jinja2_sanic
+from ..utils import emailService
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
@@ -26,13 +27,15 @@ async def allowed_file(filename):
 
 # @main.route('/send')
 # async def send(request):
-#     attachments = {}
-    # async with aiofiles.open("source/README.md", "rb") as f:
-    #     attachments["README.md"] = await f.read()
-    # async with aiofiles.open('source/猫.jpg', "rb") as f:
-    #     attachments['猫.jpg'] = await f.read()
-
-    # return json({"result": "ok"})
+#     _email = emailService()
+#     _email.destination = ['yeye@hop.cash']
+#     name = 'Yehuda'
+#     _email.subject = "Hey, " + name + "! Awalilah perjalanan usahamu dengan Hop sekarang."
+#     _email.content = jinja.env.get_template('mail/register.html').render(
+#         name=name, subject=_email.subject
+#     )
+#     _email._send()
+#     return json({"result": "ok"})
 
 # @main.route('/email-test')
 # async def email_test_register(request):

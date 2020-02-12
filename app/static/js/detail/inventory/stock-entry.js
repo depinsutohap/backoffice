@@ -197,46 +197,40 @@ function _search_query(row){
       let input_except = $('.item');
       let except = []
       for(i=0; i < input_except.length; i++){
-        if($(input_except[i]).val().trim().length > 0 && $(input_except[i]).data('id') !== '0'){
-          if(except.length > 0){
-            let _data_0 = []
+        if($(input_except[i]).val().trim().length > 0 && $(input_except[i]).data('id') !== 0){
+          if(except.length > 0){ // If Except list is more than 0
+            let _data_0 = [];
             for(x=0; x<except.length;x++){
               _data_0.push(except[x][0])
             }
-            if(_data_0.includes($(input_except[i]).data('id'))){
+            if(_data_0.includes($(input_except[i]).attr('data-id'))){
               for(x=0; x<except.length;x++){
-                if(except[x][0] == $(input_except[i]).data('id') && except[x][1] == true){
-                  if(except[x][2].includes($('.variant_' + $(input_except[i]).data('row'))) == false){
-                    except[x][2].push($('.variant_' + $(input_except[i]).data('row')).val());
+                if(except[x][0] == $(input_except[i]).attr('data-id') && except[x][1] == 'true'){
+                  if(except[x][2].includes($('.variant_' + $(input_except[i]).attr('data-row'))) == 'false'){
+                    except[x][2].push($('.variant_' + $(input_except[i]).attr('data-row')).val());
                   }
                 }else{
-                  let detail_except = [$(input_except[i]).data('id'), $(input_except[i]).attr('data-variant'), []]
-                  if($(input_except[i]).attr('data-variant') !== false){
-                    detail_except[2].push($('.variant_' + $(input_except[i]).data('row')).val())
+                  let detail_except = [$(input_except[i]).attr('data-id'), $(input_except[i]).attr('data-variant'), []]
+                  if($(input_except[i]).attr('data-variant') !== 'false'){
+                    detail_except[2].push($('.variant_' + $(input_except[i]).attr('data-row')).val())
                   }
                   except.push(detail_except);
-                  console.log(except)
                 }
               }
             }else{
-              let detail_except = [$(input_except[i]).data('id'), $(input_except[i]).attr('data-variant'), []]
-              if($(input_except[i]).attr('data-variant') !== false){
-                detail_except[2].push($('.variant_' + $(input_except[i]).data('row')).val())
+              let detail_except = [$(input_except[i]).attr('data-id'), $(input_except[i]).attr('data-variant'), []]
+              if($(input_except[i]).attr('data-variant') !== 'false'){
+                detail_except[2].push($('.variant_' + $(input_except[i]).attr('data-row')).val())
               }
               except.push(detail_except);
-              console.log(except)
             }
           }else{
-            let detail_except = [$(input_except[i]).data('id'), $(input_except[i]).attr('data-variant'), []]
-            if($(input_except[i]).attr('data-variant') !== false){
-              console.log($('.variant_' + $(input_except[i]).data('row')).val())
-              detail_except[2].push($('.variant_' + $(input_except[i]).data('row')).val())
+            let detail_except = [$(input_except[i]).attr('data-id'), $(input_except[i]).attr('data-variant'), []]
+            if($(input_except[i]).attr('data-variant') !== 'false'){
+              detail_except[2].push($('.variant_' + $(input_except[i]).attr('data-row')).val())
             }
             except.push(detail_except);
-            console.log('----------')
-            console.log(except)
           }
-
         }
       }
       $.post('/v1/api/data/search',{
@@ -276,6 +270,7 @@ function _search_query(row){
 
 function choose_stock_option(row, id, name, variant){
   $('.item_' + row).val(name).attr('data-id', id).attr('data-variant', variant)
+  $('.div_search_stock_' + row).css('display', 'none');
   if(variant == 'true'){
     let input_except = $('.item');
     let except = []
@@ -290,8 +285,6 @@ function choose_stock_option(row, id, name, variant){
 
       }
     }
-    console.log(except)
-
     $.post('/v1/api/data/search',{
       data: JSON.stringify({
         id: userData['id'],
@@ -322,7 +315,6 @@ function choose_stock_option(row, id, name, variant){
         }
         $('.variant_' + row).attr('data-pid', id)
         $('.variant_' + row).css('display', 'inherit');
-        $('.div_search_stock_' + row).css('display', 'none');
         $('.stock_div_search_input_field_' + row).val('').blur();
         $('.task_' + row).css('display', 'inherit');
         $('.waiting_' + row).css('display', 'none');
@@ -332,7 +324,7 @@ function choose_stock_option(row, id, name, variant){
     });
 
   }else{
-    $('variant_' + row).css('display', 'none');
+    $('.variant_' + row).css('display', 'none');
   }
 
   $('.variant_' + row).on('change', function(){

@@ -20,7 +20,7 @@
               <label for="view_pass" class="glyphicon glyphicon-eye-close"></label>
           </div>
           <input name="refferal" id="refferal" type="text" placeholder="Refferal Code..">
-          <button type="submit">SIGN UP</button>
+          <button class="login" type="submit">SIGN UP</button>
           <p>
             By signing up, you agree to hop’s
             <a href="https://hop.cash/terms-conditions">Terms of Services</a>
@@ -32,10 +32,4 @@
       </form>
   </main>
   <script src="{{ url_for('static', filename='js/detail/auth.js') }}"></script>
-  <script>
-    function input_formatNumberwocommas(n) {
-      $(n).val($(n).val().toString().replace(/\D/g, ""))
-    }
-    register();
-  </script>
 {% endblock %}

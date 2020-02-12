@@ -7,7 +7,7 @@ from decimal import *
 from app.models import *
 from sanic.response import json, raw, redirect
 from ..models import Hop_User, Hop_Business, Hop_Outlet, Hop_Business, Hop_Login_Log, Hop_User_Outlet
-
+from ..utils import emailService
 #===================================================================
 # SPECIFICS DATA [API]
 # ==============================================================================
@@ -83,23 +83,14 @@ async def _add_register(request):
                         user = Hop_User().verify_auth(response['data']['id'])
                         _auth.login_user(request, user)
                         Hop_Login_Log()._insert(user.id, 2)
-                        try:
-                            subject = "Hey, " + user.name + "! Awalilah perjalanan usahamu dengan Hop sekarang."
-                            content = jinja.env.get_template('mail/register.html').render(
-                                name=user.name, subject=subject
-                            )
-                            await app.send_email(
-                                targetlist=user.email,
-                                subject=subject,
-                                content=content,
-                                html=True,
-                                # attachments=attachments
-                            )
-                        except Exception as e:
-                            raise
-                        finally:
-                            pass
-
+                        # Send Email
+                        _email = emailService()
+                        _email.destination = [user.email]
+                        _email.subject = "Hey, " + user.name + "! Awalilah perjalanan usahamu dengan Hop sekarang."
+                        _email.content = jinja.env.get_template('mail/register.html').render(
+                            name=user.name, subject=_email.subject
+                        )
+                        _email._send()
                 else:
                     response['status'] = '50'
                     response['message'] = 'Password must be at least 8 characters in length.'
@@ -153,17 +144,15 @@ async def _add_token(request):
             user = Hop_User().verify_auth(apidata['email'])
             if user is not None:
                     Hop_Login_Log()._insert(user.id, 2)
+                    # Sending Email
+                    _email = emailService()
                     token = user.get_reset_password_token()
-                    subject = "Hey, " + user.name + "! Lets finish your password reset."
-                    content = jinja.env.get_template('mail/reset-password.html').render(
-                        name=user.name, subject=subject, token=token
+                    _email.destination = [user.email]
+                    _email.subject = "Hey, " + user.name + "! Lets finish your password reset."
+                    _email.content = jinja.env.get_template('mail/reset-password.html').render(
+                        name=user.name, subject=_email.subject, token=token
                     )
-                    await app.send_email(
-                        targetlist=user.email,
-                        subject=subject,
-                        content=content,
-                        html=True,
-                    )
+                    _send = _email._send()
                     response['status'] = '00'
                     response['message'] = 'Please check your email to reset your HOP account\'s password !'
             else:

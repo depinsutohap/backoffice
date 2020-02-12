@@ -9,30 +9,34 @@ let userData;
 function login() {
   _loading(0); view_pass();
   $('form').submit(function (e) {
-      e.preventDefault();
-      $.post('/v1/api/auth/login',{
-          data: JSON.stringify({
-            email: $('#email').val(),
-            password: $('#password').val()
-          })
-      }, function(e){
-        if(e.status === '00'){
-            notif('success', e.message)
-            localStorage.setItem('name', e.name);
-            localStorage.setItem('id', e.user_id);
-            localStorage.setItem('role_id', e.role_id);
-            localStorage.setItem('phone_number', e.phone_number);
-            localStorage.setItem('email', e.email);
-            localStorage.setItem('lang', e.lang);
-            localStorage.setItem('token', e.token);
-            localStorage.setItem('permission', JSON.stringify(e.permission));
-            location.reload();
-        }else{
-            notif('danger', e.message)
-        }
-      }).fail(function () {
-        notif('warning', 'Maaf, sistem sedang ada gangguan...')
-      });
+    e.preventDefault();
+    $('button.login').prop('disabled', true);
+    notif('info', 'Loading...');
+    $.post('/v1/api/auth/login',{
+        data: JSON.stringify({
+          email: $('#email').val(),
+          password: $('#password').val()
+        })
+    }, function(e){
+      if(e.status === '00'){
+          notif('success', e.message)
+          localStorage.setItem('name', e.name);
+          localStorage.setItem('id', e.user_id);
+          localStorage.setItem('role_id', e.role_id);
+          localStorage.setItem('phone_number', e.phone_number);
+          localStorage.setItem('email', e.email);
+          localStorage.setItem('lang', e.lang);
+          localStorage.setItem('token', e.token);
+          localStorage.setItem('permission', JSON.stringify(e.permission));
+          location.reload();
+      }else{
+          notif('danger', e.message);
+          $('button.login').prop('disabled', false);
+      }
+    }).fail(function () {
+      notif('warning', 'Maaf, sistem sedang ada gangguan')
+      $('button.login').prop('disabled', false)
+    });
   })
 }
 
@@ -41,6 +45,8 @@ function register() {
   _loading(0); view_pass();
   $('form').submit(function (e) {
       e.preventDefault();
+      $('button.login').prop('disabled', true);
+      notif('info', 'Loading...');
       let refferal = null;
       if($('#refferal').val().trim().length > 0 ){
         refferal = $('#refferal').val()
@@ -64,16 +70,15 @@ function register() {
           localStorage.setItem('role_id', e.data.role_id);
           localStorage.setItem('token', e.data.token);
           localStorage.setItem('permission', JSON.stringify(e.data.permission));
-          // location.reload();
+          location.reload();
         }else{
             notif('danger', e.message)
+            $('button.login').prop('disabled', false);
         }
       }).fail(function () {
-          $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
+          notif('warning', 'Maaf, sistem sedang ada gangguan')
+          $('button.login').prop('disabled', false);
       });
-
-      $('#notification-box').delay(200).css('display','inherit').fadeIn('slow');
-
   })
 }
 
@@ -81,6 +86,8 @@ function forgot() {
   _loading(0); view_pass();
   $('form').submit(function (e) {
       e.preventDefault();
+      $('button.login').prop('disabled', true)
+      notif('info', 'Loading...');
       $.post('/v1/api/auth/forgot',{
         data: JSON.stringify({
           email: $('#email').val(),
@@ -92,12 +99,11 @@ function forgot() {
         }else{
             notif('danger', e.message)
         }
+        $('button.login').prop('disabled', false)
       }).fail(function () {
-          $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
+          notif('warning', 'Maaf, sistem sedang ada gangguan')
+          $('button.login').prop('disabled', false);
       });
-
-      $('#notification-box').delay(200).css('display','inherit').fadeIn('slow');
-
   })
 }
 
@@ -105,6 +111,8 @@ function reset() {
   _loading(0); view_pass();
   $('form').submit(function (e) {
       e.preventDefault();
+      $('button.login').prop('disabled', true)
+      notif('info', 'Loading...');
       $.post('/v1/api/auth/reset-password',{
           data: JSON.stringify({
             token: $('.token').val(),
@@ -116,10 +124,12 @@ function reset() {
             notif('success', e.message)
             location.href = window.location.origin;
         }else{
-            notif('danger', e.message)
+            notif('danger', e.message);
+            $('button.login').prop('disabled', false);
         }
       }).fail(function () {
-        notif('warning', 'Maaf, sistem sedang ada gangguan...')
+        notif('warning', 'Maaf, sistem sedang ada gangguan')
+        $('button.login').prop('disabled', false);
       });
   })
 }
@@ -134,6 +144,8 @@ function detail() {
   _loading(0); view_pass();
   $('form').submit(function (e) {
       e.preventDefault();
+      notif('info', 'Loading...');
+      $('button.login').prop('disabled', true);
       $.post('/v1/api/auth/detail',{
         data: JSON.stringify({
           id: userData['id'],
@@ -151,71 +163,14 @@ function detail() {
             location.reload();
         }else{
             notif('danger', result.message)
+            $('button.login').prop('disabled', false);
         }
       }).fail(function () {
-          $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
+          notif('warning', 'Maaf, sistem sedang ada gangguan')
+          $('button.login').prop('disabled', false);
       });
-
-      $('#notification-box').delay(200).css('display','inherit').fadeIn('slow');
   })
 }
-
-function change_password() {
-    $('form').submit(function (e) {
-        e.preventDefault();
-        $.post('/request/auth-change-password',{
-          data: JSON.stringify({
-            old_password: $('#old_password').val(),
-            password: $('#password').val(),
-            password2: $('#password2').val()
-          })
-        }, function(result){
-          if(result.status === '00'){
-              localStorage.setItem('name', result.name);
-              localStorage.setItem('id', result.user_id);
-              localStorage.setItem('phone_number', result.phone_number);
-              localStorage.setItem('email', result.email);
-              localStorage.setItem('token', result.token);
-              location.reload();
-          }else{
-              notif('danger', result.message)
-          }
-        }).fail(function () {
-            $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
-        });
-        $('#notification-box').delay(200).fadeIn('slow').css('display', 'flex');
-
-    })
-}
-
-function reset_password() {
-    $('form').submit(function (e) {
-        e.preventDefault();
-        $.post('/request/auth-reset',{
-          data: JSON.stringify({
-            email: $('#email').val()
-          })
-        }, function(result){
-            if(result.status === 0){
-                loader(0)
-            }else if(result.status === 1){
-                location.replace(window.location.origin);
-            }
-            $('#notification-box > span').text(result.message)
-        }).fail(function () {
-            $('#notification-box > span').text('Maaf sistem sedang ada ada gangguan');
-        });
-        $('#notification-box').delay(200).fadeIn('slow').css('display', 'flex');
-
-    })
-}
-
-$(document).ready(function(){
-  $('#notif-close').click(function () {
-      $(this).parent().delay(200).fadeOut('slow');
-      loader(0);
-  });
-})
 
 function view_pass(){
   $('input#view_pass').on('change', function () {
@@ -225,4 +180,8 @@ function view_pass(){
           $('input#password').attr('type', 'password');
       }
   })
+}
+
+function input_formatNumberwocommas(n) {
+  $(n).val($(n).val().toString().replace(/\D/g, ""))
 }

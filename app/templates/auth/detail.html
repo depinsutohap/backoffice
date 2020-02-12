@@ -21,15 +21,12 @@
           <label class="owner_phone_check"><input class="_checkbox" name="owner_phone_check" id="owner_phone_check" type="checkbox">Copy from Owner’s phone number</label>
           <input name="outlet_address" id="outlet_address" type="text" placeholder="Address">
           <select id="outlet_country"></select>
-          <button type="submit">SUBMIT</button>
+          <button class="login" type="submit">SUBMIT</button>
       </form>
   </main>
   <script src="{{ url_for('static', filename='js/detail/auth.js') }}"></script>
   <script src="{{ url_for('static', filename='js/general.js') }}"></script>
   <script>
-    function input_formatNumberwocommas(n) {
-      $(n).val($(n).val().toString().replace(/\D/g, ""))
-    }
     detail();
   </script>
 {% endblock %}
