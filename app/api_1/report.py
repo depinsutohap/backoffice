@@ -20,9 +20,14 @@ from os import path
 from os.path import join, dirname, realpath
 import pathlib
 from pathlib import Path
+import PyPDF2
+import urllib.request
 
 app = Sanic(__name__)
 excelDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
+# image_dir = (os.path.join(os.path.dirname(__file__),'static\\src\\logo.png'))
+# print('---')
+# print(image_dir)
 
 @api_1.route('/data/report', methods=['POST', 'GET'])
 @_auth.login_required
@@ -139,41 +144,45 @@ async def _api_export(request):
                     outlet = 'Semua'
                 if int(apidata['status']) == 1:
                     if int(apidata['export_type']) == 1: #summary
-                        filename = "summary-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
+                            url = "logo.png"
+                            data = urllib.request.urlopen(url).read()
+                            file = open("image.png", "wb")
+                            file.write(data)
+                            file.close()
                             datas = TransLog()._summary_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
-                            writer = pd.ExcelWriter(our_path, engine ='xlsxwriter')
                             report_name = pd.DataFrame([['Summary Report']])
                             report_header = pd.DataFrame([['Bisnis',business,'Dari', apidata['dari']],['Outlet',outlet, 'Sampai',apidata['sampai']]])
                             report_detail = pd.DataFrame({'Name': ['Revenue', 'Discount', 'Void', 'Nett Revenue', 'Tax & Service', 'Total Revenue'], 'Amount' : [datas['success_st'],datas['discount_success_st'],datas['void_st'],datas['nettrevenue'],datas['tax_sc_st'],datas['total_revenue']]})
+                            writer = pd.ExcelWriter(our_path, engine ='xlsxwriter')
                             report_name.to_excel(writer, sheet_name ='Summary', startrow = 0, index=False, header=False)
                             report_header.to_excel(writer, sheet_name ='Summary', startrow = 2, index=False, header=False)
                             report_detail.to_excel(writer, sheet_name ='Summary', startrow = 5, index=False, header=True)
                             workbook  = writer.book
-                            name_format=workbook.add_format({'font':24, 'bold': 5})
+                            worksheet = writer.sheets['Summary']
+                            name_format=workbook.add_format({'font_size':24, 'bold': 5})
                             header_format=workbook.add_format({'border':1,'align':'left','font': 'Arial','color': '#031B4D','bg_color':'#eeeeee' })
                             field_info=workbook.add_format({'border':1,'bg_color':'#36A551','align':'center_across','color' : '#ffffff'})
                             record_info=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#81db9e','color' : '#ffffff','align':'center_across','bold': 1})
-                            worksheet = writer.sheets['Summary']
-                            worksheet.conditional_format( 'A1:D1' , { 'type' : 'no_blanks' , 'format' : name_format} )
+                            worksheet.conditional_format( 'A1:B1' , { 'type' : 'no_blanks' , 'format' : name_format} )
                             worksheet.conditional_format( 'A3:D4' , { 'type' : 'no_blanks' , 'format' : header_format} )
                             worksheet.conditional_format( 'A6:L6' , { 'type' : 'no_blanks' , 'format' : field_info} )
                             worksheet.conditional_format( 'A7:M36' , { 'type' : 'no_blanks' , 'format' : record_info} )
+                            worksheet.insert_image('E1', 'image.png')
                             worksheet.set_column(0, 4, 18)
                             writer.save()
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 2: #product sales
-                        filename = "product-sales-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._product_sales_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -213,11 +222,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 3: #daily sales
-                        filename = "daily-sales-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._daily_sales_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -257,11 +265,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 4: #data sales transaction
-                        filename = "data-sales-transaction-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._data_sales_trx_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -301,11 +308,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 5: #sales per category
-                        filename = "Category-sales-transaction-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._category_sales_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -346,11 +352,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 6:#sales per outlet
-                        filename = "Sales-Per-Outlet-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._sales_per_outlet_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -390,11 +395,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 7: # tax
-                        filename = "Tax-Revenue-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._tax_revenue_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -432,11 +436,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 8: #discount
-                        filename = "Tax-Revenue-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._discount_revenue_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -474,11 +477,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 9: #Daily Profil
-                        filename = "Daily-Profit-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._daily_profit_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -518,11 +520,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 10: #product Profil
-                        filename = "Product-Profit-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._product_profit_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -562,11 +563,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 11: #sales per hour
-                        filename = "Sales-PerHour-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._sales_per_hour_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -606,11 +606,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 12: #payment method
-                        filename = "Payment-Method-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._payment_method_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
@@ -650,11 +649,10 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                     elif int(apidata['export_type']) == 13: #stock
-                        filename = "Stock-Report-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         if os.path.isfile(our_path): #Jika file sudah dibuat
-                            response['status'] = '50'
-                            response['message'] = 'Data sudah berhasil di export'
+                            response['status'] = '00'
                             response['filename'] = filename
                         else:
                             datas = TransLog()._stock_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
