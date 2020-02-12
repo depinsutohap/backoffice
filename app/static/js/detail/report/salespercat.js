@@ -28,9 +28,6 @@ function _detail(){
     }, function (e) {
       let i;
       $('#data_body').empty();
-      console.log(e)
-      console.log('++++++=')
-      console.log(e.data)
       if(e['status'] === '00'){
         $('#sold_total').text(e.data.total_sold);
         $('#revenue_total').text("Rp."+ formatNumber(e.data.total_revenue));

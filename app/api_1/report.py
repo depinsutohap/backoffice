@@ -9,7 +9,7 @@ from datetime import datetime
 from ..models_mongo import TransLog
 from ..utils import *
 from sanic.response import json, raw, redirect
-from sanic import response
+from sanic import Sanic, response
 from ..models import Hop_User, Hop_Business, Hop_Outlet, Hop_Product_Item, \
     Hop_Role, Hop_Product_Outlet, Hop_Provinces, Hop_Cities,  Hop_Business_Category, \
     Hop_Countries, Hop_Product_Category, Hop_Tax, Hop_Tax_Type, Hop_Special_Promo, Hop_Ap_Detail, \
@@ -20,6 +20,9 @@ from os import path
 from os.path import join, dirname, realpath
 import pathlib
 from pathlib import Path
+
+app = Sanic(__name__)
+excelDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
 
 @api_1.route('/data/report', methods=['POST', 'GET'])
 @_auth.login_required
@@ -134,8 +137,6 @@ async def _api_export(request):
                     outlet = _outlet.name
                 else:
                     outlet = 'Semua'
-                excelDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
-                pdfDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\pdf\\')
                 if int(apidata['status']) == 1:
                     if int(apidata['export_type']) == 1: #summary
                         filename = "summary-"+str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
@@ -181,8 +182,6 @@ async def _api_export(request):
                             report_header = pd.DataFrame([['Bisnis',business,'Dari', apidata['dari']],['Outlet',outlet, 'Sampai',apidata['sampai']]])
                             newdata = [datas['product_sales']]
                             newdata = [x for x in newdata if x != []]
-                            print('-------')
-                            print(len(newdata))
                             report_total = pd.DataFrame([['Total Revenue', 'Total Terjual'],[0, 0]])
                             report_detail = pd.DataFrame([[0, 0, 0, 0, 0]])
                             if len(newdata) > 0:
@@ -618,7 +617,6 @@ async def _api_export(request):
                             writer = pd.ExcelWriter(our_path, engine ='xlsxwriter')
                             report_name = pd.DataFrame([['Payment Method Report']])
                             report_header = pd.DataFrame([['Bisnis',business,'Dari', apidata['dari']],['Outlet',outlet, 'Sampai',apidata['sampai']]])
-                            print(datas)
                             newdata = [datas['data']]
                             newdata = [x for x in newdata if x != []]
                             # report_total = pd.DataFrame([['Total Transaksi', 'Total Revenue', 'Revenue Rata-Rata'],[0, 0, 0]])
@@ -629,7 +627,6 @@ async def _api_export(request):
                                 # report_total = pd.DataFrame([['Total Transaction', 'Total Revenue', 'Total Average'],[datas['total_sold'], datas['total_revenue'], datas['total_average']]])
                                 report_detail = report_detail[['payment_method', 'subtotal']]
                             report_detail.columns= ['Jenis Pembayaran', 'Total Terjual']
-                            print(report_detail)
                             report_name.to_excel(writer, sheet_name ='Payment Method', startrow = 0, index=False, header=False)
                             report_header.to_excel(writer, sheet_name ='Payment Method', startrow = 2, index=False, header=False)
                             # report_total.to_excel(writer, sheet_name ='Payment Method', startrow = 5, index=False, header=False)
@@ -713,6 +710,7 @@ async def _api_dashboard(request):
     if request.method == 'POST':
         apidata = _json.loads(request.form['data'][0])
         response = {}
+        print(apidata)
         user = Hop_User().verify_auth(apidata['id'])
         session = Session()
         try:
@@ -729,8 +727,35 @@ async def _api_dashboard(request):
         finally:
             session.close()
         return response
-# @api_1.route('/data/download', methods=['POST', 'GET'])
+
+# @api_1.route('/file', methods=['POST', 'GET'])
 # @_auth.login_required
-# def download_file(filename):
-#     @_auth.login_required
-#     return await response.file('D:/uta-project/hop-backoffice/summary-report.xlsx')
+# async def handle_request(request):
+#     # directory = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
+#     return await response.file('/file_secure/excels/abc.xlsx')
+
+@api_1.route('/data/download', methods=['POST', 'GET'])
+async def _download(request):
+    if request.method == 'POST':
+        apidata = _json.loads(request.form['data'][0])
+        respon = {}
+        user = Hop_User().verify_auth(apidata['id'])
+        session = Session()
+        try:
+            if user is not None and user.verify_token(apidata['token']):
+                print('okeokeoke')
+                directory = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
+                print(directory)
+                # app.static(apidata['filename'], '/file_secure/excels/', stream_large_files=True)
+                return await response.file(directory+apidata['filename'])
+                # return send_file('/file_secure/excels/'+apidata['filename'][0], as_attachment=True)
+            else:
+                respon['status'] = '50'
+                respon['message'] = 'Your credential are invalid.'
+            return json(respon)
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+    return respon
