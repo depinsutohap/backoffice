@@ -150,11 +150,6 @@ async def _api_export(request):
                             response['status'] = '00'
                             response['filename'] = filename
                         else:
-                            url = "logo.png"
-                            data = urllib.request.urlopen(url).read()
-                            file = open("image.png", "wb")
-                            file.write(data)
-                            file.close()
                             datas = TransLog()._summary_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
                             report_name = pd.DataFrame([['Summary Report']])
                             report_header = pd.DataFrame([['Bisnis',business,'Dari', apidata['dari']],['Outlet',outlet, 'Sampai',apidata['sampai']]])
@@ -173,7 +168,6 @@ async def _api_export(request):
                             worksheet.conditional_format( 'A3:D4' , { 'type' : 'no_blanks' , 'format' : header_format} )
                             worksheet.conditional_format( 'A6:L6' , { 'type' : 'no_blanks' , 'format' : field_info} )
                             worksheet.conditional_format( 'A7:M36' , { 'type' : 'no_blanks' , 'format' : record_info} )
-                            worksheet.insert_image('E1', 'image.png')
                             worksheet.set_column(0, 4, 18)
                             writer.save()
                             response['status'] = '00'
@@ -735,17 +729,17 @@ async def _api_dashboard(request):
 @api_1.route('/data/download', methods=['POST', 'GET'])
 async def _download(request):
     if request.method == 'POST':
-        apidata = _json.loads(request.form['data'][0])
+        # apidata = _json.loads(request.form['data'][0])
+        apidata = request.form
+        print(apidata)
         respon = {}
-        user = Hop_User().verify_auth(apidata['id'])
+        user = Hop_User().verify_auth(apidata['id'][0])
         session = Session()
         try:
-            if user is not None and user.verify_token(apidata['token']):
-                print('okeokeoke')
+            if user is not None and user.verify_token(apidata['token'][0]):
                 directory = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
-                print(directory)
                 # app.static(apidata['filename'], '/file_secure/excels/', stream_large_files=True)
-                return await response.file(directory+apidata['filename'])
+                return await response.file(directory+apidata['filename'][0])
                 # return send_file('/file_secure/excels/'+apidata['filename'][0], as_attachment=True)
             else:
                 respon['status'] = '50'
