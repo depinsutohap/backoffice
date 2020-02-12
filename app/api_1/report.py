@@ -26,7 +26,7 @@ import urllib.request
 app = Sanic(__name__)
 excelDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
 # image_dir = (os.path.join(os.path.dirname(__file__),'static\\src\\logo.png'))
-# print('---')
+print('---')
 # print(image_dir)
 
 @api_1.route('/data/report', methods=['POST', 'GET'])
