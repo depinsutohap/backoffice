@@ -1,0 +1,85 @@
+*   [33mfc4bf40[m[33m ([m[1;36mHEAD -> [m[1;32manaconda[m[33m)[m Merge branch 'master' into anaconda
+[31m|[m[32m\[m  
+[31m|[m * [33m3ce4269[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m Alligator 0025 -> small update on user's auth
+[31m|[m * [33m294cb97[m Alligator 0024 -> small update on .gitignore
+[31m|[m * [33m72ac780[m Alligator 0023 -> Updating Validation on User's Auth and Update the SMTP class
+[31m|[m * [33m1f732e0[m Mergin with Ardi's Anaconda branch
+[31m|[m *   [33m57f42d1[m merging anaconda on git and local
+[31m|[m [33m|[m[34m\[m  
+[31m|[m [33m|[m * [33mae7ed91[m Alligator 0022 -> updating bugs on stock entry
+[31m|[m * [34m|[m   [33meb7e22f[m test aja
+[31m|[m [35m|[m[36m\[m [34m\[m  
+[31m|[m * [36m|[m [34m|[m [33m1f9e1ae[m Updating __init__.py file and cleaning some bug
+[31m|[m * [36m|[m [34m|[m [33m1046e23[m test 2
+* [36m|[m [36m|[m [34m|[m [33mfc21343[m[33m ([m[1;31morigin/anaconda[m[33m)[m Anaconda 003 export and download
+[36m|[m [36m|[m[36m/[m [34m/[m  
+[36m|[m[36m/[m[36m|[m [34m|[m   
+* [36m|[m [34m|[m   [33m3c71236[m Anaconda 0002 -> export data
+[1;31m|[m[34m\[m [36m\[m [34m\[m  
+[1;31m|[m [34m|[m [36m|[m[34m/[m  
+[1;31m|[m [34m|[m[34m/[m[36m|[m   
+[1;31m|[m * [36m|[m   [33m5ab5ec5[m test again
+[1;31m|[m [1;33m|[m[1;34m\[m [36m\[m  
+[1;31m|[m [1;33m|[m * [36m|[m [33m5ce784f[m Initial Bitbucket Pipelines configuration
+[1;31m|[m * [1;34m|[m [36m|[m [33mef40d0a[m test
+[1;31m|[m [1;34m|[m[1;34m/[m [36m/[m  
+[1;31m|[m * [36m|[m [33m71ffa74[m test
+[1;31m|[m * [36m|[m [33mc45b44b[m Test 3
+[1;31m|[m [36m|[m[36m/[m  
+[1;31m|[m * [33mf110b75[m test
+[1;31m|[m * [33m744d350[m Alligator 0021 -> update on mysql Engine
+[1;31m|[m * [33m51f75b0[m Alligator 0021 -> Updating small bugs and request update
+* [1;34m|[m [33ma942a95[m Anaconda 0001 -> export data
+* [1;34m|[m [33m2f213f6[m my config
+[1;34m|[m[1;34m/[m  
+* [33maca692d[m Alligator 0020 -> Updating for export data
+* [33ma2fb9ae[m Alligator 019 -> Update on Loop and Echo_Pool of the mysql db engine
+* [33m2912ed9[m Clean some CSS
+* [33m44f1865[m Alligator 018 -> Updating Mail for spacing on RESET Mail PAGE .html page
+*   [33mbbc8667[m 017 -> Merging from Anaconda's Branch
+[1;35m|[m[1;36m\[m  
+* [1;36m|[m [33m153d539[m Alligator 016 -> Fixing minor bugs and finishing reset password on User's Authentications
+[1;36m|[m [1;36m|[m *   [33m1fb35ef[m[33m ([m[1;35mrefs/stash[m[33m)[m WIP on anaconda: d115752 Anaconda 003 -> Fixing All Major and Minor bugs on report and adding some detail on daily transactions
+[1;36m|[m [1;36m|[m [1;36m|[m[32m\[m  
+[1;36m|[m [1;36m|[m[1;36m/[m [32m/[m  
+[1;36m|[m [1;36m|[m * [33mccf97e8[m index on anaconda: d115752 Anaconda 003 -> Fixing All Major and Minor bugs on report and adding some detail on daily transactions
+[1;36m|[m [1;36m|[m[1;36m/[m  
+[1;36m|[m * [33md115752[m Anaconda 003 -> Fixing All Major and Minor bugs on report and adding some detail on daily transactions
+[1;36m|[m[1;36m/[m  
+*   [33mabf6d0c[m Alligator 015 -> Mergin from Anaconda's Branch
+[33m|[m[34m\[m  
+[33m|[m * [33ma9f0841[m Anaconda 002 -> update bug fixing
+* [34m|[m [33m06337a9[m Alligator 014 -> updating small bugs on business (Move Outlets) and Styling the notifications
+* [34m|[m [33mfd8e550[m Alligator 013 -> Updating User Auth by adding refferal and sales-id to the owner data
+* [34m|[m [33md679bd0[m Alligator 012 -> Updating tax, promo and account from the minor bug
+* [34m|[m [33mb2ac8f3[m Alligator 011 -> Updating backoffice with email for registration
+[34m|[m[34m/[m  
+* [33m04836db[m Alligator 010 -> Updating minor error on Filter of Business and Outlet
+*   [33m7c551a0[m Alligator 009 -> Merging from Anaconda's Branch and marked as the last updated commit
+[35m|[m[36m\[m  
+[35m|[m *   [33m8ba87c2[m Anaconda 002 After pull
+[35m|[m [1;31m|[m[1;32m\[m  
+[35m|[m [1;31m|[m * [33m27b5488[m Anaconda 001 -> update bug on report and dashboard (not finished yet, but ready for merge in period of time)
+* [1;31m|[m [1;32m|[m [33m837483a[m Alligator 008 -> Fixing some minor bug
+* [1;31m|[m [1;32m|[m [33m0f8d13d[m Alligator 007 -> updating User's list of outlets based on user permission
+* [1;31m|[m [1;32m|[m [33medf22e9[m alligator 006 -> updating .gitignore to not adding .pyc file for the 3nd time
+* [1;31m|[m [1;32m|[m [33ma7ae665[m alligator 006 -> updating .gitignore to not adding .pyc file for the 2nd time
+* [1;31m|[m [1;32m|[m [33m833bb84[m alligator 006 -> updating .gitignore to not adding .pyc file
+* [1;31m|[m [1;32m|[m   [33m9ee64e8[m alligator 005 after merge with anaconda
+[1;33m|[m[1;31m\[m [1;31m\[m [1;32m\[m  
+[1;33m|[m [1;31m|[m[1;31m/[m [1;32m/[m  
+[1;33m|[m * [1;32m|[m   [33m4167efe[m test
+[1;33m|[m [1;35m|[m[1;32m\[m [1;32m\[m  
+[1;33m|[m [1;35m|[m [1;32m|[m[1;32m/[m  
+[1;33m|[m [1;35m|[m * [33m485c3de[m anaconda 000
+* [1;35m|[m [1;36m|[m [33m73061b0[m alligator 004
+[1;35m|[m[1;35m/[m [1;36m/[m  
+* [1;36m|[m [33maa61a3a[m test from anaconda branch
+* [1;36m|[m [33m01e6af7[m update on .ignore and js
+* [1;36m|[m [33mfb52a2c[m alligator 3
+* [1;36m|[m [33meb92581[m alligator 002
+* [1;36m|[m [33me85d012[m alligator 002
+* [1;36m|[m [33me1a09f3[m alligator 001
+* [1;36m|[m [33m8750394[m alligator 0
+[1;36m|[m[1;36m/[m  
+* [33m12eaf80[m alligator
