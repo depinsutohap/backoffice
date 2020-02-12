@@ -737,9 +737,9 @@ async def _download(request):
         session = Session()
         try:
             if user is not None and user.verify_token(apidata['token'][0]):
-                directory = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
+                # directory = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
                 # app.static(apidata['filename'], '/file_secure/excels/', stream_large_files=True)
-                return await response.file(directory+apidata['filename'][0])
+                return await response.file(excelDir+apidata['filename'][0])
                 # return send_file('/file_secure/excels/'+apidata['filename'][0], as_attachment=True)
             else:
                 respon['status'] = '50'

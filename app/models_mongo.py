@@ -1170,17 +1170,14 @@ class TransLog:
         session = Session()
         try:
             if int(_outletid) == 0 and int(_business_id) == 0:
-                print('semua dipilih')
                 for j in session.query(Hop_Product_Item).filter_by(owner_id=_ownerid, composed_type=False, status=True).all():
                     for c in session.query(Hop_Log_Inventory).filter_by(pid = j.id, status=True, owner_id=_ownerid).filter(Hop_Log_Inventory.added_time.between(_dari,_sampai)).all():
                         response.append({'type_id':c.type_id, 'cost_id':c.cost_id, 'quantity':c.quantity, 'pid':c.pid})
             if int(_outletid) != 0 and int(_business_id) == 0:
-                print('sbisnis 1 outlet semuadipilih')
                 for j in session.query(Hop_Product_Item).filter_by(owner_id=_ownerid, composed_type=False, status=True).all():
                     for c in session.query(Hop_Log_Inventory).filter_by(pid = j.id, status=True, owner_id=_ownerid).filter(Hop_Log_Inventory.added_time.between(_dari,_sampai)).all():
                         response.append({'type_id':c.type_id, 'cost_id':c.cost_id, 'quantity':c.quantity, 'pid':c.pid})
             else:
-                print('sepisifik outlet dipilih')
                 for j in session.query(Hop_Product_Item).filter_by(owner_id=_ownerid, composed_type=False, status=True).all():
                     for c in session.query(Hop_Log_Inventory).filter_by(pid = j.id, status=True, outlet_id=_outletid).filter(Hop_Log_Inventory.added_time.between(_dari,_sampai)).all():
                         response.append({'type_id':c.type_id, 'cost_id':c.cost_id, 'quantity':c.quantity, 'pid':c.pid})
