@@ -65,6 +65,14 @@ function close_notif(t){
   }, 1000)
 }
 
+function close_notif_ad(t){
+  $($($(t).parent()).parent()).css('right', '-200%');
+  setTimeout(
+    function(){
+      $($(t).parent()).remove();
+  }, 1000)
+}
+
 function auto_close(t){
   $(t).css('right', '-200%');
   setTimeout(
