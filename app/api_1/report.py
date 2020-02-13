@@ -142,7 +142,7 @@ async def _api_export(request):
                     outlet = _outlet.name
                 else:
                     outlet = 'Semua'
-                if int(apidata['status']) == 1:
+                if int(apidata['status']) == 1: #excel
                     if int(apidata['export_type']) == 1: #summary
                         filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
@@ -682,6 +682,36 @@ async def _api_export(request):
                             worksheet.conditional_format( 'A9:L9' , { 'type' : 'no_blanks' , 'format' : field_info} )
                             worksheet.conditional_format( 'A9:M36' , { 'type' : 'no_blanks' , 'format' : record_info} )
                             worksheet.set_column(0, 5, 18)
+                            writer.save()
+                            response['status'] = '00'
+                            response['filename'] = filename
+                elif int(apidata['status']) == 2: #PDF
+                    if int(apidata['export_type']) == 1: #summary
+                        filename = str(user.owner_id)+"-"+str(apidata['outlet'])+"-"+str(apidata['business_id'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
+                        our_path = excelDir+filename
+                        if os.path.isfile(our_path): #Jika file sudah dibuat
+                            response['status'] = '00'
+                            response['filename'] = filename
+                        else:
+                            datas = TransLog()._summary_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                            report_name = pd.DataFrame([['Summary Report']])
+                            report_header = pd.DataFrame([['Bisnis',business,'Dari', apidata['dari']],['Outlet',outlet, 'Sampai',apidata['sampai']]])
+                            report_detail = pd.DataFrame({'Name': ['Revenue', 'Discount', 'Void', 'Nett Revenue', 'Tax & Service', 'Total Revenue'], 'Amount' : [datas['success_st'],datas['discount_success_st'],datas['void_st'],datas['nettrevenue'],datas['tax_sc_st'],datas['total_revenue']]})
+                            writer = pd.ExcelWriter(our_path, engine ='xlsxwriter')
+                            report_name.to_excel(writer, sheet_name ='Summary', startrow = 0, index=False, header=False)
+                            report_header.to_excel(writer, sheet_name ='Summary', startrow = 2, index=False, header=False)
+                            report_detail.to_excel(writer, sheet_name ='Summary', startrow = 5, index=False, header=True)
+                            workbook  = writer.book
+                            worksheet = writer.sheets['Summary']
+                            name_format=workbook.add_format({'font_size':24, 'bold': 5})
+                            header_format=workbook.add_format({'border':1,'align':'left','font': 'Arial','color': '#031B4D','bg_color':'#eeeeee' })
+                            field_info=workbook.add_format({'border':1,'bg_color':'#36A551','align':'center_across','color' : '#ffffff'})
+                            record_info=workbook.add_format({'border':1,'font': 'Calibri','bg_color':'#81db9e','color' : '#ffffff','align':'center_across','bold': 1})
+                            worksheet.conditional_format( 'A1:B1' , { 'type' : 'no_blanks' , 'format' : name_format} )
+                            worksheet.conditional_format( 'A3:D4' , { 'type' : 'no_blanks' , 'format' : header_format} )
+                            worksheet.conditional_format( 'A6:L6' , { 'type' : 'no_blanks' , 'format' : field_info} )
+                            worksheet.conditional_format( 'A7:M36' , { 'type' : 'no_blanks' , 'format' : record_info} )
+                            worksheet.set_column(0, 4, 18)
                             writer.save()
                             response['status'] = '00'
                             response['filename'] = filename
