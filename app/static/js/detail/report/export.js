@@ -15,7 +15,10 @@ function _export(id){
       console.log(e)
       let i;
       if(e.status == '00'){
-        notif('success', 'Your file has beem successfully downloaded');
+        notif('success',
+          'Your file has been successfully generated' +
+          '<a onclick="close_notif_ad(this)" href="/v1/api/data/' + e.filename + '">Click here to download</a>'
+        );
       }else{
         notif('danger', e.message);
       }

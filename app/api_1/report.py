@@ -8,7 +8,7 @@ from sqlalchemy import or_
 from datetime import datetime
 from ..models_mongo import TransLog
 from ..utils import *
-from sanic.response import json, raw, redirect
+from sanic.response import json, raw, redirect, file_stream
 from sanic import Sanic, response
 from ..models import Hop_User, Hop_Business, Hop_Outlet, Hop_Product_Item, \
     Hop_Role, Hop_Product_Outlet, Hop_Provinces, Hop_Cities,  Hop_Business_Category, \
@@ -18,13 +18,14 @@ import pandas as pd
 import os
 from os import path
 from os.path import join, dirname, realpath
+from aiofiles import os as async_os
 import pathlib
 from pathlib import Path
 import PyPDF2
 import urllib.request
 
 app = Sanic(__name__)
-excelDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
+excelDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure/excels/')
 # image_dir = (os.path.join(os.path.dirname(__file__),'static\\src\\logo.png'))
 # print('---')
 # print(image_dir)
@@ -726,27 +727,21 @@ async def _api_dashboard(request):
 #     # directory = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'file_secure\\excels\\')
 #     return await response.file('/file_secure/excels/abc.xlsx')
 
-@api_1.route('/data/download', methods=['POST', 'GET'])
-async def _download(request):
-    if request.method == 'POST':
-        # apidata = _json.loads(request.form['data'][0])
-        apidata = request.form
-        print(apidata)
-        respon = {}
-        user = Hop_User().verify_auth(apidata['id'][0])
-        session = Session()
-        try:
-            if user is not None and user.verify_token(apidata['token'][0]):
-                # app.static(apidata['filename'], '/file_secure/excels/', stream_large_files=True)
-                return await response.file(excelDir+apidata['filename'][0])
-                # return send_file('/file_secure/excels/'+apidata['filename'][0], as_attachment=True)
-            else:
-                respon['status'] = '50'
-                respon['message'] = 'Your credential are invalid.'
-            return json(respon)
-        except:
-            session.rollback()
-            raise
-        finally:
-            session.close()
-    return respon
+@api_1.route('/data/<filename>')
+@_auth.login_required
+async def _download(request, filename):
+    cur_user = _auth.current_user(request)
+    if cur_user is not None:
+        file_path = excelDir+filename
+        # apidata['filename']
+        file_stat = await async_os.stat(file_path)
+        headers = {"Content-Length": str(file_stat.st_size)}
+        return await file_stream(
+            file_path,
+            headers=headers,
+            chunked=False,
+        )
+    else:
+        respon['status'] = '50'
+        respon['message'] = 'Your credential are invalid.'
+    return json(respon)
