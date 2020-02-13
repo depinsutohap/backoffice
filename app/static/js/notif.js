@@ -69,7 +69,7 @@ function close_notif_ad(t){
   $($($(t).parent()).parent()).css('right', '-200%');
   setTimeout(
     function(){
-      $($(t).parent()).remove();
+      $($($(t).parent()).parent()).remove();
   }, 1000)
 }
 
