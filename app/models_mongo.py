@@ -355,7 +355,7 @@ class TransLog:
             response['nettrevenue'] = netrevenue
             response['tax_sc_st'] = total_tax
             response['total_revenue'] = total_revenue
-            # response['cogs'] = Report()._cogs(date_from, date_to, outlet_list, _ownerid)
+            response['cogs'] = Report()._cogs(date_from, date_to, outlet_list, _ownerid)
         except:
             session.rollback()
             raise

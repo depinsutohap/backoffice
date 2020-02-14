@@ -148,6 +148,8 @@ async def _api_export(request):
                         filename = str(user.owner_id)+"-"+str(apidata['business_id'])+"-"+str(apidata['outlet'])+"-"+str(apidata['export_type'])+"-dari-"+str(apidata['dari'])+"-sampai-"+str(apidata['sampai'])+".xlsx"
                         our_path = excelDir+filename
                         datas = TransLog()._summary_co(user.owner_id, apidata['outlet'], apidata['dari'], apidata['sampai'], apidata['business_id'])
+                        print('-----')
+                        print(datas)
                         report_name = pd.DataFrame([['Summary Report']])
                         report_header = pd.DataFrame([['Bisnis',business,'Dari', apidata['dari']],['Outlet',outlet, 'Sampai',apidata['sampai']]])
                         report_detail = pd.DataFrame({'Name': ['Revenue', 'Discount', 'Void', 'Nett Revenue', 'Tax & Service', 'Total Revenue'], 'Amount' : [datas['success_st'],datas['discount_success_st'],datas['void_st'],datas['nettrevenue'],datas['tax_sc_st'],datas['total_revenue']]})
