@@ -691,6 +691,7 @@ class Hop_Outlet(Base):
             session.close()
         Hop_Product_Category_Outlet()._insertall(response, _business.owner_id)
         Hop_Product_Outlet()._insertall(response, _business.owner_id)
+        Hop_Outlet_Payment().add_payment(response, 1, 1, 6)
         return Hop_Outlet()._data(response)
 
     def _update(self, _id, _name, _numempid, _phonenumber, _address, _country_id, _tax_list, _table_status):
@@ -3961,6 +3962,35 @@ class Hop_Outlet_Tax(Base):
 
 # CLASS FOR PAYMENT
 
+class Hop_Outlet_Payment(Base):
+    __tablename__ = 'outlet_payment'
+
+    id = Column(Integer,primary_key=True)
+    outlet_id = Column(Integer,ForeignKey('outlet.id'), default=None)
+    payment_type_id = Column(Integer,ForeignKey('payment_type.id'), default=None)
+    payment_name_id = Column(Integer,ForeignKey('payment_name.id'), default=None)
+    payment_detail_id = Column(Integer,ForeignKey('payment_detail.id'), default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+
+    def add_payment(self, outlet_id, type_id, name_id, detail_id):
+        session = Session()
+        try:
+            _payment = Hop_Outlet_Payment()
+            _payment.outlet_id = outlet_id
+            _payment.payment_type_id = payment_type_id
+            _payment.payment_name_id = payment_name_id
+            _payment.payment_detail_id = payment_detail_id
+            session.add(_payment)
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+
+
 class Hop_Payment_Type(Base):
     __tablename__ = 'payment_type'
 
@@ -5091,7 +5121,6 @@ class Hop_Billing_Transaction(Base):
             response += _package['total']
         return response
 
-
 class Hop_Billing_Invoice(Base):
     __tablename__ = 'billing_invoice'
 
@@ -5525,7 +5554,6 @@ class Hop_Sales(Base):
             session.close()
         return response
 
-
 class Hop_Sales_Role(Base):
     __tablename__ = 'sales_role'
 
@@ -5691,6 +5719,91 @@ class Hop_Language(Base):
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
 
+# HR
+
+class Hop_Attendance(Base):
+    __tablename__ = 'attendance'
+
+    id = Column(Integer,primary_key=True)
+    user_id = Column(Integer,ForeignKey('user.id'),default=None)
+    latitude = Column(String(100),default=None)
+    longitude = Column(String(100),default=None)
+    description = Column(Text,default=None)
+    type_id = Column(Integer,ForeignKey('attendance_type.id'),default=None)
+    confirm = Column(Text,default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+    def _insert(self, _userid, _latitude, _longitude, _description, _type_id):
+        session = Hop_Attendance()
+        try:
+            insert = Hop_Log_Action_Detail()
+            insert.user_id = _userid
+            insert.latitude = _latitude
+            insert.longitude = _longitude
+            insert.description = _description
+            insert.type_id = _type_id
+            session.add(insert)
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        return None
+
+class Hop_Attendance_Type(Base):
+    __tablename__ = 'attendance_type'
+
+    id = Column(Integer,primary_key=True)
+    name = Column(String(255),default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+class Hop_HR_Category(Base):
+    __tablename__ = 'hr_category'
+
+    id = Column(Integer,primary_key=True)
+    owner_id = Column(Integer,ForeignKey('user.id'),default=None)
+    name = Column(String(255),default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+class Hop_HR_Personal(Base):
+    __tablename__ = 'hr_personal'
+
+    id = Column(Integer,primary_key=True)
+    user_id = Column(Integer,ForeignKey('user.id'),default=None)
+    ktp_filename = Column(String(255),default=None)
+    working_time = Column(Time,default=None)
+    salary = Column(DECIMAL(36,2),default=None)
+    salary_type_id = Column(Integer,default=None)
+    overtime_bonus = Column(DECIMAL(36,2),default=None)
+    overtime_bonus_type = Column(Integer,default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+class Hop_HR_Personal_Allowance(Base):
+    __tablename__ = 'hr_personal_allowance'
+
+    id = Column(Integer,primary_key=True)
+    hr_personal_id = Column(Integer,ForeignKey('hr_personal.id'),default=None)
+    name = Column(String(255),default=None)
+    salary_type_id = Column(DECIMAL(36,2),default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
+
+class Hop_HR_Personal_Template(Base):
+    __tablename__ = 'hr_personal_template'
+
+    id = Column(Integer,primary_key=True)
+    owner_id = Column(Integer,ForeignKey('user.id'),default=None)
+    working_time = Column(Time,default=None)
+    salary = Column(DECIMAL(36,2),default=None)
+    overtime_bonus = Column(DECIMAL(36,2),default=None)
+    overtime_bonus_type = Column(Integer,default=None)
+    added_time = Column(DateTime,default=datetime.now())
+    status = Column(Boolean,default=True)
 
 # REINIT FUNCTION
 def reinit():
