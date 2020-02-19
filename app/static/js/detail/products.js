@@ -252,6 +252,20 @@ function iid(id){
 function _product_item(){
   _products_item_list();
   _submit_data_item();
+  _product_filter();
+}
+
+function _product_filter(){
+  let value = 0;
+  $('#product_category').on('change', function(t){
+    value = $(this).val();
+    $('.cat_row').css('display', 'none')
+    if(parseInt(value) !== 0){
+      $('.cat_row_' + value ).css('display', 'table-row')
+    }else{
+      $('.cat_row').css('display', 'table-row')
+    }
+  })
 }
 
 // ITEM LIST FOR THE TABLE
@@ -264,6 +278,15 @@ function _products_item_list(){
       'status': 8,
     })
   }, function (e) {
+
+    if(e.data_category.length > 0){
+      for(i=0; i<e.data_category.length; i++){
+        $('#product_category').append(
+          '<option value="' + e.data_category[i].id + '">' + e.data_category[i].name + '</option>'
+        )
+      }
+    }
+
     if(e.data.length > 0){
       $('.no_data').css('display', 'none');
       for(i=0; i<e.data.length; i++){
@@ -278,7 +301,7 @@ function _products_item_list(){
           price_href = '<a onclick="sub_href(\'/page/product-item/manage-price\'); iid(' + e.data[i].id + ')">Manage Price</a>';
         }
         $('#data_body').append(
-          '<tr id="data_item_' + e.data[i].id + '">'+
+          '<tr id="data_item_' + e.data[i].id + '" class="cat_row cat_row_' + e.data[i].category.id + '" data-category="' + e.data[i].category.id + '">'+
           '<td><input class="check_data" value="' + e.data[i].id + '" type="checkbox"></td>'+
           '<td class="data_item_name_' + e.data[i].id + '">' + e.data[i].name + '</td>'+
           '<td class="data_item_category_' + e.data[i].id + '">' + e.data[i].category.name + '</td>'+

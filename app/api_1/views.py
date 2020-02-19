@@ -250,6 +250,7 @@ async def _api_billing(request):
             # PRODUCT CATEGORY
             if int(apidata['status']) == 0:
                 response['data'] = Hop_User_Outlet()._list(user.id)
+                response['business_list'] = Hop_Business()._listbyownerid(owner_id=user.owner_id)
                 response['package'] = Hop_Billing_Package_Item()._list(1)
                 response['count'] = Hop_Billing_Invoice()._invoice_trx_count(user.id)
                 response['ongoing'] = Hop_Billing_Invoice()._check_ongoing_payment(user.id)

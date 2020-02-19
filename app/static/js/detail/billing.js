@@ -27,9 +27,18 @@ function _billing_overview(){
     if(e.status == '00'){
       $('#order_count').text(e.count)
       if(e.ongoing !== true){
+
+        if(e.business_list.length > 0){
+          for(i=0; i<e.business_list.length; i++){
+            $('#business_list').append(
+              '<option value="' + e.business_list[i].id + '">' + e.business_list[i].name + '</option>'
+            )
+          }
+        }
+
         for(i=0; i<e.data.length; i++){
           $('#data_body').append(
-            '<tr class="data_row_' + e.data[i].id + '">' +
+            '<tr class="data_row_' + e.data[i].id + ' data_business data_business_' + e.data[i].business_id.id + '">' +
             '<td><input value="' + e.data[i].id + '" class="check_data check_data_' + e.data[i].id + '" type="checkbox"></td>' +
             '<td>' + e.data[i].name + '</td>' +
             '<td>' + e.data[i].business_id.name + '</td>' +
@@ -58,6 +67,20 @@ function _billing_overview(){
     _loading(0);
   });
   _submit_billing();
+  _billing_filter();
+}
+
+function _billing_filter(){
+  let value = 0;
+  $('#business_list').on('change', function(t){
+    value = $(this).val();
+    $('.data_business').css('display', 'none')
+    if(parseInt(value) !== 0){
+      $('.data_business_' + value ).css('display', 'table-row')
+    }else{
+      $('.data_business').css('display', 'table-row')
+    }
+  })
 }
 
 function _billing_order(){

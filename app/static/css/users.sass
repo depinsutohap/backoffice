@@ -32,30 +32,44 @@ main#mainBusinessPage
     width: 30%
   .column_transactions
     width: 30%
+  ._menu_div
+    display: flex
+    flex-wrap: wrap
   ._data
     display: flex
     margin-right: 50px
     &._menu
       margin-right: 0
-    a
-      padding: 5px
-      border-bottom: 1px solid $border-dark
-      color: $secondary-color
-      text-align: right
-      width: 100%
-      cursor: pointer
-      transition: 300ms
-      &:hover
-        color: $primary-color
-        border-color: $primary-color
-      &.edit_button
+      display: flex
+      align-items: center
+      width: calc(50% - 10px)
+      margin: 5px
+      a
+        padding: 5px
         border: 1px solid $secondary-color
-        border-radius: 3px
-        margin-left: 5px
+        color: $secondary-color
+        display: flex
+        align-items: center
+        justify-content: center
+        height: 50px
+        width: 100%
+        cursor: pointer
         transition: 300ms
+        border-radius: 3px
         &:hover
           color: $light
           background-color: $secondary-color
+    a.edit_button
+      color: $secondary-color
+      cursor: pointer
+      padding: 5px
+      border: 1px solid $secondary-color
+      border-radius: 3px
+      margin-left: 5px
+      transition: 300ms
+      &:hover
+        color: $light
+        background-color: $secondary-color
     .key
       font-weight: bolder
       color: $primary-color
@@ -745,3 +759,49 @@ main#new_employee_index
       >.list_data
         width: 80%
         margin-bottom: 15px
+
+#form_edit_outlet_table
+  .outlet_table_div
+    margin-bottom: 10px
+    >.outlet_table_row
+      position: relative
+      margin-bottom: 10px
+      >a
+        position: absolute
+        right: 15px
+        cursor: pointer
+        top: 15px
+        font-size: 20px
+        color: lighten($danger, 5%)
+        &:hover
+          color: $danger
+  >div.button_add
+    display: flex
+    >a
+      background-color: $positive
+      border-radius: 3px
+      color: $light
+      padding: 10px
+      cursor: pointer
+      >i
+        margin-right: 10px
+
+#form_edit_outlet_payment
+  >.outlet_payment_div
+    label.payment_check
+      cursor: pointer
+      padding: 0 10px
+    div.payment_check
+      padding: 0 0 0 35px
+      background: $secondary-color
+      color: $light
+    label.payment_check, div.payment_check
+      display: flex
+      height: 50px
+      align-items: center
+      border: 1px solid $border-dark
+      border-radius: 3px
+      margin-bottom: 10px
+      input
+        width: 15px
+        margin-right: 10px

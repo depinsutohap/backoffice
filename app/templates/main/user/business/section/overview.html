@@ -9,6 +9,8 @@
 {% include 'main/user/business/submacros/_edit_category_outlet.html' %}
 {% include 'main/user/business/submacros/_edit_item_outlet.html' %}
 {% include 'main/user/business/submacros/_edit.html' %}
+{% include 'main/user/business/submacros/_edit_table.html' %}
+{% include 'main/user/business/submacros/_edit_payment.html' %}
 {% include 'main/user/business/submacros/_remove.html' %}
 <script>
   $('.label.ui.dropdown')
@@ -22,6 +24,6 @@
   $('.ui.button').on('click', function () {
     $('.ui.dropdown')
       .dropdown('restore defaults')
-  })
+  });
   _business_overview();
 </script>

@@ -1,4 +1,4 @@
-function _dashboard_sales(){
+function _dashboard(){
   business_list(); _date(); _detail();
   _loading(1);
 
@@ -9,7 +9,7 @@ function _dashboard_sales(){
   });
 
   nav_lang('report');
-
+  graph();
 }
 
 function _detail(){

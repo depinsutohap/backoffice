@@ -1128,21 +1128,30 @@ class Hop_User_Outlet(Base):
 
 class Hop_Table_Outlet(Base):
     __tablename__ = 'table_outlet'
-
     id = Column(Integer,primary_key=True)
     name = Column(String(100))
     outlet_id = Column(Integer,ForeignKey('outlet.id'))
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
 
-    def _insert(self, _name, _outletid):
+    def _update(self, _list, outlet_id):
+        print(outlet_id)
+        Hop_Table_Outlet()._remove(outlet_id)
         session = Session()
         try:
-            insert = Hop_Table_Outlet()
-            insert.name = _name
-            insert.outlet_id = _outletid
-            insert.added_time = datetime.now()
-            session.add(insert)
+            for i in _list:
+                print(i)
+                if int(i['id']) == 0:
+                    _table = Hop_Table_Outlet()
+                    _table.name = i['name']
+                    _table.outlet_id = outlet_id
+                    session.add(_table)
+                else:
+                    _table = session.query(Hop_Table_Outlet).filter_by(id=i['id'], outlet_id=outlet_id).first()
+                    print(_table)
+                    _table.name = i['name']
+                    _table.status = True
+                    session.add(_table)
             session.commit()
         except:
             session.rollback()
@@ -1150,13 +1159,13 @@ class Hop_Table_Outlet(Base):
         finally:
             session.close()
 
-    def _update(self,_id, _name, _outletid):
+    def _remove(self, outlet_id):
         session = Session()
         try:
-            update = session.query(Hop_Table_Outlet).filter_by(id = _id).first()
-            update.name = _name
-            update.outlet_id = _outletid
-            session.add(update)
+            _table = session.query(Hop_Table_Outlet).filter_by(outlet_id=outlet_id).all()
+            for i in _table:
+                i.status = False
+                session.add(i)
             session.commit()
         except:
             session.rollback()
@@ -1164,59 +1173,16 @@ class Hop_Table_Outlet(Base):
         finally:
             session.close()
 
-    def _remove(self, _id):
-        session = Session()
-        try:
-            update = session.query(Hop_Table_Outlet).filter_by(id = _id).first()
-            update.status = False
-            session.add(update)
-            session.commit()
-        except:
-            session.rollback()
-            raise
-        finally:
-            session.close()
-
-
-    def _listbyoutlet(self, _outletid):
+    def _listbyoutlet(self, outlet_id):
         response = []
         session = Session()
         try:
-            _table_outlet = session.query(Hop_Table_Outlet).filter_by(outlet_id = _outletid, status = True).all()
+            _table_outlet = session.query(Hop_Table_Outlet).filter_by(outlet_id = outlet_id, status = True).all()
             for i in _table_outlet:
                 response.append({
                     'id' : i.id,
                     'name' : i.name
                 })
-        except:
-            session.rollback()
-            raise
-        finally:
-            session.close()
-        return response
-
-    def _data(self, _id):
-        response = {}
-        session = Session()
-        try:
-            _table_outlet = session.query(Hop_Table_Outlet).filter_by(id = _id).filter_by(status = True).first()
-            if _table_outlet is not None:
-                response['id'] = _table_outlet.id
-                response['name'] = _table_outlet.name
-        except:
-            session.rollback()
-            raise
-        finally:
-            session.close()
-        return response
-
-    def _checkname(self, _name, _outletid):
-        response = False
-        session = Session()
-        try:
-            _table_outlet = session.query(Hop_Table_Outlet).filter_by(name = _name, status = True, outlet_id = _outletid).first()
-            if _table_outlet is not None:
-              response = True
         except:
             session.rollback()
             raise
@@ -3973,15 +3939,14 @@ class Hop_Outlet_Payment(Base):
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
 
-
     def add_payment(self, outlet_id, type_id, name_id, detail_id):
         session = Session()
         try:
             _payment = Hop_Outlet_Payment()
             _payment.outlet_id = outlet_id
-            _payment.payment_type_id = payment_type_id
-            _payment.payment_name_id = payment_name_id
-            _payment.payment_detail_id = payment_detail_id
+            _payment.payment_type_id = type_id
+            _payment.payment_name_id = name_id
+            _payment.payment_detail_id = detail_id
             session.add(_payment)
             session.commit()
         except:
@@ -3990,6 +3955,63 @@ class Hop_Outlet_Payment(Base):
         finally:
             session.close()
 
+    def _update(self, outlet_id, _list):
+        Hop_Outlet_Payment()._remove(outlet_id)
+        session = Session()
+        try:
+            for i in _list:
+                _code = i.split('-')
+                print(str(_code))
+                _payment = session.query(Hop_Outlet_Payment).filter_by(
+                    outlet_id=outlet_id,
+                    payment_type_id=_code[0],
+                    payment_name_id=_code[1],
+                    payment_detail_id=_code[2],
+                ).first()
+                if _payment is not None:
+                    _payment.status = True
+                    session.add(_payment)
+                else:
+                    _new_payment = Hop_Outlet_Payment()
+                    _new_payment.outlet_id = outlet_id
+                    _new_payment.payment_type_id = _code[0]
+                    _new_payment.payment_name_id = _code[1]
+                    _new_payment.payment_detail_id = _code[2]
+                    session.add(_new_payment)
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+
+    def _remove(self, outlet_id):
+        session = Session()
+        try:
+            _payment = session.query(Hop_Outlet_Payment).filter_by(outlet_id=outlet_id, status = True).all()
+            for i in _payment:
+                i.status = False
+                session.add(i)
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+
+    def _list(self, outlet_id):
+        response = []
+        session = Session()
+        try:
+            _payment = session.query(Hop_Outlet_Payment).filter_by(outlet_id=outlet_id, status = True).all()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        for i in _payment:
+            response.append(str(i.payment_type_id) + '-' + str(i.payment_name_id) + '-' + str(i.payment_detail_id))
+        return response
 
 class Hop_Payment_Type(Base):
     __tablename__ = 'payment_type'
@@ -3999,6 +4021,24 @@ class Hop_Payment_Type(Base):
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
 
+    def _list(self):
+        response = []
+        session = Session()
+        try:
+            _payment = session.query(Hop_Payment_Type).filter_by(status = True).all()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        for i in _payment:
+            response.append({
+                'id': i.id,
+                'name': i.name,
+                'detail': Hop_Payment_Name()._list(i.id),
+            })
+        return response
+
 class Hop_Payment_Name(Base):
     __tablename__ = 'payment_name'
 
@@ -4007,6 +4047,24 @@ class Hop_Payment_Name(Base):
     type_id = Column(Integer,ForeignKey('payment_type.id'))
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
+
+    def _list(self, type_id):
+        response = []
+        session = Session()
+        try:
+            _payment = session.query(Hop_Payment_Name).filter_by(type_id=type_id, status = True).all()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        for i in _payment:
+            response.append({
+                'id' : i.id ,
+                'name' : i.name,
+                'detail': Hop_Payment_Detail()._list(i.id)
+            })
+        return response
 
 class Hop_Payment_Detail(Base):
     __tablename__ = 'payment_detail'
@@ -4033,17 +4091,17 @@ class Hop_Payment_Detail(Base):
             response['payment_name_id'] = _payment_detail.payment_name_id
         return response
 
-    def _listbypayment(self, _paymentid):
+    def _list(self, name_id):
         response = []
         session = Session()
         try:
-            _payment_detail = session.query(payment_detail).filter_by(payment_name_id = _paymentid, status = True).all()
+            _payment = session.query(Hop_Payment_Detail).filter_by(payment_name_id=name_id, status=True).all()
         except:
             session.rollback()
             raise
         finally:
             session.close()
-        for i in _payment_detail:
+        for i in _payment:
             response.append({
                 'id' : i.id ,
                 'name' : i.name

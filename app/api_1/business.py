@@ -12,7 +12,8 @@ from ..models import Hop_User, Hop_Business, Hop_Outlet, Hop_Product_Item, \
     Hop_Countries, Hop_Product_Category, Hop_Tax, Hop_Tax_Type, Hop_Special_Promo, Hop_Ap_Detail, \
     Hop_Business, Hop_Num_Emp, Hop_Price, Hop_Measurement_List, Hop_User_Outlet, Hop_Variant_List, \
     Hop_Variant_Category, Hop_Composed_Product, Hop_Inventory, Hop_Inventory_List, \
-    Hop_Billing_Package_Item, Hop_Billing_Invoice, Hop_Billing_Payment, Hop_Product_Category_Outlet
+    Hop_Billing_Package_Item, Hop_Billing_Invoice, Hop_Billing_Payment, Hop_Product_Category_Outlet, \
+    Hop_Table_Outlet, Hop_Payment_Type, Hop_Outlet_Payment
 
 # BUSINESS SECTION's API
 @api_1.route('/data/business', methods=['POST', 'GET'])
@@ -50,6 +51,7 @@ async def _api_business(request):
                     response['category_list'] = Hop_Product_Category()._list(owner_id=user.owner_id)
                     response['item_list'] = Hop_Product_Item()._list_sold(owner_id=user.owner_id)
                     response['tax_list'] = Hop_Tax()._list(owner_id=user.owner_id)
+                    response['payment_list'] = Hop_Payment_Type()._list()
                     response['status'] = '00'
             elif int(apidata['status']) == 4:
             # SUBMIT NEW BUSINESS AND GET EXISTING OUTLET BASED ON OWNER ID
@@ -133,10 +135,34 @@ async def _api_business(request):
                 response['list'] = Hop_Product_Outlet()._list(outlet_id=apidata['outlet_id'], owner_id=user.owner_id)
                 response['status'] = '00'
             elif int(apidata['status']) == 16:
-            # GET THE DATA FOR THE OUTLET
+            # Update Product per Outlet
                 response['data'] = Hop_Product_Outlet()._update(
                     outlet_id=apidata['outlet_id'], _list=apidata['list'],
                     owner_id=user.owner_id
+                )
+                response['status'] = '00'
+            elif int(apidata['status']) == 17:
+            # GET OUTLET's TABLE
+                response['data'] = Hop_Outlet()._data(_id=apidata['outlet_id'])
+                response['list'] = Hop_Table_Outlet()._listbyoutlet(
+                    outlet_id=apidata['outlet_id']
+                )
+                response['status'] = '00'
+            elif int(apidata['status']) == 18:
+            # Update Product per Outlet
+                response['data'] = Hop_Table_Outlet()._update(
+                    outlet_id=apidata['outlet_id'], _list=apidata['list']
+                )
+                response['status'] = '00'
+            elif int(apidata['status']) == 19:
+            # Update Product per Outlet
+                response['data'] = Hop_Outlet()._data(_id=apidata['outlet_id'])
+                response['list'] = Hop_Outlet_Payment()._list(outlet_id=apidata['outlet_id'])
+                response['status'] = '00'
+            elif int(apidata['status']) == 20:
+            # Update Product per Outlet
+                response['data'] = Hop_Outlet_Payment()._update(
+                    outlet_id=apidata['outlet_id'], _list=apidata['list']
                 )
                 response['status'] = '00'
 

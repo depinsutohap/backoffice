@@ -1,16 +1,17 @@
-<div class="sidemodal" id="edit_item_outlet_modal">
+<div class="sidemodal" id="edit_outlet_table_modal">
   <div class="header">
-    <h4>Edit Product Item (<span id="edit_item_outlet_modal_title">########</span>)</h4>
+    <h4>Edit Outlet's Table (<span id="edit_outlet_table_modal_title">########</span>)</h4>
     <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
   </div>
-  <form id="form_edit_item_outlet">
-    <div class="item_list_data">
-      <div class="column_header">Item List</div>
+  <form id="form_edit_outlet_table">
+    <div class="outlet_table_div"></div>
+    <div class="button_add">
+      <a onclick="_append_table(0, '')"><i class="fa fa-plus"></i>Tambah Meja</a>
     </div>
     <div class="footer">
       <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
       <div>
-        <input type="hidden" id="edit_item_outlet_id">
+        <input type="hidden" id="edit_outlet_table_id">
         <button onclick="close_sideform()" class="_cancel">Cancel</button>
         <button type="submit" class="_submit">Submit</button>
       </div>

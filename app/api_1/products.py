@@ -54,6 +54,7 @@ async def _api_products(request):
             # PRODUCT ITEM
             elif int(apidata['status']) == 8:
                 response['data'] = Hop_Product_Item()._list(owner_id=user.owner_id)
+                response['data_category'] = Hop_Product_Category()._list(owner_id=user.owner_id)
                 response['status'] = '00'
             elif int(apidata['status']) == 9:
                 response['data'] = Hop_Product_Item()._insert(product_name=apidata['product_name'], \

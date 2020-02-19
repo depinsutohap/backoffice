@@ -113,6 +113,65 @@ function _outlet_list(b_id){
         '<option value="' + e.tax_list[i].id + '">' + e.tax_list[i].name + '</option>'
       )
     }
+
+    for(x=0; x< e.payment_list.length; x++){
+      let _dx = e.payment_list[x].detail;
+      if(e.payment_list[x].id == 2){
+        for(y=0; y<_dx.length; y++){
+          let _dy = _dx[y].detail;
+          if(_dx[y].id == 2){
+            for(z=0; z<_dy.length; z++){
+              let _pc = (e.payment_list[x].id).toString() + '-' + (_dx[y].id).toString() + '-' + (_dy[z].id).toString();
+              $('.payment_check_debit').append(
+                '<label class="payment_check">' +
+                '<input class="payment_value payment_value_' + _pc + '" value="' + _pc + '" type="checkbox">' +
+                '<p>' + _dy[z].name + '</p>' +
+                '</label>'
+              )
+            }
+          }else{
+            for(z=0; z<_dy.length; z++){
+              let _pc = (e.payment_list[x].id).toString() + '-' + (_dx[y].id).toString() + '-' + (_dy[z].id).toString();
+              $('.payment_check_credit').append(
+                '<label class="payment_check">' +
+                '<input class="payment_value payment_value_' + _pc + '" value="' + _pc + '" type="checkbox">' +
+                '<p>' + _dy[z].name + '</p>' +
+                '</label>'
+              )
+            }
+          }
+        }
+      }else if(e.payment_list[x].id == 3){
+        let _dx = e.payment_list[x].detail;
+        for(y=0; y<_dx.length; y++){
+          let _dy = _dx[y].detail;
+          for(z=0; z<_dy.length; z++){
+            let _pc = (e.payment_list[x].id).toString() + '-' + (_dx[y].id).toString() + '-' + (_dy[z].id).toString()
+            $('.payment_check_other').append(
+              '<label class="payment_check">' +
+              '<input class="payment_value payment_value_' + _pc + '" value="' + _pc + '" type="checkbox">' +
+              '<p>' + _dy[z].name + '</p>' +
+              '</label>'
+            )
+          }
+        }
+      }else{
+        let _dx = e.payment_list[x].detail;
+        for(y=0; y<_dx.length; y++){
+          let _dy = _dx[y].detail;
+          for(z=0; z<_dy.length; z++){
+            let _pc = (e.payment_list[x].id).toString() + '-' + (_dx[y].id).toString() + '-' + (_dy[z].id).toString()
+            $('.payment_check_cash').append(
+              '<label class="payment_check">' +
+              '<input class="payment_value payment_value_' + _pc + '" value="' + _pc + '" type="checkbox">' +
+              '<p>' + _dy[z].name + '</p>' +
+              '</label>'
+            )
+          }
+        }
+      }
+    }
+
     for(i=0; i<e.category_list.length;i++){
       $('.category_list_data').append(
         '<div class="colum_input">' +
@@ -176,12 +235,12 @@ function _append_overview_list(data){
     '<p class="outlet_tax_' + data.id + '">' + _tax + '</p>' +
     '</div>' +
     '<div class="_column column_more">' +
-    '<a class="fa fa-ellipsis-h"></a>' +
+    '<a class="fa fa-caret-down"></a>' +
     '</div>' +
     '</div>' +
     '<div id="accordion_' + data.id + '" class="accordion_collapse collapse">' +
     '<div class="_row">' +
-    '<div class="col_4">' +
+    '<div class="col_3">' +
     '<div class="_data">' +
     '<p class="key">Business</p>' +
     '<p class="value" class="outlet_business_' + data.id + '">' + data.business_id.name + '</p>' +
@@ -199,7 +258,7 @@ function _append_overview_list(data){
     '<p class="value"><span class="total_category_outlet_' + data.id + '">' + data.total_category + '</span><a class="edit_button" onclick="_edit_category_outlet(' + data.id + ')">Edit</a></p>' +
     '</div>' +
     '</div>' +
-    '<div class="col_4">' +
+    '<div class="col_3">' +
     '<div class="_data">' +
     '<p class="key">Address</p>' +
     '<p class="value" class="outlet_address_' + data.id + '">' + data.address + '</p>' +
@@ -217,10 +276,13 @@ function _append_overview_list(data){
     '<p class="value"><span class="total_item_outlet_' + data.id + '">' + data.total_item + '</span><a class="edit_button" onclick="_edit_item_outlet(' + data.id + ')">Edit</a></p>' +
     '</div>' +
     '</div>' +
-    '<div class="col_2">' +
-    // '<div class="_data _menu">' +
-    // '<a onclick="_edit_outlet(' + data.id + ')">Table</a>' +
-    // '</div>' +
+    '<div class="col_3 _menu_div">' +
+    '<div class="_data _menu">' +
+    '<a onclick="_table_outlet(' + data.id + ')">Table</a>' +
+    '</div>' +
+    '<div class="_data _menu">' +
+    '<a onclick="_payment_outlet(' + data.id + ')">Payment</a>' +
+    '</div>' +
     '<div class="_data _menu">' +
     '<a onclick="_edit_outlet(' + data.id + ')">Edit</a>' +
     '</div>' +
@@ -233,7 +295,6 @@ function _append_overview_list(data){
     '</div>'
   )
 }
-
 
 function _edit_outlet(t){
   $.post('/v1/api/data/business',{
@@ -269,6 +330,80 @@ function _edit_outlet(t){
     _loading(0);
   });
 }
+
+function _table_outlet(t){
+  $.post('/v1/api/data/business',{
+    data: JSON.stringify({
+      'id': userData['id'],
+      'token': userData['token'],
+      'status': 17,
+      'outlet_id': t
+    })
+  }, function (e) {
+    $('.outlet_table_div').empty();
+    $('#edit_outlet_table_modal_title').text(e.data.name);
+    $('#edit_outlet_table_id').val(e.data.id);
+
+    if(e.list.length > 0){
+      for(i=0; i<e.list.length;i++){
+        _append_table(e.list[i].id, e.list[i].name);
+      }
+    }else{
+      _append_table(0, '');
+    }
+
+    open_sideform('edit_outlet_table_modal');
+  }).fail(function(){
+    notif('danger', 'Mohon kontak IT Administrator');
+  }).done(function(){
+    _loading(0);
+  });
+}
+
+
+function _append_table(i, v){
+  _row = 0
+  let _append = $('.outlet_table_div > div ');
+  if(_append.length > 0){
+    _row = $(_append[_append.length-1]).data('row') + 1
+  }
+
+  $('.outlet_table_div').append(
+    '<div class="outlet_table_row outlet_table_row_' + _row + '" data-row="' + _row + '">' +
+    '<input class="table_input" placeholder="Nama Meja, Contoh: Meja 1;" type="text" data-row="0" data-id="' + i + '" value="' + v + '">' +
+    '<a onclick="_remove_table(' + _row + ')"><i class="fa fa-trash"></i></a>' +
+    '</div>'
+  )
+}
+
+function _remove_table(i){
+  $('.outlet_table_row_' + i).remove();
+}
+
+function _payment_outlet(t){
+  $.post('/v1/api/data/business',{
+    data: JSON.stringify({
+      'id': userData['id'],
+      'token': userData['token'],
+      'status': 19,
+      'outlet_id': t
+    })
+  }, function (e) {
+    console.log(e)
+    $('#edit_outlet_payment_modal_title').text(e.data.name);
+    $('#edit_outlet_payment_id').val(e.data.id);
+    for(i=0;i<e.list.length;i++){
+      $('.payment_value_' + e.list[i]).prop('checked', true);
+    }
+
+    open_sideform('edit_outlet_payment_modal');
+  }).fail(function(){
+    notif('danger', 'Mohon kontak IT Administrator');
+  }).done(function(){
+    _loading(0);
+  });
+}
+
 
 function _edit_category_outlet(t){
   $.post('/v1/api/data/business',{
@@ -383,57 +518,119 @@ function submit_edit_outlet(){
   })
 
 
-    $('form#form_edit_category_outlet').submit(function(e){
-      e.preventDefault();
-      let _list = [], outlet = $('.category_check_permission:checked');
-      for(i=0; i<outlet.length;i++){
-        _list.push($(outlet[i]).val())
+  $('form#form_edit_category_outlet').submit(function(e){
+    e.preventDefault();
+    let _list = [], outlet = $('.category_check_permission:checked');
+    for(i=0; i<outlet.length;i++){
+      _list.push($(outlet[i]).val())
+    }
+    $.post('/v1/api/data/business',{
+      data: JSON.stringify({
+        id: userData['id'],
+        token: userData['token'],
+        status: 14,
+        outlet_id: $('#edit_category_outlet_id').val(),
+        list:_list,
+      })
+    }, function (e) {
+      if(e.status == '00'){
+        $('.total_category_outlet_' + $('#edit_category_outlet_id').val()).text(e.data)
+        close_sideform();
       }
-      $.post('/v1/api/data/business',{
-        data: JSON.stringify({
-          id: userData['id'],
-          token: userData['token'],
-          status: 14,
-          outlet_id: $('#edit_category_outlet_id').val(),
-          list:_list,
-        })
-      }, function (e) {
-        if(e.status == '00'){
-          $('.total_category_outlet_' + $('#edit_category_outlet_id').val()).text(e.data)
-          close_sideform();
-        }
-      }).fail(function(){
-        notif('danger', 'Mohon kontak IT Administrator');
-      }).done(function(){
-        _loading(0);
-      });
-    })
+    }).fail(function(){
+      notif('danger', 'Mohon kontak IT Administrator');
+    }).done(function(){
+      _loading(0);
+    });
+  })
 
-    $('form#form_edit_item_outlet').submit(function(e){
-      e.preventDefault();
-      let _list = [], outlet = $('.item_check_permission:checked');
-      for(i=0; i<outlet.length;i++){
-        _list.push($(outlet[i]).val())
+  $('form#form_edit_item_outlet').submit(function(e){
+    e.preventDefault();
+    let _list = [], outlet = $('.item_check_permission:checked');
+    for(i=0; i<outlet.length;i++){
+      _list.push($(outlet[i]).val())
+    }
+    $.post('/v1/api/data/business',{
+      data: JSON.stringify({
+        id: userData['id'],
+        token: userData['token'],
+        status: 16,
+        outlet_id: $('#edit_item_outlet_id').val(),
+        list:_list,
+      })
+    }, function (e) {
+      if(e.status == '00'){
+        $('.total_item_outlet_' + $('#edit_item_outlet_id').val()).text(e.data)
+        close_sideform();
       }
-      $.post('/v1/api/data/business',{
-        data: JSON.stringify({
-          id: userData['id'],
-          token: userData['token'],
-          status: 16,
-          outlet_id: $('#edit_item_outlet_id').val(),
-          list:_list,
+    }).fail(function(){
+      notif('danger', 'Mohon kontak IT Administrator');
+    }).done(function(){
+      _loading(0);
+    });
+  })
+
+  $('form#form_edit_outlet_table').submit(function(e){
+    e.preventDefault();
+    let _list = [], table = $('.table_input');
+    for(i=0; i<table.length;i++){
+      if($(table[i]).val().length > 0){
+        _list.push({
+          id: $(table[i]).attr('data-id'),
+          name: $(table[i]).val(),
         })
-      }, function (e) {
-        if(e.status == '00'){
-          $('.total_item_outlet_' + $('#edit_item_outlet_id').val()).text(e.data)
-          close_sideform();
-        }
-      }).fail(function(){
-        notif('danger', 'Mohon kontak IT Administrator');
-      }).done(function(){
-        _loading(0);
-      });
-    })
+      }
+    }
+
+    $.post('/v1/api/data/business',{
+      data: JSON.stringify({
+        id: userData['id'],
+        token: userData['token'],
+        status: 18,
+        outlet_id: $('#edit_outlet_table_id').val(),
+        list:_list,
+      })
+    }, function (e) {
+      if(e.status == '00'){
+        close_sideform();
+      }
+    }).fail(function(){
+      notif('danger', 'Mohon kontak IT Administrator');
+    }).done(function(){
+      _loading(0);
+    });
+  })
+
+  $('form#form_edit_outlet_payment').submit(function(e){
+    e.preventDefault();
+    let _list = [], payment = $('.payment_value');
+    for(i=0; i<payment.length;i++){
+      if($(payment[i]).is(':checked')){
+        _list.push($(payment[i]).val());
+      }
+    }
+
+    $.post('/v1/api/data/business',{
+      data: JSON.stringify({
+        id: userData['id'],
+        token: userData['token'],
+        status: 20,
+        outlet_id: $('#edit_outlet_payment_id').val(),
+        list:_list,
+      })
+    }, function (e) {
+      if(e.status == '00'){
+        close_sideform();
+        $(payment).prop('checked', false);
+      }
+    }).fail(function(){
+      notif('danger', 'Mohon kontak IT Administrator');
+    }).done(function(){
+      _loading(0);
+    });
+  })
+
+
 
 }
 

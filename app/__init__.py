@@ -26,6 +26,10 @@ Session = sessionmaker(bind=engine)
 client = MongoClient("mongodb://hop_bo:!2345hopbo0005432!@157.230.46.218:27017/uta_mongo_hop_dev_db_000")
 mongo = client.uta_mongo_hop_dev_db_000
 
+# mongoexport --host=178.128.93.105 --db=uta_mongo_hop_dev_db_000 --collection=trx_log --out=data.json
+# mongoimport --host=178.128.93.105 --db=uta_mongo_hop_db_000 --collection=trx_log --file=data.json
+
+
 def create_app(config_name):
     app.config.from_object(config[config_name])
     app.static('/static', 'app/static')

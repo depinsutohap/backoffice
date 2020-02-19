@@ -1,0 +1,32 @@
+<div class="sidemodal" id="edit_outlet_payment_modal">
+  <div class="header">
+    <h4>Edit Outlet's Table (<span id="edit_outlet_payment_modal_title">########</span>)</h4>
+    <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
+  </div>
+  <form id="form_edit_outlet_payment">
+    <div class="outlet_payment_div">  
+      <div class="payment_check_cash"></div>
+      <div class="payment_check">
+        <p>Kartu / Debit</p>
+      </div>
+      <div class="payment_check_debit"></div>
+      <div class="payment_check">
+        <p>Kartu / Kredit</p>
+      </div>
+      <div class="payment_check_credit"></div>
+      <div class="payment_check">
+        <p>Lainnya</p>
+      </div>
+      <div class="payment_check_other"></div>
+    </div>
+    <div class="footer">
+      <h5>Kolom bertanda <span class="danger">*</span> wajib disini</h5>
+      <div>
+        <input type="hidden" id="edit_outlet_payment_id">
+        <button onclick="close_sideform()" class="_cancel">Cancel</button>
+        <button type="submit" class="_submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="backdrop"></div>
