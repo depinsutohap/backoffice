@@ -9,20 +9,20 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql://hop_bo:!2345hopbo0005432!@178.128.93.105/uta_hop_dev_db_000'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/uta_hop_dev_db_000'
     MONGO_DBNAME = 'uta_mongo_hop_dev_db_000'
-    MONGO_URI = 'mongodb://hop_bo:!2345hopbo0005432!@178.128.93.105/uta_mongo_hop_dev_db_000'
+    MONGO_URI = 'mongodb://root:root@localhost/uta_mongo_hop_dev_db_000'
 
 class TestingConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://hop_bo:!2345hopbo0005432!@178.128.93.105/uta_hop_dev_db_000'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/uta_hop_dev_db_000'
     MONGO_DBNAME = 'uta_mongo_hop_dev_db_000'
-    MONGO_URI = 'mongodb://hop_bo:!2345hopbo0005432!@178.128.93.105/uta_mongo_hop_dev_db_000'
+    MONGO_URI = 'mongodb://root:root@localhost/uta_mongo_hop_dev_db_000'
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://hop_bo:!2345hopbo0005432!@178.128.93.105/uta_hop_db_000'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/uta_hop_db_000'
     MONGO_DBNAME = 'uta_mongo_hop_db_000'
-    MONGO_URI = 'mongodb://hop_bo:!2345hopbo0005432!@178.128.93.105/uta_mongo_hop_db_000'
+    MONGO_URI = 'mongodb://root:root@localhost/uta_mongo_hop_db_000'
 
     @classmethod
     def init_app(cls, app):
