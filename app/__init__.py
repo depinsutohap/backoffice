@@ -17,14 +17,15 @@ app = Sanic(__name__)
 jinja = SanicJinja2()
 _auth = Auth(app)
 # engine = create_engine('mysql://hop_bo:!2345hopbo0005432!@178.128.93.105:3306/uta_hop_db_000', poolclass=NullPool)
-engine = create_engine('mysql://hop_bo:!2345HopBo0005432!@157.230.46.218:3306/uta_hop_dev_db_000', poolclass=NullPool)
+engine = create_engine('mysql://root:dkresiens@35.240.171.200:3306/hop_db_000', poolclass=NullPool)
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 
 # client = MongoClient("mongodb://hop_ag:!2345hopag0005432!@178.128.93.105:27017/uta_mongo_hop_db_000")
 # mongo = client.uta_mongo_hop_db_000
-client = MongoClient("mongodb://hop_bo:!2345hopbo0005432!@157.230.46.218:27017/uta_mongo_hop_dev_db_000")
-mongo = client.uta_mongo_hop_dev_db_000
+
+client = MongoClient("mongodb://127.0.0.1:27017/hop_db_000")
+mongo = client.hop_db_000
 
 # mongoexport --host=178.128.93.105 --db=uta_mongo_hop_dev_db_000 --collection=trx_log --out=data.json
 # mongoimport --host=178.128.93.105 --db=uta_mongo_hop_db_000 --collection=trx_log --file=data.json
