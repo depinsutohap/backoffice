@@ -346,8 +346,8 @@ function _products_item_add(){
 
 // EDIT ITEM DATA FUNCTIONS
 function _products_item_edit(){
-  _open_item_data();
   _product_category_list('edit_product_category');
+  _open_item_data();
   _measurement_item();
   _submit_data_item();
 }

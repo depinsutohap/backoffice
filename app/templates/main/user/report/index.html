@@ -2,7 +2,7 @@
   <main id="dashboard_index">
     <div class="inmain_nav">
       <div class="title">
-        <h1 class="report">Report</h1>
+        <h1 class="report">Laporan</h1>
       </div>
     </div>
     <div class="_container">
@@ -11,29 +11,24 @@
         <div class="col_10">
           <div class="card dashboard_card">
             <div class="col_1">
-              <h5 class="title total_transaction">Total Transactions</h5>
+              <h5 class="title total_transaction">Total Transaksi</h5>
               <h2 class="value" id="totaltrans">-</h2>
-              <span class="_growth positive"><span>12</span>% increase</span>
             </div>
             <div class="col_1">
-              <h5 class="title done_transaction">Done Transactions</h5>
+              <h5 class="title done_transaction">Transaksi Selesai</h5>
               <h2 class="value" id="successtrans">-</h2>
-              <span class="_growth positive"><span>12</span>% increase</span>
             </div>
             <div class="col_1">
-              <h5 class="title ongoing_transaction">Ongoing Transactions</h5>
+              <h5 class="title ongoing_transaction">Transaksi Berjalan</h5>
               <h2 class="value" id="ongoingtrans">-</h2>
-              <span class="_growth negative"><span>12</span>% decrease</span>
             </div>
             <div class="col_1">
-              <h5 class="title cancel_transaction">Cancelled Transactions</h5>
+              <h5 class="title cancel_transaction">Transaksi Batal</h5>
               <h2 class="value last" id="cancelled">-</h2>
-              <span class="_growth negative"><span>12</span>% decrease</span>
             </div>
             <div class="col_1">
-              <h5 class="title void_transaction">Void Transactions</h5>
+              <h5 class="title void_transaction">Transaksi Void</h5>
               <h2 class="value last" id="voidtrans">-</h2>
-              <span class="_growth negative"><span>12</span>% decrease</span>
             </div>
           </div>
         </div>
@@ -42,23 +37,23 @@
       <div class="_row">
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='summary') }}')">
           <img src="{{ url_for('static', filename='src/icon/report.png') }}">
-          <p class="summary">Summary</p>
+          <p class="summary">Ringkasan</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='product-sales') }}')">
           <img src="{{ url_for('static', filename='src/icon/product.png') }}">
-          <p class="product_sales">Product Sales</p>
+          <p class="product_sales">Penjualan Produk</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='daily-sales') }}')">
           <img src="{{ url_for('static', filename='src/icon/bar.png') }}">
-          <p class="daily_sales">Daily Sales</p>
+          <p class="daily_sales">Penjualan Harian</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='data-sales-transactions') }}')">
           <img src="{{ url_for('static', filename='src/icon/report.png') }}">
-          <p class="data_sales_transactions">Data Sales Transactions</p>
+          <p class="data_sales_transactions">Data Transaksi Penjualan</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='sales-per-category') }}')">
           <img src="{{ url_for('static', filename='src/icon/tag.png') }}">
-          <p class="sales_per_category">Sales Per Categoty</p>
+          <p class="sales_per_category">Penjualan Per Kategori</p>
         </a>
       </div>
 
@@ -66,27 +61,27 @@
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='sales-per-outlet') }}')">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/outlet.png') }}">
-          <p class="sales_per_outlet">Sales Per Outlet</p>
+          <p class="sales_per_outlet">Penjualan Per Outlet</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='tax-revenue') }}')">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/report.png') }}">
-          <p class="tax_revenue">Tax Revenue</p>
+          <p class="tax_revenue">Pendapatan Servis & Pajak</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='discount') }}')">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/discount.png') }}">
-          <p class="discount">Discount</p>
+          <p class="discount">Diskon</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='daily-profit') }}')">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/profit.png') }}">
-          <p class="daily_profit">Daily Profit</p>
+          <p class="daily_profit">Keuntungan Harian</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='product-profit') }}')">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/product.png') }}">
-          <p class="product_profit">Product Profit</p>
+          <p class="product_profit">Keuntungan Produk</p>
         </a>
       </div>
 
@@ -94,27 +89,27 @@
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='sales-per-hour') }}')">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/time.png') }}">
-          <p class="sales_per_hour">Sales Per Hour</p>
+          <p class="sales_per_hour">Penjualan Per Jam</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='payment-method') }}')">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/payment.png') }}">
-          <p class="payment_method">Payment Method</p>
+          <p class="payment_method">Metode Pembayaran</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='report', subpage='stock') }}')">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/stock.png') }}">
-          <p class="stock">Stock</p>
+          <p class="stock">Stok</p>
         </a>
-        <a class="col_1 menu_thumb">
+        <a onclick="notif('info', 'Coming soon')" class="col_1 menu_thumb">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/report.png') }}">
-          <p class="cash_recap">Cash Recap</p>
+          <p class="cash_recap">Rekap Uang Tunai</p>
         </a>
-        <a class="col_1 menu_thumb">
+        <a onclick="notif('info', 'Coming soon')" class="col_1 menu_thumb">
           <img src="/static/src/icon/upgrade-blue.png" class="upgrade_icon">
           <img src="{{ url_for('static', filename='src/icon/users.png') }}">
-          <p class="customer">Customer</p>
+          <p class="customer">Pelanggan</p>
         </a>
       </div>
 

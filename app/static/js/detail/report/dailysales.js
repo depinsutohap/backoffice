@@ -1,5 +1,5 @@
 function _dailysales(){
-  nav_lang('report');
+  // nav_lang('report');
   business_list(); _date(); _detail();
   _min_max_data();
   _loading(1);

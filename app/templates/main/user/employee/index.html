@@ -6,22 +6,22 @@
   <main id="dashboard_index">
     <div class="inmain_nav">
       <div class="title">
-        <h1>Employee</h1>
+        <h1>Karyawan</h1>
       </div>
       <div class="_filter">
-        <a class="nav_create" onclick="sub_href('{{ url_for('main._subreport', sector='employee', subpage='add') }}')"><p>Add Employee</p></a>
+        <a class="nav_create" onclick="sub_href('{{ url_for('main._subreport', sector='employee', subpage='add') }}')"><p>Tamabah Karyawan</p></a>
       </div>
     </div>
     <div class="_container">
       <div class="_row">
         <div class="col_10">
           <div class="card chart_card table_card">
-            <button type="button" class="_remove_all danger" onclick="open_sideform('remove_many_employee_modal');" disabled>Remove</button>
+            <button type="button" class="_remove_all danger" onclick="open_sideform('remove_many_employee_modal');" disabled>Hapus</button>
             <table class="table table-hover" id="table_data">
               <thead>
                 <tr>
                   <th onclick="sortTable(0);">Name</th>
-                  <th onclick="sortTable(1);">Type</th>
+                  <th onclick="sortTable(1);">Tipe</th>
                   <th onclick="sortTable(2);">Outlet</th>
                   <th></th>
                 </tr>
@@ -30,7 +30,7 @@
             </table>
             <div class="no_data">
               <img src="{{ url_for('static', filename='src/icon/users.png') }}">
-              You don't have any employee yet.
+              Anda belum memiliki karyawan.
             </div>
         </div>
       </div>

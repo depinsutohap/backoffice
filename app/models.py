@@ -3343,6 +3343,8 @@ class Hop_Log_Inventory(Base):
     __tablename__ = 'log_inventory'
 
     id = Column(Integer,primary_key=True)
+    f_pid = Column(Integer,ForeignKey('product_item.id'),default=None)
+    f_vid = Column(Integer,ForeignKey('variant_list.id'),default=None)
     pid = Column(Integer,ForeignKey('product_item.id'),default=None)
     vid = Column(Integer,ForeignKey('variant_list.id'),default=None)
     cid = Column(Integer,ForeignKey('product_category.id'),default=None)
@@ -3353,10 +3355,11 @@ class Hop_Log_Inventory(Base):
     type_id = Column(Integer,ForeignKey('inventory_type.id'),default=None)
     cost_id = Column(Integer,ForeignKey('cost.id'),default=None)
     quantity = Column(DECIMAL(36,2), default=0)
-    date = Column(Date,default=None)
+    date = Column(DateTime,default=None)
     expire = Column(Date,default=None)
     added_time = Column(DateTime,default=datetime.now())
     status = Column(Boolean,default=True)
+
 
     def _insert(self, pid, vid, cid, date, inventory_list_id, inventory_id, outlet_id, owner_id, type_id, cost_id, quantity):
         response = None
@@ -4514,6 +4517,7 @@ class Hop_Ap_Detail(Base):
 
     def _name(self, ap_type_id, ap_requirement_id, requirement_value,
         requirement_relation, ap_reward_id, reward_value, reward_relation, owner_id):
+        print(ap_type_id)
         response = Hop_Ap_Type()._data(ap_type_id)['description']
         _x = 'Rp ' + requirement_value
         if int(ap_requirement_id) == 1:
@@ -4737,15 +4741,15 @@ class Hop_Ap_Type(Base):
         session = Session()
         try:
             _ap_type = session.query(Hop_Ap_Type).filter_by(id = _id, status = True).first()
+            if _ap_type is not None:
+                response['id'] = _ap_type.id
+                response['name'] = _ap_type.name
+                response['description'] = _ap_type.description
         except:
             session.rollback()
             raise
         finally:
             session.close()
-        if _ap_type is not None:
-            response['id'] = _ap_type.id
-            response['name'] = _ap_type.name
-            response['description'] = _ap_type.description
         return response
 
 class Hop_Ap_Requirement(Base):

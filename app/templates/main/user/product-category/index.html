@@ -6,23 +6,23 @@
   <main id="dashboard_index">
     <div class="inmain_nav">
       <div class="title">
-        <h1>Product Category</h1>
+        <h1>Product Kategori</h1>
       </div>
       <div class="_filter">
-        <a class="nav_create" onclick="open_sideform('add_category_modal')"><p>Add Category</p></a>
+        <a class="nav_create" onclick="open_sideform('add_category_modal')"><p>Tambah Kategori</p></a>
       </div>
     </div>
     <div class="_container">
       <div class="_row">
         <div class="col_10">
           <div class="card chart_card table_card">
-            <button type="button" class="_remove_all danger" onclick="open_sideform('remove_many_category_modal');" disabled>Remove</button>
+            <button type="button" class="_remove_all danger" onclick="open_sideform('remove_many_category_modal');" disabled>Hapus</button>
             <table class="table table-hover" id="table_data">
               <thead>
                 <tr>
                   <th><input type="checkbox" class="check_all"></th>
-                  <th onclick="sortTable(0);">Category Name</th>
-                  <th onclick="sortTable(1);">Total Product</th>
+                  <th onclick="sortTable(0);">Nama Kategori</th>
+                  <th onclick="sortTable(1);">Total Produk</th>
                   <th></th>
                 </tr>
               </thead>
@@ -30,7 +30,7 @@
             </table>
             <div class="no_data">
               <img src="{{ url_for('static', filename='src/icon/tag.png') }}">
-              You don't have any category yet.
+              Anda belum memiliki kategori.
             </div>
         </div>
       </div>

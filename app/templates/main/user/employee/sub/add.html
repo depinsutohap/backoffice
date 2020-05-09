@@ -6,17 +6,17 @@
   <main id="new_employee_index">
       <div class="inmain_nav">
         <div class="title">
-          <h1><a onclick="sub_href('{{ url_for('main._page', sector='employee') }}')">Employee</a> > Add New Employee</h1>
+          <h1><a onclick="sub_href('{{ url_for('main._page', sector='employee') }}')">Karyawan</a> > Tambah Karyawan Baru</h1>
         </div>
         <div class="_filter">
-          <button type="button" onclick="sub_href('{{ url_for('main._page', sector='employee') }}')">Cancel</button>
+          <button type="button" onclick="sub_href('{{ url_for('main._page', sector='employee') }}')">Batal</button>
         </div>
       </div>
       <div class="_container">
 
         <div class="_row">
-          <div class="title active" id="cat"><div class="number">1</div> Create Account</div>
-          <div class="title" id="mat"><div class="number">2</div> Manage Access</div>
+          <div class="title active" id="cat"><div class="number">1</div> Buat Akun</div>
+          <div class="title" id="mat"><div class="number">2</div> Atur Akses</div>
         </div>
 
         <form method="post" class="_create_account" id="form_add_employee" autocomplete="false">
@@ -24,16 +24,16 @@
             <div class="col_10">
               <div class="card dashboard_card form_card">
                 <div class="col_10">
-                  <h4>Employee's Type</h4>
+                  <h4>Tipe Karyawan</h4>
                 </div>
                 <div class="col_5">
                   <div class="li no_margin">
                     <label class="radio_exp">
                       <input value="3" name="add_employee_role" type="radio">
                       <div class="option_exp">
-                        <h4 class="title">Cashier/Waiter/Operator</h4>
+                        <h4 class="title">Kasir/Pramusaji/Pramuniaga/Operator</h4>
                         <p>
-                          Karyawan ini bertugas sebagai kasir atau pramusaji, mereka hanya mendapatkan hak akses di aplikasi kasir.
+                          Karyawan ini bertugas sebagai kasir atau pramusaji atau pramuniaga, mereka hanya mendapatkan hak akses di aplikasi front-office.
                         </p>
                       </div>
                     </label>
@@ -46,7 +46,7 @@
                       <div class="option_exp">
                         <h4 class="title">Staff/Admin/Manager</h4>
                         <p>
-                          Karyawan ini bertugas sebagai kasir atau pramusaji, mereka hanya mendapatkan hak akses di aplikasi kasir.
+                          Karyawan ini bertugas sebagai Admin atau manager, mereka mendapatkan hak akses di aplikasi front-office dan backoffice.
                         </p>
                       </div>
                     </label>
@@ -61,7 +61,7 @@
               <div class="card dashboard_card form_card">
                 <div class="col_5">
                   <div class="li">
-                    <label>Name<span class="danger">*</span></label>
+                    <label>Nama<span class="danger">*</span></label>
                     <input id="add_employee_name" type="text" placeholder="Name">
                   </div>
                   <div class="li">
@@ -72,7 +72,7 @@
 
                 <div class="col_5">
                   <div class="li">
-                    <label>Phone Number<span class="danger">*</span></label>
+                    <label>Nomor Telepon<span class="danger">*</span></label>
                     <input id="add_employee_phone" type="text" placeholder="Phone Number" onkeyup="input_formatNumberwocommas(this)">
                   </div>
                   <div class="li">
@@ -90,7 +90,7 @@
 
           <div class="_row">
             <div class="col_10 text-center">
-              <button class="_submit" type="submit">Create Account</button>
+              <button class="_submit" type="submit">Buat Akun</button>
             </div>
           </div>
 
@@ -102,14 +102,14 @@
               <div class="card chart_card table_card">
                 <div class="_filter">
                   <input type="hidden" id="add_employee_id">
-                  <button class="nav_create" type="submit">Save</button>
+                  <button class="nav_create" type="submit">Simpan</button>
                 </div>
                 <table class="table table-hover" id="table_data">
                   <thead>
                     <tr>
                       <th><input type="checkbox" class="check_all"></th>
-                      <th onclick="sortTable(0);">Outlet Name</th>
-                      <th onclick="sortTable(1);">Business</th>
+                      <th onclick="sortTable(0);">Nama Outlet</th>
+                      <th onclick="sortTable(1);">Bisnis</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -117,7 +117,7 @@
                 </table>
                 <div class="no_data">
                   <img src="{{ url_for('static', filename='src/icon/tag.png') }}">
-                  You don't have any outlet yet.
+                  Anda belum memiliki outlet.
                 </div>
               </div>
             </div>

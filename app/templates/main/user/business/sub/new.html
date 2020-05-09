@@ -19,28 +19,28 @@
 <main id="new_business_index">
   <div class="_container">
     <div class="_row">
-      <div class="title active" id="cbt"><div class="number">1</div> Create Business</div>
-      <div class="title" id="mot"><div class="number">2</div> Move Outlets</div>
+      <div class="title active" id="cbt"><div class="number">1</div> Buat Bisnis</div>
+      <div class="title" id="mot"><div class="number">2</div> Pindahkan Outlet</div>
     </div>
 
     <div class="_row" id="new_business">
       <div class="col_6">
         <div class="card dashboard_card">
           <form id="form_new_business" method="post">
-            <h1>Create new Business</h1>
+            <h1>Buat Bisnis Baru</h1>
             <div class="li">
-              <label>Business Name</label>
-              <input name="business_name" id="business_name" type="text" placeholder="Business Name">
+              <label>Nama Bisnis</label>
+              <input name="business_name" id="business_name" type="text" placeholder="Nama Bisnis, Contoh: HOP Cafe">
             </div>
             <div class="li">
-              <label>Business Category</label>
+              <label>Kategori Bisnis</label>
               <select id="business_category"></select>
             </div>
             <div class="li">
-              <label>Description</label>
-              <input name="business_description" id="business_description" type="text" placeholder="Business Description">
+              <label>Deskripsi</label>
+              <input name="business_description" id="business_description" type="text" placeholder="Deskripsi Bisnis">
             </div>
-            <button type="submit">Create Business</button>
+            <button type="submit">Buat Bisnis</button>
 
           </form>
         </div>
@@ -51,12 +51,12 @@
       <div class="col_6">
         <div class="card dashboard_card">
           <form method="post" id="form_move_outlet">
-            <h1>Move outlet into <span id="mrt">#######</span></h1>
-            <p>Move Existing Outlet into your new project.</p>
+            <h1>Pindahkan Outlet ke <span id="mrt">#######</span></h1>
+            <p>Pindahkan Outlet yang sudah tersedia kepada bisnis baru anda.</p>
             <select id="move_list_outlet" name="skills" multiple="" class="label ui selection fluid dropdown"></select>
             <input type="hidden" id="new_business_id">
-            <button type="submit">Move Outlet</button>
-            <a class="_skip" onclick="_skip();">Skip for now</a>
+            <button type="submit">Pindahkan Outlet</button>
+            <a class="_skip" onclick="_skip();">Lewati untuk sekarang</a>
           </form>
         </div>
       </div>

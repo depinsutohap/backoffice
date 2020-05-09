@@ -6,11 +6,11 @@
     <form method="post" id="form_add_item">
       <div class="inmain_nav">
         <div class="title">
-          <h1><a onclick="sub_href('{{ url_for('main._page', sector='product-item') }}')">Product</a> > Add Product</h1>
+          <h1><a onclick="sub_href('{{ url_for('main._page', sector='product-item') }}')">Produk</a> > Tambah Product</h1>
         </div>
         <div class="_filter">
-          <button type="button" onclick="sub_href('{{ url_for('main._page', sector='product-item') }}')">Cancel</button>
-          <button class="_submit" type="submit">Save</button>
+          <button type="button" onclick="sub_href('{{ url_for('main._page', sector='product-item') }}')">Batal</button>
+          <button class="_submit" type="submit">Simpan</button>
         </div>
       </div>
       <div class="_container">
@@ -20,19 +20,19 @@
             <div class="card dashboard_card form_card">
               <div class="col_5">
                 <div class="li">
-                  <label>Product Name<span class="danger">*</span></label>
+                  <label>Nama Produk<span class="danger">*</span></label>
                   <input id="add_product_name" type="text" placeholder="Product Name">
                 </div>
                 <div class="li">
-                  <label>Product Category<span class="danger">*</span></label>
+                  <label>Produk Kategori<span class="danger">*</span></label>
                   <select id="add_product_category"></select>
                 </div>
                 <div class="li">
-                  <label>Price</label>
+                  <label>Harga</label>
                   <input class="price" id="add_product_price"  onkeypress="return isNumber(event)" type="text" placeholder="Rp 0">
                 </div>
                 <div class="colum_input">
-                  <p>Product For Sale</p>
+                  <p>Produk dijual</p>
                   <div class="div_input">
                     <label class="switch">
                       <input id="add_product_sold" type="checkbox" checked>
@@ -41,7 +41,7 @@
                   </div>
                 </div>
                 <div class="li">
-                  <label>Product Description</label>
+                  <label>Deskripsi Produk</label>
                   <textarea id="add_product_description" type="text" placeholder="Product Description"></textarea>
                 </div>
 
@@ -57,7 +57,7 @@
                   <input id="add_product_barcode" type="text">
                 </div>
                 <div class="li">
-                  <label>Product Measurement</label>
+                  <label>Ukuran Produk</label>
                   <div class="measurement">
                     <input class="product_measurement" readonly id="edit_product_measurement" data-id="0" type="text" placeholder="Measurement, Ex: Gram, Pcs, Box, Unit">
                     <div  class="div_search_measurement">
@@ -65,16 +65,16 @@
                         <input class="measurement_div_search_input_field" type="text" placeholder="Type here, press enter or choose below..">
                       </div>
                       <div class="measurement_div_search_data">
-                        <div class="waiting">Waiting..</div>
-                        <div class="task">Insert at least 1 character or more..</div>
-                        <div class="enter">Click enter to insert new measurement</div>
+                        <div class="waiting">Menunggu..</div>
+                        <div class="task">Masukkan  minimum 1 karakter atau lebih..</div>
+                        <div class="enter">Klik enter untuk memasukan ukuran baru</div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div class="colum_input">
-                  <p class="edit_page_title">Variant Product</p>
+                  <p class="edit_page_title">Varian Produk</p>
                   <div class="div_input">
                     <label class="switch">
                       <input id="add_product_variant" type="checkbox">
@@ -83,10 +83,10 @@
                   </div>
                 </div>
                 <div class="colum_input variant_button">
-                  <a class="default" onclick="open_sideform('manage_variant_modal');">Manage Variant</a>
+                  <a class="default" onclick="open_sideform('manage_variant_modal');">Pengaturan Varian</a>
                 </div>
                 <div class="colum_input">
-                  <p>Composed Product</p>
+                  <p>Produk Gabungan</p>
                   <div class="div_input">
                     <label class="switch">
                       <input id="add_product_composed" type="checkbox">
@@ -96,18 +96,18 @@
                 </div>
                 <div class="colum_input colum_composed">
                   <div class="compose_div composed_exp">
-                    <h4>Composed Product</h4>
-                    <p>Product has its ingredients</p>
-                    <p>Ex: Avocado (Fruit)</p>
+                    <h4>Produk Gabungan</h4>
+                    <p>Produk memiliki bahan baku</p>
+                    <p>Contoh: Jus Alpukat</p>
                   </div>
                   <div class="compose_div single_exp">
-                    <h4>Single Product</h4>
-                    <p>Product has no ingredients</p>
-                    <p>Ex: Avocado Juice</p>
+                    <h4>Produk Tunggal</h4>
+                    <p>Produk tidak memiliki bahan baku</p>
+                    <p>Contoh: Alpukat (Buah)</p>
                   </div>
                 </div>
                 <div class="colum_input stock_exp">
-                  <p class="edit_page_title">Stock Management</p>
+                  <p class="edit_page_title">Pengaturan Stok/Inventori</p>
                   <div class="div_input">
                     <label class="switch">
                       <input id="add_manage_stock" type="checkbox">

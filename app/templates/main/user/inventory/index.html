@@ -4,7 +4,7 @@
   <main id="dashboard_index">
     <div class="inmain_nav">
       <div class="title">
-        <h1>Inventory</h1>
+        <h1>Invetarisasi</h1>
       </div>
     </div>
     <div class="_container">
@@ -13,23 +13,23 @@
       <div class="_row">
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-card') }}')">
           <img src="{{ url_for('static', filename='src/icon/report.png') }}">
-          <p>Stock Card</p>
+          <p>Kartu Stok</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-entry') }}')">
           <img src="{{ url_for('static', filename='src/icon/product.png') }}">
-          <p>Stock Entry</p>
+          <p>Stok Masuk</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-exit') }}')">
           <img src="{{ url_for('static', filename='src/icon/bar.png') }}">
-          <p>Stock Exit</p>
+          <p>Stok Keluar</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='transfer-stock') }}')">
           <img src="{{ url_for('static', filename='src/icon/report.png') }}">
-          <p>Transfer Stock</p>
+          <p>Transfer Stok</p>
         </a>
         <a class="col_1 menu_thumb" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-opname') }}')">
           <img src="{{ url_for('static', filename='src/icon/tag.png') }}">
-          <p>Stock Opname</p>
+          <p>Stok Opnam</p>
         </a>
       </div>
 

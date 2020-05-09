@@ -7,13 +7,13 @@
       <div class="inmain_nav">
         <div class="title">
           <h1>
-            <a  onclick="sub_href('{{ url_for('main._page', sector='inventory') }}')">Inventory</a> > <a  onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-opname') }}')">Stock Opname</a>
-             > Add Stock Opname
+            <a  onclick="sub_href('{{ url_for('main._page', sector='inventory') }}')">Inventarisasi</a> > <a  onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-opname') }}')">Stok Opnam</a>
+             > Tambah Stok Opnam
           </h1>
         </div>
         <div class="_filter">
-          <button type="button" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-opname') }}')">Cancel</button>
-          <button class="_submit" type="submit">Save</button>
+          <button type="button" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-opname') }}')">Batal</button>
+          <button class="_submit" type="submit">Simpan</button>
         </div>
       </div>
       <div class="_container">
@@ -24,14 +24,14 @@
                     <div class="li">
                       <label>Outlet<span class="danger">*</span></label>
                       <select class="outlet" id="outlet">
-                        <option value="0">Select an Outlet</option>
+                        <option value="0">Pilih Outlet</option>
                       </select>
                     </div>
                   </div>
 
                   <div class="col_5">
                     <div class="li">
-                      <label>Description</label>
+                      <label>Deskripsi</label>
                       <textarea id="description" placeholder="Description"></textarea>
                     </div>
                   </div>
@@ -46,11 +46,11 @@
                     <div class="div_add_stock_table">
                       <div class="table_header stock_opname_table_header">
                         <div class="item_column">Item</div>
-                        <div class="variant_column">Variant</div>
-                        <div class="total_unit_column">Total Unit (System)</div>
-                        <div class="total_unit_column">Total Unit (Actual)</div>
+                        <div class="variant_column">Varian</div>
+                        <div class="total_unit_column">Total Unit (Sistem)</div>
+                        <div class="total_unit_column">Total Unit (Aktual)</div>
                         <div class="unit">Unit</div>
-                        <div class="total_unit_column">Deviation</div>
+                        <div class="total_unit_column">Perbedaan</div>
                       </div>
                       <div class="table_body stock_opname_table_body"></div>
                     </div>

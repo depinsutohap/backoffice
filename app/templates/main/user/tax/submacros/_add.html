@@ -1,23 +1,23 @@
 <div class="sidemodal" id="add_tax_modal">
   <div class="header">
-    <h4>Add Tax</h4>
+    <h4>Tambah Servis & Pajak</h4>
     <a onclick="close_sideform()"><i class="glyphicon glyphicon-remove"></i></a>
   </div>
   <form id="form_add_tax">
     <div class="colum_input">
-      <p>Tax Name<span class="danger">*</span></p>
+      <p>Nama<span class="danger">*</span></p>
       <div class="div_input">
         <input type="text" id="add_tax_name">
       </div>
     </div>
     <div class="colum_input">
-      <p>Type<span class="danger">*</span></p>
+      <p>Tipe<span class="danger">*</span></p>
       <div class="div_input">
         <select id="add_tax_type"></select>
       </div>
     </div>
     <div class="colum_input">
-      <p>Value (%)<span class="danger">*</span></p>
+      <p>Jumlah (%)<span class="danger">*</span></p>
       <div class="div_input">
         <input type="number" step="0.1" min="0" id="add_tax_value">
       </div>
@@ -29,7 +29,7 @@
           <thead>
             <tr>
               <th><input type="checkbox" class="add_check_all"></th>
-              <th onclick="sortTable(0);">All Outlet</th>
+              <th onclick="sortTable(0);">Semua Outlet</th>
             </tr>
           </thead>
           <tbody class="add_outlet_list"></tbody>

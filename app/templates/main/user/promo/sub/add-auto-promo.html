@@ -11,11 +11,11 @@
     <form method="post" id="form_add_auto_promo">
       <div class="inmain_nav">
         <div class="title">
-          <h1><a onclick="sub_href('{{ url_for('main._subreport', sector='promo', subpage='auto-promo') }}')">Auto Promo</a> > New Promo</h1>
+          <h1><a onclick="sub_href('{{ url_for('main._subreport', sector='promo', subpage='auto-promo') }}')">Auto Promo</a> > Promo Baru</h1>
         </div>
         <div class="_filter">
-          <button type="button" onclick="sub_href('{{ url_for('main._subreport', sector='promo', subpage='auto-promo') }}')">Cancel</button>
-          <button class="_submit" type="submit">Save</button>
+          <button type="button" onclick="sub_href('{{ url_for('main._subreport', sector='promo', subpage='auto-promo') }}')">Batal</button>
+          <button class="_submit" type="submit">Simpan</button>
         </div>
       </div>
       <div class="_container">
@@ -24,7 +24,7 @@
           <div class="col_10">
             <div class="card dashboard_card form_card">
               <div class="col_10">
-                <h4>Promo's Type<span class="danger">*</span></h4>
+                <h4>Tipe Promo<span class="danger">*</span></h4>
               </div>
               <div class="col_3">
                 <div class="li no_margin">
@@ -80,7 +80,7 @@
             <div class="card dashboard_card form_card">
               <div class="col_10">
                 <div class="colum_input promo_rule_buy">
-                  <p>Buy<span class="danger">*</span></p>
+                  <p>Beli<span class="danger">*</span></p>
                   <div class="div_input">
                     <div class="promo_rule_input">
                       <select class="auto_promo_select_item" id="add_auto_promo_1_buy_item"></select>
@@ -94,12 +94,12 @@
                         <input id="add_auto_promo_1_buy_check_category" type="checkbox">
                         <span class="slider"></span>
                       </label>
-                      <p class="note">Promo based on product category</p>
+                      <p class="note">Promo berdasarkan produk kategori</p>
                     </div>
                   </div>
                 </div>
                 <div class="colum_input">
-                  <p>Get Discount<span class="danger">*</span></p>
+                  <p>Mendapat Diskon<span class="danger">*</span></p>
                   <div class="div_input">
                     <select class="extra_input" id="add_auto_promo_1_get_percent_type">
                       <option value="4">%</option>
@@ -118,13 +118,13 @@
             <div class="card dashboard_card form_card">
               <div class="col_10">
                 <div class="colum_input">
-                  <p>Minimum Transaction<span class="danger">*</span></p>
+                  <p>Minimum Transaksi<span class="danger">*</span></p>
                   <div class="div_input">
                     <input type="number" step="0.1" min="0" id="add_auto_promo_2_buy_value">
                   </div>
                 </div>
                   <div class="colum_input">
-                    <p>Discount Value<span class="danger">*</span></p>
+                    <p>Jumlah Diskon<span class="danger">*</span></p>
                     <div class="div_input">
                       <select class="extra_input" id="add_auto_promo_2_get_percent_type">
                         <option value="4">%</option>
@@ -143,7 +143,7 @@
             <div class="card dashboard_card form_card">
               <div class="col_10">
                 <div class="colum_input promo_rule_buy">
-                  <p>Buy<span class="danger">*</span></p>
+                  <p>Beli<span class="danger">*</span></p>
                   <div class="div_input">
                     <div class="promo_rule_input">
                       <select class="auto_promo_select_item" id="add_auto_promo_3_buy_item"></select>
@@ -157,12 +157,12 @@
                         <input id="add_auto_promo_3_buy_check_category" type="checkbox">
                         <span class="slider"></span>
                       </label>
-                      <p class="note">Promo based on product category</p>
+                      <p class="note">Promo berdasarkan produk kategori</p>
                     </div>
                   </div>
                 </div>
                 <div class="colum_input promo_rule_buy">
-                  <p>Get Free<span class="danger">*</span></p>
+                  <p>Mendapat Gratis<span class="danger">*</span></p>
                   <div class="div_input">
                     <div class="promo_rule_input">
                       <select class="auto_promo_select_item" id="add_auto_promo_3_get_item"></select>
@@ -176,14 +176,14 @@
                         <input id="add_auto_promo_3_get_check_category" type="checkbox">
                         <span class="slider"></span>
                       </label>
-                      <p class="note">Promo based on product category</p>
+                      <p class="note">Promo berdasarkan produk kategori</p>
                     </div>
                     <div class="auto_promo_category">
                       <label class="switch">
                         <input id="add_auto_promo_check_multiple" type="checkbox">
                         <span class="slider"></span>
                       </label>
-                      <p class="note">Apply multiple</p>
+                      <p class="note">Penerapan Kelipatan</p>
                     </div>
                   </div>
                 </div>
@@ -197,7 +197,7 @@
             <div class="card dashboard_card form_card">
               <div class="col_10">
                 <div class="colum_input">
-                  <p>Set Promo Date<span class="danger">*</span></p>
+                  <p>Atur Tanggal Promo<span class="danger">*</span></p>
                   <div class="div_input">
                     <label class="switch">
                       <input id="add_auto_promo_date_status" type="checkbox">
@@ -206,43 +206,43 @@
                   </div>
                 </div>
                 <div class="colum_input add_promo_date">
-                  <p>Promo Date<span class="danger">*</span></p>
+                  <p>Tanggal Promo</p>
                   <div class="div_input">
                     <div class="subdiv_input">
-                      <p class="title">Start Date</p>
+                      <p class="title">Tanggal Mulai</p>
                       <input type="date" id="add_auto_promo_start_date">
                     </div>
                     <div class="subdiv_input">
-                      <p class="title">End Date</p>
+                      <p class="title">Tanggal Akhir</p>
                       <input type="date" id="add_auto_promo_end_date">
                     </div>
                   </div>
                 </div>
                 <div class="colum_input">
-                  <p>Applied Day<span class="danger">*</span></p>
+                  <p>Hari Penerapan</p>
                   <div class="div_input">
                     <div class="select_area">
                       <input type="checkbox" class="add_applied_check_all" id="add_auto_promo_everyday">
-                      <label class="select_option" for="add_auto_promo_everyday">Everyday</label>
+                      <label class="select_option" for="add_auto_promo_everyday">Setiap Hari</label>
                       <input value="sunday" type="checkbox" class="add_applied_check" id="add_auto_promo_sunday">
-                      <label class="select_option" for="add_auto_promo_sunday">Sunday</label>
+                      <label class="select_option" for="add_auto_promo_sunday">Minggu</label>
                       <input value="monday" type="checkbox" class="add_applied_check" id="add_auto_promo_monday">
-                      <label class="select_option" for="add_auto_promo_monday">Monday</label>
+                      <label class="select_option" for="add_auto_promo_monday">Senin</label>
                       <input value="tuesday" type="checkbox" class="add_applied_check" id="add_auto_promo_tuesday">
-                      <label class="select_option" for="add_auto_promo_tuesday">Tuesday</label>
+                      <label class="select_option" for="add_auto_promo_tuesday">Selasa</label>
                       <input value="wednesday" type="checkbox" class="add_applied_check" id="add_auto_promo_wednesday">
-                      <label class="select_option" for="add_auto_promo_wednesday">Wednesday</label>
+                      <label class="select_option" for="add_auto_promo_wednesday">Rabu</label>
                       <input value="thursday" type="checkbox" class="add_applied_check" id="add_auto_promo_thursday">
-                      <label class="select_option" for="add_auto_promo_thursday">Thursday</label>
+                      <label class="select_option" for="add_auto_promo_thursday">Kamis</label>
                       <input value="friday" type="checkbox" class="add_applied_check" id="add_auto_promo_friday">
-                      <label class="select_option" for="add_auto_promo_friday">Friday</label>
+                      <label class="select_option" for="add_auto_promo_friday">Jumat</label>
                       <input value="saturday" type="checkbox" class="add_applied_check" id="add_auto_promo_saturday">
-                      <label class="select_option" for="add_auto_promo_saturday">Saturday</label>
+                      <label class="select_option" for="add_auto_promo_saturday">Sabtu</label>
                     </div>
                   </div>
                 </div>
                 <div class="colum_input">
-                  <p>Set Applied Time<span class="danger">*</span></p>
+                  <p>Atut Waktu Penerapan</p>
                   <div class="div_input">
                     <label class="switch">
                       <input id="add_auto_promo_applied_status" type="checkbox">
@@ -251,14 +251,14 @@
                   </div>
                 </div>
                 <div class="colum_input add_applied_time">
-                  <p>Applied Time<span class="danger">*</span></p>
+                  <p>Penerapan Waktu</p>
                   <div class="div_input">
                     <div class="subdiv_input">
-                      <p class="title">Start Time</p>
+                      <p class="title">Waktu Mulai</p>
                       <input type="time" id="add_auto_promo_start_time">
                     </div>
                     <div class="subdiv_input">
-                      <p class="title">End Time</p>
+                      <p class="title">Waktu Akhir</p>
                       <input type="time" id="add_auto_promo_end_time">
                     </div>
                   </div>
@@ -279,7 +279,7 @@
                       <thead>
                         <tr>
                           <th><input type="checkbox" class="add_check_all"></th>
-                          <th onclick="sortTable(0);">All Outlet</th>
+                          <th onclick="sortTable(0);">Semua Outlet</th>
                         </tr>
                       </thead>
                       <tbody class="add_outlet_list"></tbody>

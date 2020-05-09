@@ -7,13 +7,13 @@
       <div class="inmain_nav">
         <div class="title">
           <h1>
-            <a  onclick="sub_href('{{ url_for('main._page', sector='inventory') }}')">Inventory</a> > <a  onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-entry') }}')">Stock Entry</a>
-             > Add Stock Entry
+            <a  onclick="sub_href('{{ url_for('main._page', sector='inventory') }}')">Inventarisasi</a> > <a  onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-entry') }}')">Stock Masuk</a>
+             > Tambah Stok Masuk
           </h1>
         </div>
         <div class="_filter">
-          <button type="button" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-entry') }}')">Cancel</button>
-          <button class="_submit" type="submit">Save</button>
+          <button type="button" onclick="sub_href('{{ url_for('main._subreport', sector='inventory', subpage='stock-entry') }}')">Batal</button>
+          <button class="_submit" type="submit">Simpan</button>
         </div>
       </div>
       <div class="_container">
@@ -27,14 +27,14 @@
                       <select class="outlet" id="outlet"></select>
                     </div>
                     <div class="li">
-                      <label>Date<span class="danger">*</span></label>
+                      <label>Tanggal<span class="danger">*</span></label>
                       <input id="date" type="date" placeholder="Email">
                     </div>
                   </div>
 
                   <div class="col_5">
                     <div class="li">
-                      <label>Description</label>
+                      <label>Deskripsi</label>
                       <textarea id="description" placeholder="Description"></textarea>
                     </div>
                   </div>
@@ -50,16 +50,16 @@
                     <div class="div_add_stock_table">
                       <div class="table_header">
                         <div class="item_column">Item</div>
-                        <div class="variant_column">Variant</div>
+                        <div class="variant_column">Varian</div>
                         <div class="total_unit_column">Total Unit</div>
                         <div class="unit">Unit</div>
-                        <div class="cost_unit_column">Cost @ Unit</div>
-                        <div class="total_cost_column">Total Cost</div>
+                        <div class="cost_unit_column">Biaya Per Unit</div>
+                        <div class="total_cost_column">Total Biaya</div>
                         <div class="trash_column"></div>
                       </div>
                       <div class="table_body"></div>
                       <div class="table_href">
-                        <a class="add_row"><i class="fas fa-plus"></i>Add Product</a>
+                        <a class="add_row"><i class="fas fa-plus"></i>Tambah Produk</a>
                       </div>
                     </div>
                   </div>

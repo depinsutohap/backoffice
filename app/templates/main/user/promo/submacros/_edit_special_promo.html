@@ -5,13 +5,13 @@
   </div>
   <form id="form_edit_special_promo">
     <div class="colum_input">
-      <p>Promo Name<span class="danger">*</span></p>
+      <p>Nama Promo<span class="danger">*</span></p>
       <div class="div_input">
         <input type="text" id="edit_special_promo_name">
       </div>
     </div>
     <div class="colum_input">
-      <p>Discount Value<span class="danger">*</span></p>
+      <p>Jumlah Diskon<span class="danger">*</span></p>
       <div class="div_input">
         <select class="extra_input" id="edit_special_promo_percent_type">
           <option value="0">%</option>
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="colum_input">
-      <p>Set Promo Date<span class="danger">*</span></p>
+      <p>Atur Tanggal Promo</p>
       <div class="div_input">
         <label class="switch">
           <input id="edit_special_promo_date_status" type="checkbox">
@@ -30,43 +30,43 @@
       </div>
     </div>
     <div class="colum_input edit_promo_date">
-      <p>Promo Date<span class="danger">*</span></p>
+      <p>Tanggal Promo</p>
       <div class="div_input">
         <div class="subdiv_input">
-          <p class="title">Start Date</p>
+          <p class="title">Tanggal Mulai</p>
           <input type="date" id="edit_special_promo_start_date">
         </div>
         <div class="subdiv_input">
-          <p class="title">End Date</p>
+          <p class="title">Tanggal Akhir</p>
           <input type="date" id="edit_special_promo_end_date">
         </div>
       </div>
     </div>
     <div class="colum_input">
-      <p>Applied Day<span class="danger">*</span></p>
+      <p>Hari Penerapan</p>
       <div class="div_input">
         <div class="select_area">
           <input type="checkbox" class="edit_applied_check_all" id="edit_special_promo_everyday">
-          <label class="select_option" for="edit_special_promo_everyday">Everyday</label>
+          <label class="select_option" for="edit_special_promo_everyday">Setiap hari</label>
           <input value="sunday" type="checkbox" class="edit_applied_check" id="edit_special_promo_sunday">
-          <label class="select_option" for="edit_special_promo_sunday">Sunday</label>
+          <label class="select_option" for="edit_special_promo_sunday">Minggu</label>
           <input value="monday" type="checkbox" class="edit_applied_check" id="edit_special_promo_monday">
-          <label class="select_option" for="edit_special_promo_monday">Monday</label>
+          <label class="select_option" for="edit_special_promo_monday">Senin</label>
           <input value="tuesday" type="checkbox" class="edit_applied_check" id="edit_special_promo_tuesday">
-          <label class="select_option" for="edit_special_promo_tuesday">Tuesday</label>
+          <label class="select_option" for="edit_special_promo_tuesday">Selasa</label>
           <input value="wednesday" type="checkbox" class="edit_applied_check" id="edit_special_promo_wednesday">
-          <label class="select_option" for="edit_special_promo_wednesday">Wednesday</label>
+          <label class="select_option" for="edit_special_promo_wednesday">Rabu</label>
           <input value="thursday" type="checkbox" class="edit_applied_check" id="edit_special_promo_thursday">
-          <label class="select_option" for="edit_special_promo_thursday">Thursday</label>
+          <label class="select_option" for="edit_special_promo_thursday">Kamis</label>
           <input value="friday" type="checkbox" class="edit_applied_check" id="edit_special_promo_friday">
-          <label class="select_option" for="edit_special_promo_friday">Friday</label>
+          <label class="select_option" for="edit_special_promo_friday">Jumat</label>
           <input value="saturday" type="checkbox" class="edit_applied_check" id="edit_special_promo_saturday">
-          <label class="select_option" for="edit_special_promo_saturday">Saturday</label>
+          <label class="select_option" for="edit_special_promo_saturday">Sabtu</label>
         </div>
       </div>
     </div>
     <div class="colum_input">
-      <p>Set Applied Time<span class="danger">*</span></p>
+      <p>Atur Waktu Penerapan</p>
       <div class="div_input">
         <label class="switch">
           <input id="edit_special_promo_applied_status" type="checkbox">
@@ -75,26 +75,26 @@
       </div>
     </div>
     <div class="colum_input edit_applied_time">
-      <p>Applied Time<span class="danger">*</span></p>
+      <p>Waktu Penerapan</p>
       <div class="div_input">
         <div class="subdiv_input">
-          <p class="title">Start Time</p>
+          <p class="title">Waktu Mulai</p>
           <input type="time" id="edit_special_promo_start_time">
         </div>
         <div class="subdiv_input">
-          <p class="title">End Time</p>
+          <p class="title">Waktu Akhir</p>
           <input type="time" id="edit_special_promo_end_time">
         </div>
       </div>
     </div>
     <div class="colum_input column_table">
-      <p class="table_title">Outlet<span class="danger">*</span></p>
+      <p class="table_title">Outlet</p>
       <div class="div_input">
         <table class="table table-hover" id="table_data">
           <thead>
             <tr>
               <th><input type="checkbox" class="edit_check_all"></th>
-              <th onclick="sortTable(0);">All Outlet</th>
+              <th onclick="sortTable(0);">Semua Outlet</th>
             </tr>
           </thead>
           <tbody class="edit_outlet_list"></tbody>

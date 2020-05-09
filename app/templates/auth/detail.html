@@ -7,19 +7,19 @@
   <link rel="stylesheet" type="text/css" href="/static/css/auth.min.css">
   <main id="main_auth">
       <form method="post" autocomplete="on">
-          <h1>Fill your merchant’s name & information</h1>
+          <h1>Isi nama usaha dan seluruh informasi</h1>
           <h4>
-            Nama toko, kontak, lokasi dan informasi usaha digunakan untuk
+            Nama usaha, outlet, kontak, lokasi dan informasi usaha digunakan untuk
             Informasi tambahan mengenai usaha kamu.
           </h4>
           <hr>
-          <input name="business_name" id="business_name" type="text" placeholder="Business Name">
-          <input name="outlet_name" id="outlet_name" type="text" placeholder="Outlet Name">
+          <input name="business_name" id="business_name" type="text" placeholder="Nama Usaha, Contoh: HOP">
+          <input name="outlet_name" id="outlet_name" type="text" placeholder="Nama Outlet, Contoh: Cabang Jakarta">
           <select id="business_category"></select>
           <select id="outlet_num_emp"></select>
-          <input name="outlet_phone_number" id="outlet_phone_number" type="tel" placeholder="Outlet's Phone Number" onkeyup="input_formatNumberwocommas(this)">
-          <label class="owner_phone_check"><input class="_checkbox" name="owner_phone_check" id="owner_phone_check" type="checkbox">Copy from Owner’s phone number</label>
-          <input name="outlet_address" id="outlet_address" type="text" placeholder="Address">
+          <input name="outlet_phone_number" id="outlet_phone_number" type="tel" placeholder="Nomor telepon outlet" onkeyup="input_formatNumberwocommas(this)">
+          <label class="owner_phone_check"><input class="_checkbox" name="owner_phone_check" id="owner_phone_check" type="checkbox">Gunakan nomor telepon pemilik</label>
+          <input style="margin-top: 0;" name="outlet_address" id="outlet_address" type="text" placeholder="Alamat Outlet">
           <select id="outlet_country"></select>
           <button class="login" type="submit">SUBMIT</button>
       </form>

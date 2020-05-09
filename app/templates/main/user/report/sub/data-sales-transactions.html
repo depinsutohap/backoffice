@@ -20,9 +20,9 @@
         <div class="col_10">
           <div class="card dashboard_card">
             <div class="col_2">
-              <h5 class="title">Business</h5>
+              <h5 class="title business">Bisnis</h5>
               <select id="business" name="business" placeholder="Business">
-                <option value="0">Semua Business</option>
+                <option value="0">Semua Bisnis</option>
               </select>
             </div>
             <div class="col_2">
@@ -52,7 +52,7 @@
                <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
                   <th onclick="sortTable(0)">Waktu</th>
                   <th onclick="sortTable(1)">Operator</th>
-                  <th onclick="sortTable(2)">ID Transaction</th>
+                  <th onclick="sortTable(2)">Kode Struk</th>
                   <th onclick="sortTable(3)">Status</th>
                   <th onclick="sortTable(4)">Total</th>
                   <th></th>
@@ -72,7 +72,7 @@
         <div class="col_10">
           <div class="card dashboard_card">
             <div class="col_5">
-              <h5 class="title">Total Revenue</h5>
+              <h5 class="title">Total Pendapatan</h5>
               <h2 class="value" id="total_revenue">-</h2>
             </div>
           </div>
@@ -80,3 +80,4 @@
       </div>
     </div>
   </main>
+  {% include 'main/user/report/submacros/_detail_trx.html' %}

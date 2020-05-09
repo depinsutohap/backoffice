@@ -7,28 +7,28 @@
   <link rel="stylesheet" type="text/css" href="/static/css/auth.min.css">
   <main id="main_auth">
       <form method="post">
-          <h1>Start your free account now.</h1>
-          <h3>Signing up to hop is just one step away</h3>
-          <h4>No payments, commitments or contracts</h4>
+          <h1>Daftar akun gratis anda sekarang.</h1>
+          <h3>Daftar akun di hop hanya melewati satu langkah</h3>
+          <h4>Tidak perlu pembayaran, komitmen ataupun kontrak</h4>
           <hr>
-          <input name="name" id="name" type="name" placeholder="Name">
-          <input name="phone" id="phone" type="tel" placeholder="Owner's phone number" onkeyup="input_formatNumberwocommas(this)">
-          <input name="email" id="email" type="email" placeholder="E-Mail..">
+          <input name="name" id="name" type="name" placeholder="Nama">
+          <input name="phone" id="phone" type="tel" placeholder="Nomor Handphone pemiliki usaha" onkeyup="input_formatNumberwocommas(this)">
+          <input name="email" id="email" type="email" placeholder="E-Mail">
           <div class="pass">
               <input id="password" name="password" type="password" placeholder="Password">
               <input type="checkbox" id="view_pass">
               <label for="view_pass" class="glyphicon glyphicon-eye-close"></label>
           </div>
-          <input name="refferal" id="refferal" type="text" placeholder="Refferal Code..">
+          <input name="refferal" id="refferal" type="text" placeholder="Kode Refferal">
           <button class="login" type="submit">SIGN UP</button>
           <p>
-            By signing up, you agree to hop’s
+            Dengan mendaftar, anda menyetujui
             <a href="https://hop.cash/terms-conditions">Terms of Services</a>
-            and have read hop’s
-            <a href="https://hop.cash/privacy-policy">Privacy Policy</a>.
+            dan telah membaca
+            <a href="https://hop.cash/privacy-policy">Privacy Policy</a> dari HOP.
           </p>
           <hr>
-          <p>Already have a hop account? <a href="/login">Sign in</a></p>
+          <p>Sudah memiliki akun HOP? <a href="/login">Masuk</a></p>
       </form>
   </main>
   <script src="{{ url_for('static', filename='js/detail/auth.js') }}"></script>

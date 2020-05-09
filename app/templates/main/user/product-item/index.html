@@ -6,7 +6,7 @@
   <main id="dashboard_index">
     <div class="inmain_nav">
       <div class="title">
-        <h1>Product Item</h1>
+        <h1>Produk Item</h1>
       </div>
       <div class="_filter">
         <a class="nav_create" onclick="sub_href('{{ url_for('main._subreport', sector='product-item', subpage='add') }}')"><p>Add Item</p></a>
@@ -18,7 +18,7 @@
         <div class="col_10">
           <div class="card dashboard_card">
             <div class="col_5">
-              <h5 class="title business">Product Category</h5>
+              <h5 class="title business">Kategori Produk</h5>
               <select id="product_category">
                 <option value="0">Semua Business</option>
               </select>
@@ -36,9 +36,9 @@
               <thead>
                 <tr>
                   <th><input type="checkbox" class="check_all"></th>
-                  <th onclick="sortTable(0);">Product Name</th>
-                  <th onclick="sortTable(1);">Product Category</th>
-                  <th onclick="sortTable(2);">Price</th>
+                  <th onclick="sortTable(0);">Nama Produk</th>
+                  <th onclick="sortTable(1);">Kategori Produk</th>
+                  <th onclick="sortTable(2);">Harga</th>
                   <th></th>
                 </tr>
               </thead>
@@ -46,7 +46,7 @@
             </table>
             <div class="no_data">
               <img src="{{ url_for('static', filename='src/icon/tag.png') }}">
-              You don't have any item yet.
+              Anda belum memiliki item
             </div>
         </div>
       </div>

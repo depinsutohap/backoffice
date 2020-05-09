@@ -1,7 +1,7 @@
 <main id="dashboard_index">
   <div class="inmain_nav">
     <div class="title">
-      <h1><a class="report" onclick="sub_href('{{ url_for('main._page', sector='report') }}')">Report</a> > <span class="daily_profit">Daily Profit</span</h1>
+      <h1><a class="report" onclick="sub_href('{{ url_for('main._page', sector='report') }}')">Laporan</a> > <span class="daily_profit">Keuntungan Harian</span</h1>
     </div>
     <div class="_filter">
       <a class="nav_create" onclick="_export('9')"><p>Export</p></a>
@@ -13,9 +13,9 @@
       <div class="col_10">
         <div class="card dashboard_card">
           <div class="col_2">
-            <h5 class="title business">Business</h5>
+            <h5 class="title business">Bisnis</h5>
             <select id="business" name="business" placeholder="Business">
-              <option value="0">Semua Business</option>
+              <option value="0">Semua Bisnis</option>
             </select>
           </div>
           <div class="col_2">
@@ -44,11 +44,11 @@
               <tr>
              <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
                 <th onclick="sortTable(0)">Tanggal</th>
-                <th onclick="sortTable(1)">Revenue</th>
-                <th onclick="sortTable(2)">Tax & Services</th>
-                <th onclick="sortTable(3)">Discount</th>
-                <th onclick="sortTable(4)">Cost</th>
-                <th onclick="sortTable(5)">Nett Profit</th>
+                <th onclick="sortTable(1)">Pendapatan</th>
+                <th onclick="sortTable(2)">Servis & Pajak</th>
+                <th onclick="sortTable(3)">Diskon</th>
+                <th onclick="sortTable(4)">COST</th>
+                <th onclick="sortTable(5)">Pendapatan Bersih</th>
               </tr>
             </thead>
             <tbody id="data_body"></tbody>
@@ -65,23 +65,23 @@
       <div class="col_10">
         <div class="card dashboard_card">
           <div class="col_1">
-            <h5 class="title">Total Revenue</h5>
+            <h5 class="title">Total Pendapatan</h5>
             <h2 class="value" id="total_revenue">-</h2>
           </div>
           <div class="col_1">
-            <h5 class="title">Tax & Services</h5>
+            <h5 class="title">Servis & Pajak</h5>
             <h2 class="value" id="total_tax">-</h2>
           </div>
           <div class="col_1">
-            <h5 class="title">Discount</h5>
+            <h5 class="title">Diskon</h5>
             <h2 class="value" id="total_discount">-</h2>
           </div>
           <div class="col_1">
-            <h5 class="title">Cost</h5>
+            <h5 class="title">COST</h5>
             <h2 class="value" id="total_cost">-</h2>
           </div>
           <div class="col_1">
-            <h5 class="title">Net Profit</h5>
+            <h5 class="title">Pendapatan Bersih</h5>
             <h2 class="value" id="total_profit">-</h2>
           </div>
         </div>

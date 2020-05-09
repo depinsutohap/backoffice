@@ -8,7 +8,7 @@ function _export(id){
         'outlet': $('#outlet').val(),
         'dari': $('#startdate').val(),
         'sampai': $('#enddate').val(),
-        'status': 1, //EXCEL
+        'status': 2, //EXCEL
         'export_type': id
       })
     }, function (e) {

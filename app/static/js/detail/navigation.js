@@ -7,7 +7,7 @@ $(document).ready(function () {
   _header_user_data();
   _nav_business_list();
   _menu_dropdown();
-  nav_lang('nav');
+  // // nav_lang('nav');
   _search();
 });
 
@@ -178,7 +178,7 @@ function _nav_business_list(){
         $('#list_business').empty().prepend(
           '<a class="nb" href="#" id="nav_outlet" onclick="sub_href(\'/page/business/new\')">' +
           '<i class="fa fa-plus-circle"></i>' +
-          '<p>New Business</p></a>'
+          '<p>Bisnis Baru</p></a>'
         );
       }
       if (JSON.parse(userData['permission']) !== null){
@@ -393,6 +393,6 @@ function _date(){
   });
   startdate = new Date().toDateInputValue();
   enddate = new Date().toDateInputValue();
-  document.getElementById('startdate').value = startdate
-  document.getElementById('enddate').value = enddate
+  $('#startdate').val(startdate);
+  $('#enddate').val(enddate);
 }

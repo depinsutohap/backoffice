@@ -36,18 +36,22 @@ function notif(type, message) {
   }else if(type === 'info'){
     icon = 'info';
   }
+
+  let _cn = (Math.floor(Math.random() * 10000000)).toString()
+
   $('div#notification-box').prepend(
-    '<div class="notification-box ' + type + '">' +
+    '<div class="notification-box notif-' + _cn + ' ' + type + '">' +
     '<div class="left"><i class="fas fa-' + icon + '"></i></div>' +
     '<p>' + message + '</p>' +
     '<a onclick="close_notif(this)"><i class="glyphicon glyphicon-menu-right notif"></i></a>' +
     '</div>'
   );
 
+  setTimeout(function() {
+    auto_close($('.notif-' + _cn));
+  }, 2000);
 
   let _notif_box = $('div#notification-box > div');
-  console.log(_notif_box.length)
-  console.log('haha');
   if(_notif_box.length > 1){
     for(i=0; i<_notif_box.length; i++){
       if(i!= 0){

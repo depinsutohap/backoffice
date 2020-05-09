@@ -213,9 +213,9 @@ function _outlet_list(b_id){
 }
 
 function _append_overview_list(data){
-  let _tax = 'No Tax';
+  let _tax = 'Tidak ada Servis & Pajak';
   if(data.tax_list.length>0){
-    _tax = 'Taxes applied';
+    _tax = 'Ada Servis & Pajak';
   }
 
 
@@ -242,11 +242,11 @@ function _append_overview_list(data){
     '<div class="_row">' +
     '<div class="col_3">' +
     '<div class="_data">' +
-    '<p class="key">Business</p>' +
+    '<p class="key">Bisnis</p>' +
     '<p class="value" class="outlet_business_' + data.id + '">' + data.business_id.name + '</p>' +
     '</div>' +
     '<div class="_data">' +
-    '<p class="key">Employee</p>' +
+    '<p class="key">Karyawan</p>' +
     '<p class="value" class="outlet_numpemp_' + data.id + '">' + data.num_emp.name + '</p>' +
     '</div>' +
     '<div class="_data">' +
@@ -254,40 +254,40 @@ function _append_overview_list(data){
     '<p class="value">' + data.billing.name + '</p>' +
     '</div>' +
     '<div class="_data">' +
-    '<p class="key">Product Category</p>' +
+    '<p class="key">Produk Kategori</p>' +
     '<p class="value"><span class="total_category_outlet_' + data.id + '">' + data.total_category + '</span><a class="edit_button" onclick="_edit_category_outlet(' + data.id + ')">Edit</a></p>' +
     '</div>' +
     '</div>' +
     '<div class="col_3">' +
     '<div class="_data">' +
-    '<p class="key">Address</p>' +
+    '<p class="key">Alamat</p>' +
     '<p class="value" class="outlet_address_' + data.id + '">' + data.address + '</p>' +
     '</div>' +
     '<div class="_data">' +
-    '<p class="key">Country</p>' +
+    '<p class="key">Negara</p>' +
     '<p class="value" class="outlet_country_' + data.id + '">' + data.country.name + '</p>' +
     '</div>' +
     '<div class="_data">' +
-    '<p class="key">Expiry Date</p>' +
+    '<p class="key">Tanggal Expired</p>' +
     '<p class="value" class="outlet_country_' + data.id + '">' + data.billing.expired + '</p>' +
     '</div>' +
     '<div class="_data">' +
-    '<p class="key">Product Item</p>' +
+    '<p class="key">Produk Item</p>' +
     '<p class="value"><span class="total_item_outlet_' + data.id + '">' + data.total_item + '</span><a class="edit_button" onclick="_edit_item_outlet(' + data.id + ')">Edit</a></p>' +
     '</div>' +
     '</div>' +
     '<div class="col_3 _menu_div">' +
     '<div class="_data _menu">' +
-    '<a onclick="_table_outlet(' + data.id + ')">Table</a>' +
+    '<a onclick="_table_outlet(' + data.id + ')">Meja</a>' +
     '</div>' +
     '<div class="_data _menu">' +
-    '<a onclick="_payment_outlet(' + data.id + ')">Payment</a>' +
+    '<a onclick="_payment_outlet(' + data.id + ')">Pembayaran</a>' +
     '</div>' +
     '<div class="_data _menu">' +
-    '<a onclick="_edit_outlet(' + data.id + ')">Edit</a>' +
+    '<a onclick="_edit_outlet(' + data.id + ')">Ubah</a>' +
     '</div>' +
     '<div class="_data _menu">' +
-    '<a onclick="_remove_outlet(' + data.id + ')">Remove</a>' +
+    '<a onclick="_remove_outlet(' + data.id + ')">Hapus</a>' +
     '</div>' +
     '</div>' +
     '</div>' +

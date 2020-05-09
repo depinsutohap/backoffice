@@ -8,7 +8,7 @@ function _dashboard(){
     _detail()
   });
 
-  nav_lang('report');
+  // // nav_lang('report');
   graph();
 }
 
@@ -28,6 +28,11 @@ function _detail(){
     let i;
     $('#data_body').empty();
     if(e['status'] === '00'){
+      $('#totaltrans').text(e.dashboard.total_trans);
+      $('#successtrans').text(e.dashboard.success_trans);
+      $('#ongoingtrans').text(e.dashboard.ongoing_trans);
+      $('#cancelled').text(e.dashboard.cancelled_trans);
+      $('#voidtrans').text(e.dashboard.void_trans);
       if(e.data.hourly_sales.length > 0){
           graph(e.data.hourly_sales, e.data.product_sales, e.data.category_sales);
       }

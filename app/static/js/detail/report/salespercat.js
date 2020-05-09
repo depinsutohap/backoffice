@@ -1,5 +1,5 @@
 function _sales_per_cat(){
-  nav_lang('report');
+  // nav_lang('report');
   business_list(); _date(); _detail();
   _loading(1);
 

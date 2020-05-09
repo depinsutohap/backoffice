@@ -713,6 +713,14 @@ div#mainBody
       align-items: center
     &.table_card
       padding: 25px 10px
+      .data_detail
+        color: $primary-color
+        cursor: pointer
+        transition: 300ms
+        >i
+          font-size: 25px
+        &:hover
+          color: $secondary-color
       ._filter
         display: flex
         justify-content: flex-end
@@ -1064,10 +1072,6 @@ div.main_section
             text-align: center
   @media only screen and (max-width: 991px)
     width: 400px
-
-
-
-
   .header, .footer
     display: flex
     align-items: center
@@ -1104,6 +1108,40 @@ div.main_section
           transition: 300ms
           &:hover
             background: darken($secondary-color, 5%)
+  div.body
+    height: 100%
+    overflow-y: auto
+    overflow-x: hidden
+    div.data_row
+      border: 1px solid $border-dark
+      border-radius: 3px
+      padding: 0 10px
+      margin-top: 15px
+      div.data_header
+        h1
+          font-family: $primary-font
+          color: $primary-color
+          margin-top: 10px
+      div.colum_input
+        border-bottom: 1px solid $border-dark
+      p.title
+        color: $qdark
+        span.quantity
+          border-radius: 3px
+          background-color: $positive
+          color: $light
+          width: 25px
+          height: 25px
+          display: flex
+          justify-content: center
+          align-items: center
+          margin-right: 10px
+        i
+          margin-right: 10px
+      p.body
+        font-weight: bolder
+        color: $primary-color
+        justify-content: flex-end
 
 .column_header
   padding: 10px 0

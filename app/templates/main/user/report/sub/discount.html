@@ -12,13 +12,14 @@
       </div>
     </div>
     <div class="_container">
+
       <div class="_row">
         <div class="col_10">
           <div class="card dashboard_card">
             <div class="col_2">
-              <h5 class="title">Business</h5>
+              <h5 class="title business">Bisnis</h5>
               <select id="business" name="business" placeholder="Business">
-                <option value="0">Semua Business</option>
+                <option value="0">Semua Bisnis</option>
               </select>
             </div>
             <div class="col_2">
@@ -46,9 +47,9 @@
               <thead>
                 <tr>
                <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
-                  <th onclick="sortTable(0)">Discount</th>
-                  <th onclick="sortTable(1)">Total Transactions</th>
-                  <th onclick="sortTable(2)">Total Amount</th>
+                  <th onclick="sortTable(0)">Diskon</th>
+                  <th onclick="sortTable(1)">Total Transaksi</th>
+                  <th onclick="sortTable(2)">Nilai Total</th>
                 </tr>
               </thead>
               <tbody id="data_body"></tbody>
@@ -65,11 +66,11 @@
         <div class="col_10">
           <div class="card dashboard_card">
             <div class="col_5">
-              <h5 class="title">Total Transactions</h5>
+              <h5 class="title">Total Transaksi</h5>
               <h2 class="value" id="count_trx">-</h2>
             </div>
             <div class="col_5">
-              <h5 class="title">Total Amount</h5>
+              <h5 class="title">Nilai Total</h5>
               <h2 class="value" id="total_amount">-</h2>
             </div>
           </div>
