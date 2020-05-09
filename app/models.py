@@ -299,6 +299,8 @@ class Hop_User(Base):
         return response
 
     def verify_password(self,password):
+        print(password)
+        print(self.password_hash)
         return check_password_hash(self.password_hash,password)
 
     def generate_token(self):
