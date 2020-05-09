@@ -4870,8 +4870,7 @@ class Hop_Countries(Base):
                 'id' : i.id,
                 'name' : i.name,
                 'phonecode' : i.phonecode,
-                'iso' : i.iso,
-                'added_time' : i.added_time
+                'iso' : i.iso
             })
         return response
 
