@@ -23,8 +23,6 @@ async def request_login(request):
         apidata = _json.loads(request.form['data'][0])
         if len(apidata['email']) > 0:
             user_email = Hop_User().verify_auth(apidata['email'])
-            print(apidata['email'])
-            print(user_email.password)
             if user_email is not None:
                 if user_email.verify_password(apidata['password']):
                     if user_email.role_id != 3:

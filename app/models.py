@@ -323,9 +323,9 @@ class Hop_User(Base):
             check_phone = session.query(Hop_User).filter_by(phone_number=username, status=True).first()
             if check_id is not None:
                 response = check_id
-            elif check_email is not None:
+            if check_email is not None:
                 response = check_email
-            elif check_phone is not None:
+            if check_phone is not None:
                 response = check_phone
         except:
             session.rollback()
