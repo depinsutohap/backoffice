@@ -278,7 +278,6 @@ class Hop_User(Base):
             raise
         finally:
             session.close()
-        print(response)
         return response
 
     # ALL AUTHENTICION METHODS
@@ -1135,12 +1134,10 @@ class Hop_Table_Outlet(Base):
     status = Column(Boolean,default=True)
 
     def _update(self, _list, outlet_id):
-        print(outlet_id)
         Hop_Table_Outlet()._remove(outlet_id)
         session = Session()
         try:
             for i in _list:
-                print(i)
                 if int(i['id']) == 0:
                     _table = Hop_Table_Outlet()
                     _table.name = i['name']
@@ -1148,7 +1145,6 @@ class Hop_Table_Outlet(Base):
                     session.add(_table)
                 else:
                     _table = session.query(Hop_Table_Outlet).filter_by(id=i['id'], outlet_id=outlet_id).first()
-                    print(_table)
                     _table.name = i['name']
                     _table.status = True
                     session.add(_table)
@@ -1447,9 +1443,7 @@ class Hop_Product_Item(Base):
                 if len(data_variant) > 0:
                     insert.variant_type = True if product_variant == True else False
                 insert.sold_type = True if product_sold == True else False
-                print(product_composed)
                 insert.composed_type = True if product_composed == True else False
-                print(product_stock)
                 insert.invent_type = True if product_stock == True else False
                 insert.owner_id = owner_id
                 session.add(insert)
@@ -1752,7 +1746,6 @@ class Hop_Product_Item(Base):
         try:
             _item = session.query(Hop_Product_Item).filter_by(id=_id, owner_id=owner_id, status=True).first()
             if _item is not None:
-                print(_stock)
                 if _item.variant_type == False:
                     _item.invent_type = True if _stock[0]['invent_type'] == True else False
                     _item.invent_min_stock = _stock[0]['value']
@@ -2065,7 +2058,6 @@ class Hop_Product_Category_Outlet(Base):
         finally:
             session.close()
         for i in _products:
-            print(i.id)
             response.append(Hop_Product_Category()._basicdata(i.product_category_id, owner_id))
         return response
 
@@ -2824,7 +2816,6 @@ class Hop_Variant_List(Base):
         response = {}
         response['status'] = '50'
         session = Session()
-        print(vid)
         try:
             _variant = session.query(Hop_Variant_List).filter_by(id=vid, product_item_id=pid).first()
         except:
@@ -2984,18 +2975,13 @@ class Hop_Composed_Product(Base):
         response['list'] = []
         session = Session()
         try:
-            print(mpid)
-            print(mvid)
             _composed = session.query(Hop_Composed_Product).filter_by(main_product_id=mpid, main_variant_list_id=mvid, status=True).all()
-            print(len(_composed))
         except:
             session.rollback()
             raise
         finally:
             session.close()
-        print(len(_composed))
         for i in _composed:
-            print(i.id)
             _data = {}
             _data['ipid'] = Hop_Product_Item()._basic_data(i.ingredients_product_id, owner_id)
             _data['amount'] = str(i.amount)
@@ -3202,7 +3188,6 @@ class Hop_Inventory_List(Base):
         finally:
             session.close()
         for i in data_list:
-            print(i)
             pid = i[0]
             vid = None
             _item = Hop_Product_Item()._basic_data(_id=pid, owner_id=owner_id)
@@ -3235,7 +3220,6 @@ class Hop_Inventory_List(Base):
         finally:
             session.close()
         for i in data_list:
-            print(i)
             pid = i[0]
             vid = None
             _item = Hop_Product_Item()._basic_data(_id=pid, owner_id=owner_id)
@@ -3846,7 +3830,6 @@ class Hop_Outlet_Tax(Base):
                 _tax.outlet_id = outlet_id
                 _tax.tax_id = tax_id
                 session.add(_tax)
-                print(_tax.id)
             else:
                 _exist_tax.status = True
                 session.add(_exist_tax)
@@ -3964,7 +3947,6 @@ class Hop_Outlet_Payment(Base):
         try:
             for i in _list:
                 _code = i.split('-')
-                print(str(_code))
                 _payment = session.query(Hop_Outlet_Payment).filter_by(
                     outlet_id=outlet_id,
                     payment_type_id=_code[0],
@@ -4517,14 +4499,12 @@ class Hop_Ap_Detail(Base):
 
     def _name(self, ap_type_id, ap_requirement_id, requirement_value,
         requirement_relation, ap_reward_id, reward_value, reward_relation, owner_id):
-        print(ap_type_id)
         response = Hop_Ap_Type()._data(ap_type_id)['description']
         _x = 'Rp ' + requirement_value
         if int(ap_requirement_id) == 1:
             _item = Hop_Product_Item()._basic_data(requirement_relation, owner_id)['name']
             _x = str(int(float(requirement_value))) + ' ' + _item
         elif int(ap_requirement_id) == 2:
-            print(Hop_Product_Category()._basicdata(requirement_relation, owner_id))
             _category = Hop_Product_Category()._basicdata(requirement_relation, owner_id)['name']
             _x = str(int(float(requirement_value))) + ' ' + _category
         _y = 'Rp ' + reward_value
@@ -4615,7 +4595,6 @@ class Hop_Ap_Detail(Base):
         response = {}
         response_id = None
         session = Session()
-        print(requirement_relation)
         try:
             if len(ap_type_id) > 0 and ap_requirement_id!= '' \
             and requirement_value!= '' and ap_reward_id!= '' \
